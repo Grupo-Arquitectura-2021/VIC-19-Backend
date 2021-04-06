@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.ingsoft.dao.PublicationDao">
+    <insert id="create" parameterType="bo.ucb.edu.ingsoft.model.Publication">
+        INSERT into Publication VALUES
+        (null,#{idSeller},#{idBrand},#{idColor},#{idCity},#{title},#{model},
+        #{doorNumber},#{licensePlate},#{description},#{motor},#{price},#{datePublication},1,#{transaction.txDate},
+        #{transaction.txIdUser},#{transaction.txHost},#{transaction.txUpdate})
+    </insert>
+
+    <select  id="publicationView" resultType="bo.ucb.edu.ingsoft.dto.PublicationViewRequest">
+        SELECT
+            a.title as title,
+            a.description as description,
+            a.price as price,
+            b.brand as brand,
+            b.id_brand as idBrand,
+            a.model as model,
+            a.license_plate as licensePlate,
+            e.color as color,
+            e.id_color as idColor,
+            a.motor as motor,
+            d.phone_number as phoneNumber,
+            a.door_number as doorNumber,
+            a.id_seller as idSeller,
+            f.city as City,
+            f.id_city as idCity
+           from publication a
+           INNER JOIN brand b on
+           a.id_brand=b.id_brand
+           INNER JOIN seller c on
+           a.id_seller=c.id_seller
+           INNER JOIN person d on
+           c.id_person=d.id_person
+           INNER JOIN color e on
+           a.id_color=e.id_color
+           INNER JOIN city f on
+           a.id_city=f.id_city
+           where a.id_publication=#{idPublication}
+           AND a.status=1
+    </select>
+    <update id="update" parameterType="bo.ucb.edu.ingsoft.model.Publication">
+        UPDATE publication set
+        id_brand=#{idBrand},
+        id_color=#{idColor},
+        id_city=#{idCity},
+        title=#{title},
+        model=#{model},
+        door_number=#{doorNumber},
+        license_plate=#{licensePlate},
+        description=#{description},
+        motor=#{motor},
+        price=#{price},
+        date_publication=#{datePublication},
+        tx_id_user=#{transaction.txIdUser},
+        tx_host=#{transaction.txHost},
+        tx_update=#{transaction.txUpdate},
+        status=1
+        WHERE
+        id_publication=#{idPublication}
+    </update>
+    <update id="delete" parameterType="bo.ucb.edu.ingsoft.model.Publication">
+        UPDATE publication set
+        status=#{status},
+        tx_id_user=#{transaction.txIdUser},
+        tx_host=#{transaction.txHost},
+        tx_update=#{transaction.txUpdate}
+        WHERE
+        id_publication=#{idPublication} and
+        status=1
+    </update>
+    <update id="deleteImagePublication" parameterType="bo.ucb.edu.ingsoft.model.ImagePublication">
+        UPDATE image_publication set
+        status=0,
+        tx_id_user=#{transaction.txIdUser},
+        tx_host=#{transaction.txHost},
+        tx_update=#{transaction.txUpdate}
+        WHERE
+        id_image_publication=#{idImagePublication} and
+        status=1
+    </update>
+    <resultMap type="bo.ucb.edu.ingsoft.model.Color" id="colorsMap">
+        <result column="idColor" property="idColor"/>
+        <result column="color" property="color"/>
+    </resultMap>
+    <select  id="colors" resultMap="colorsMap">
+        SELECT id_color idColor,
+               color
+               from color
+               where color.status=1
+    </select>
+    <resultMap type="bo.ucb.edu.ingsoft.model.City" id="citiesMap">
+        <result column="idCity" property="idCity"/>
+        <result column="city" property="city"/>
+    </resultMap>
+    <select  id="cities" resultMap="citiesMap">
+        SELECT id_city idCity,
+               city
+               from city
+               where city.status=1
+    </select>
+
+    <resultMap type="bo.ucb.edu.ingsoft.model.Brand" id="brandsMap">
+        <result column="idBrand" property="idBrand"/>
+        <result column="brand" property="brand"/>
+    </resultMap>
+    <select  id="brands" resultMap="brandsMap">
+        SELECT brand.id_brand as idBrand,
+               brand.brand
+               from brand
+               where brand.status=1
+    </select>
+
+    <resultMap type="bo.ucb.edu.ingsoft.dto.ImagePublicationRequest" id="publicationPathsMap">
+        <result column="idImagePublication" property="idImagePublication"/>
+        <result column="path" property="path"/>
+    </resultMap>
+    <select id="publicationPaths" resultMap="publicationPathsMap">
+        SELECT
+        ipub.id_image_publication as idImagePublication,
+        ipub.path as path
+        FROM publication pub
+        INNER JOIN image_publication ipub on
+        pub.id_publication=ipub.id_publication
+        WHERE
+        pub.status=1
+        and ipub.status=1
+        AND pub.id_publication=#{idPublication}
+    </select>
+
+    <insert id="createImagePublication" parameterType="java.util.List">
+        INSERT INTO image_publication
+        VALUES
+        <foreach collection="list" item="element" index="index" open="(" separator="),("  close=")">
+            null,
+            #{element.idPublication},
+            #{element.path},
+            true,
+            #{element.transaction.txDate},
+            #{element.transaction.txIdUser},
+            #{element.transaction.txHost},
+            #{element.transaction.txUpdate}
+        </foreach>
+    </insert>
+
+    <resultMap type="bo.ucb.edu.ingsoft.dto.PublicationSimpleRequest" id="publicationsMap">
+        <result column="idPublication" property="idPublication"/>
+        <result column="imagePath" property="imagePath"/>
+        <result column="title" property="title"/>
+        <result column="price" property="price"/>
+    </resultMap>
+    <select id="publications" resultMap="publicationsMap">
+        SELECT
+        publication.id_publication as idPublication,
+        image_publication.path as imagePath,
+        title as title,
+        price as price
+        FROM publication
+        INNER JOIN image_publication on
+        image_publication.id_publication=publication.id_publication
+        INNER JOIN seller on
+        seller.id_seller=publication.id_seller
+        WHERE
+
+        image_publication.status=1
+        and publication.status=1
+        and seller.status=1
+        <if test="publicationRequest.idColor!=null and publicationRequest.idPublication==null">
+            AND publication.id_color=#{publicationRequest.idColor}
+        </if>
+        <if test="publicationRequest.idCity!=null and publicationRequest.idPublication==null">
+            AND publication.id_city=#{publicationRequest.idCity}
+        </if>
+        <if test="publicationRequest.idBrand!=null and publicationRequest.idPublication==null">
+            AND publication.id_brand=#{publicationRequest.idBrand}
+        </if>
+        <if test="publicationRequest.model!=null and publicationRequest.idPublication==null">
+            AND publication.model=#{publicationRequest.model}
+        </if>
+        <if test="publicationRequest.doorNumber!=null and publicationRequest.idPublication==null">
+            AND publication.door_number=#{publicationRequest.doorNumber}
+        </if>
+        <if test="publicationRequest.title!=null and publicationRequest.idPublication==null">
+            AND MATCH(title,description)
+            AGAINST(#{publicationRequest.title} IN BOOLEAN MODE )
+        </if>
+        <if test="publicationRequest.idPublication!=null">
+            AND publication.id_publication=#{publicationRequest.idPublication}
+        </if>
+        AND image_publication.id_image_publication IN(
+        SELECT MIN(id_image_publication)
+        FROM image_publication
+        WHERE image_publication.id_publication=publication.id_publication
+        AND publication.id_seller!=#{sellerId}
+        )
+        <if test="publicationRequest.idPublication==null">
+            LIMIT #{n} OFFSET #{i}
+        </if>
+    </select>
+</mapper>

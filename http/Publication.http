@@ -1,0 +1,49 @@
+GET http://localhost:8080/publications/?n=5&i=0
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:8080/publications/idd?idPublication=4
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:8080/publications/paths?idPublication=4
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:8080/publications/colors
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+POST http://localhost:8080/publications
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idBrand": 1,
+  "idColor": 1,
+  "idCity": 1,
+  "title": "Title 6",
+  "model": 2018,
+  "doorNumber": 5,
+  "licensePlate": "4089ZPLP",
+  "description": "Hermoso auto con todas las prestaciones y confort",
+  "motor": "1600cc",
+  "price": 15000.500
+}
+
+###
+
+DELETE http://localhost:8080/publications?idPublication=1
+Accept: application/json

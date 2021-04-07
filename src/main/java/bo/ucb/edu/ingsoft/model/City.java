@@ -1,31 +1,31 @@
 package bo.ucb.edu.ingsoft.model;
 
-public class Departament {
-    private Integer idDepartament;
-    private String departament;
+public class City {
+    private Integer idCity;
+    private String city;
     private float lon;
     private float lat;
     private Integer status;
     private Transaction transaction;
 
-    public Departament(){
+    public City(){
         transaction = new Transaction();
     }
 
-    public Integer getIdDepartament() {
-        return idDepartament;
+    public Integer getIdCity() {
+        return idCity;
     }
 
-    public void setIdDepartament(Integer idDepartament) {
-        this.idDepartament = idDepartament;
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
     }
 
-    public String getDepartament() {
-        return departament;
+    public String getCity() {
+        return city;
     }
 
-    public void setDepartament(String departament) {
-        this.departament = departament;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public float getLon() {
@@ -63,8 +63,8 @@ public class Departament {
     @Override
     public String toString() {
         return "Departament{" +
-                "idDepartament=" + idDepartament +
-                ", departament='" + departament + '\'' +
+                "idDepartament=" + idCity +
+                ", departament='" + city + '\'' +
                 ", lon=" + lon +
                 ", lat=" + lat +
                 ", status=" + status +

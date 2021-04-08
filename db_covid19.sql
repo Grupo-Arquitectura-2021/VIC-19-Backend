@@ -2,6 +2,20 @@
 -- Last modification date: 2021-04-07 19:26:28.298
 
 -- tables
+
+-- Table: City_covid_data
+CREATE TABLE City_covid_data (
+                                 id_city_covid_data int NOT NULL,
+                                 id_city int NOT NULL,
+                                 id_covid_data int NOT NULL,
+                                 status int NOT NULL,
+                                 tx_id int NOT NULL,
+                                 tx_date datetime NOT NULL,
+                                 tx_host varchar(100) NOT NULL,
+                                 tx_update datetime NOT NULL,
+                                 CONSTRAINT City_covid_data_pk PRIMARY KEY (id_city_covid_data)
+);
+
 -- Table: City
 CREATE TABLE City (
                       id_city int NOT NULL AUTO_INCREMENT,
@@ -241,5 +255,13 @@ ALTER TABLE Municipality_covid_data ADD CONSTRAINT Table_11_Covid_data FOREIGN K
 -- Reference: Table_11_Municipality (table: Municipality_covid_data)
 ALTER TABLE Municipality_covid_data ADD CONSTRAINT Table_11_Municipality FOREIGN KEY Table_11_Municipality (id_municipality)
     REFERENCES Municipality (id_municipality);
+
+-- Reference: Table_25_City (table: City_covid_data)
+ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_City FOREIGN KEY Table_25_City (id_covid_data)
+    REFERENCES City (id_city);
+
+-- Reference: Table_25_Covid_data (table: City_covid_data)
+ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_Covid_data FOREIGN KEY Table_25_Covid_data (id_city)
+    REFERENCES Covid_data (id_covid_data);
 
 -- End of file.

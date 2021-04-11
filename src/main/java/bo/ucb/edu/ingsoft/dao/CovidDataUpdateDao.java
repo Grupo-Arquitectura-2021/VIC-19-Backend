@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface CovidDataUpdateDao {
     public void insertData(CovidData covidData);
+    public Integer getCovidDataId();
 }

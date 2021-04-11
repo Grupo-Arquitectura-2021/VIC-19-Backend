@@ -6,4 +6,13 @@
     <select id="getLastInsertId" resultType="java.lang.Integer">
         SELECT LAST_INSERT_ID()
     </select>
+    <insert id="create" parameterType="bo.ucb.edu.ingsoft.model.Transaction">
+        INSERT INTO transaction
+        VALUES (
+            null,
+            #{txDate},
+            #{txHost},
+            #{txUpdate}
+        )
+    </insert>
 </mapper>

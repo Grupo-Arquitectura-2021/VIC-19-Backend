@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionBl {
-/*
+
     private TransactionDao transactionDao;
 
     @Autowired
@@ -26,5 +26,4 @@ public class TransactionBl {
         return transaction;
     }
 
- */
 }

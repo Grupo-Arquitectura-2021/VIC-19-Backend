@@ -1,20 +1,42 @@
 package bo.ucb.edu.ingsoft;
 
-import bo.ucb.edu.ingsoft.bl.DataBl;
+
 import bo.ucb.edu.ingsoft.util.CovidDataUrlUtil;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class IngsoftApplication {
+import org.springframework.context.annotation.Configuration;
 
-	public static void main(String[] args) {
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+
+import java.io.*;
+
+
+
+@EnableScheduling
+@SpringBootApplication
+public class IngsoftApplication{
+
+	public static void main(String[] args) throws IOException {
 		SpringApplication.run(IngsoftApplication.class, args);
-		CovidDataUrlUtil.getJson();
-		CovidDataUrlUtil.getJsonHistorico();
-		//DataBl dataBl = new DataBl(null,null);
-		//dataBl.createData(null);
+		//CovidDataUrlUtil.getJson();
 
 	}
+}
 
+@Configuration
+class SchedulerConfig implements SchedulingConfigurer {
+
+	@Override
+	public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
+		ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+		threadPoolTaskScheduler.initialize();
+
+		scheduledTaskRegistrar.setTaskScheduler(threadPoolTaskScheduler);
+	}
 }

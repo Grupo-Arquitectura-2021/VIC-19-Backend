@@ -1,16 +1,47 @@
 package bo.ucb.edu.ingsoft.util;
 
+import bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao;
+import bo.ucb.edu.ingsoft.model.CovidData;
+import bo.ucb.edu.ingsoft.model.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.*;
 
+@Component
 public class CovidDataUpdateUtil {
 
-    public void creatingEmptyFile(String filePath, String url){
+    // private static final Logger logger = (Logger) LoggerFactory.getLogger(ScheduledTasks.class);
+    // private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private CovidDataUpdateDao covidDao;
+
+    @Autowired
+    public void ScheduledTasks(CovidDataUpdateDao covidDao) {
+        this.covidDao = covidDao;
+    }
+
+    @Scheduled(fixedRate = 10000L)
+    @GetMapping(value="/who")
+    public void whoCovidData() throws ParseException {
+        String filePath ="C:/Users/Marioly/Desktop/datoscovid.csv";
+        //String filePath ="C:/Usuarios/Alejo/Escritorio/datoscovid.csv";
+        String url = "https://covid19.who.int/WHO-COVID-19-global-table-data.csv";
+        creatingEmptyFile(filePath,url);
+    }
+
+    //FUNCIONES
+    public void creatingEmptyFile(String filePath, String url) throws ParseException {
         try {
             File file = new File(filePath);
             file.createNewFile();
@@ -58,25 +89,57 @@ public class CovidDataUpdateUtil {
         readingFileData(filePath);
     }
 
-    public void readingFileData(String csvFile){
+    public void readingFileData(String filePath) throws ParseException {
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
+        String[] datos = null;
+        String datoString = null;
+        CovidData covidData;
+        Transaction transaction;
+        String country = "Bolivia (Plurinational State of)";
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Date date;
+
+        //Restando 4 horas a la hora actual
+        cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
+        date = cal.getTime();
+
         try {
-            br = new BufferedReader(new FileReader(csvFile));
+            br = new BufferedReader(new FileReader(filePath));
             while ((line = br.readLine()) != null) {
-                String[] datos = line.split(cvsSplitBy); // todos los datos
+                datos = line.split(cvsSplitBy); // todos los datos
+                for (int i=0; i< datos.length; i++) {
+                    datoString = datos[i];
+                    if (datoString.equals(country)) {
+                        //System.out.println("Encuentra Bolivia");
+                        transaction = new Transaction();
+                        transaction.setTxDate(date);
 
-                int dataSize = datos.length;
+                        InetAddress direccion = InetAddress.getLocalHost();
+                        String IP_local = direccion.getHostAddress();//ip como String
 
-                for (int i=0; i<dataSize; i++){
+                        transaction.setTxHost(IP_local);
+                        transaction.setTxId(1);
+                        transaction.setTxUpdate(date);
 
-                    if(i==0){
-                        System.out.println("");
-                    }else {
-                        System.out.print(" , ");
+
+                        covidData = new CovidData();
+                        covidData.setConfirmedCases(Integer.parseInt(datos[6]));
+                        covidData.setCumulativeCases(Integer.parseInt(datos[2]));
+                        covidData.setDeathCases(Integer.parseInt(datos[11]));
+                        covidData.setRecuperated(0);
+                        covidData.setVaccinated(0);
+                        covidData.setIdCountry(1);
+                        covidData.setIdPageUrl(1);
+                        covidData.setDate(date);
+                        covidData.setStatus(1);
+                        covidData.setTransaction(transaction);
+
+                        covidDao.insertData(covidData);
+
                     }
-                    System.out.print(datos[i]); //cada dato
                 }
             }
         } catch (FileNotFoundException e) {

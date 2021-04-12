@@ -9,4 +9,9 @@
              #{transaction.txUpdate}
         )
     </insert>
+
+    <select id="getCovidDataId" resultType="Integer">
+        SELECT MAX(id_covid_data) FROM covid_data
+    </select>
+
 </mapper>

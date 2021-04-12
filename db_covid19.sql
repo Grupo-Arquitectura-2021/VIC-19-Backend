@@ -5,7 +5,7 @@
 
 -- Table: City_covid_data
 CREATE TABLE City_covid_data (
-                                 id_city_covid_data int NOT NULL,
+                                 id_city_covid_data int NOT NULL AUTO_INCREMENT,
                                  id_city int NOT NULL,
                                  id_covid_data int NOT NULL,
                                  status int NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE Covid_data (
 
 -- Table: Drugstore
 CREATE TABLE Drugstore (
-                           id_drugstore int NOT NULL,
+                           id_drugstore int NOT NULL AUTO_INCREMENT,
                            id_city int NOT NULL,
                            name varchar(50) NOT NULL,
                            lon float NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE H_User (
 
 -- Table: Hospital
 CREATE TABLE Hospital (
-                          id_hospital int NOT NULL,
+                          id_hospital int NOT NULL AUTO_INCREMENT,
                           id_city int NOT NULL,
                           name varchar(50) NOT NULL,
                           lon float NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE Municipality (
 
 -- Table: Municipality_covid_data
 CREATE TABLE Municipality_covid_data (
-                                         id_municipality_covid_data int NOT NULL,
+                                         id_municipality_covid_data int NOT NULL AUTO_INCREMENT,
                                          id_municipality int NOT NULL,
                                          id_covid_data int NOT NULL,
                                          status int NOT NULL,
@@ -257,11 +257,31 @@ ALTER TABLE Municipality_covid_data ADD CONSTRAINT Table_11_Municipality FOREIGN
     REFERENCES Municipality (id_municipality);
 
 -- Reference: Table_25_City (table: City_covid_data)
-ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_City FOREIGN KEY Table_25_City (id_covid_data)
+ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_City FOREIGN KEY Table_25_City (id_city)
     REFERENCES City (id_city);
 
 -- Reference: Table_25_Covid_data (table: City_covid_data)
-ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_Covid_data FOREIGN KEY Table_25_Covid_data (id_city)
+ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_Covid_data FOREIGN KEY Table_25_Covid_data (id_covid_data)
     REFERENCES Covid_data (id_covid_data);
 
 -- End of file.
+
+-- INSERTS
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES
+(null,'La Paz',-16.5, -68.15,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Santa Cruz',-17.78629, -63.18117,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Cochabamba',-17.3895, -66.1568,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Tarija',-21.53549, -64.72956,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Chuquisaca',-19.03332, -65.26274,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Oruro',-17.98333, -67.15,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Pando',-11.02671, -68.76918,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Beni',-14.83333, -64.9,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'Potosi',-19.58361, -65.75306,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45')
+
+
+INSERT INTO `country` (id_country, name, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 'Bolivia', -16.290154, -63.5886531, 1, 1,  '2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES
+(null,'https://covid19.who.int/WHO-COVID-19-global-table-data.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'https://opendata.arcgis.com/datasets/89873d02cfef44928668711cae827105_0.csv?outSR=%7B%22latestWkid%22%3A4326%2C%22wkid%22%3A4326%7D',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
+(null,'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');

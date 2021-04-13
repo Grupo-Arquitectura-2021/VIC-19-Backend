@@ -1,6 +1,6 @@
 package bo.ucb.edu.ingsoft.util;
 
-import bo.ucb.edu.ingsoft.dao.CovidDataJsonDao;
+import bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao;
 import bo.ucb.edu.ingsoft.dto.*;
 import bo.ucb.edu.ingsoft.model.CovidData;
 import bo.ucb.edu.ingsoft.model.Transaction;
@@ -12,10 +12,8 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.Proxy;
@@ -29,13 +27,13 @@ import java.util.Date;
 @Component
 public class CovidDataJsonUtil {
 
-    private static CovidDataJsonDao covidDataJsonDao;
+    private static CovidDataUpdateDao covidDataUpdateDao;
 
     private Transaction transaction;
 
     @Autowired
-    public void CovidDataU(CovidDataJsonDao covidDataJsonDao) {
-        this.covidDataJsonDao = covidDataJsonDao;
+    public void CovidDataU(CovidDataUpdateDao covidDataUpdateDao) {
+        this.covidDataUpdateDao = covidDataUpdateDao;
 
     }
 
@@ -135,7 +133,7 @@ public class CovidDataJsonUtil {
                 covidData.setRecuperated(caseData.get(i).getRecovered());
                 covidData.setDate(caseData.get(i).getDateCas());
                 covidData.setTransaction(transaction);
-                covidDataJsonDao.insertDataJson(covidData);
+                covidDataUpdateDao.insertData(covidData);
             }
 
         } catch (Exception e) {

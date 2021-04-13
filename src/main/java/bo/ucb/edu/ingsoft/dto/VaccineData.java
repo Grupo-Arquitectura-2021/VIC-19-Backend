@@ -1,16 +1,15 @@
 package bo.ucb.edu.ingsoft.dto;
 
-import java.util.Date;
+public class VaccineData {
 
-public class DatosVacuna {
     private String country;
     private String dateIng;
     private Integer amountData;
 
-    public DatosVacuna() {
+    public VaccineData() {
     }
 
-    public DatosVacuna(String country, String dateIng, Integer amountData) {
+    public VaccineData(String country, String dateIng, Integer amountData) {
         this.country = country;
         this.dateIng = dateIng;
         this.amountData = amountData;
@@ -43,7 +42,7 @@ public class DatosVacuna {
 
     @Override
     public String toString() {
-        return "DatosVacuna{" +
+        return "VaccineData{" +
                 "country='" + country + '\'' +
                 ", dateIng='" + dateIng + '\'' +
                 ", amountData=" + amountData +

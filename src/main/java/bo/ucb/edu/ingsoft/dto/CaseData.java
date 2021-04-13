@@ -2,14 +2,14 @@ package bo.ucb.edu.ingsoft.dto;
 
 import java.util.Date;
 
-public class DatosCasos {
+public class CaseData {
     private String country;
     private Date dateCas;
     private Integer cases;
     private Integer deaths;
     private Integer recovered;
 
-    public DatosCasos(String country, Date dateCas, Integer cases, Integer deaths, Integer recovered) {
+    public CaseData(String country, Date dateCas, Integer cases, Integer deaths, Integer recovered) {
         this.country = country;
         this.dateCas = dateCas;
         this.cases = cases;
@@ -17,7 +17,7 @@ public class DatosCasos {
         this.recovered = recovered;
     }
 
-    public DatosCasos() {
+    public CaseData() {
     }
 
     public String getCountry() {
@@ -62,7 +62,7 @@ public class DatosCasos {
 
     @Override
     public String toString() {
-        return "DatosCasos{" +
+        return "CaseData{" +
                 "country='" + country + '\'' +
                 ", dateCas=" + dateCas +
                 ", cases=" + cases +

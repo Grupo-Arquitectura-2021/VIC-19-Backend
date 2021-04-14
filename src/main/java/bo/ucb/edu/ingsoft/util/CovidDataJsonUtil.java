@@ -162,19 +162,7 @@ public class CovidDataJsonUtil {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
-            //String stringFecha = municipios1.getData_mapa().get("features").get(4).get("properties").get("_fecha_ultimo").asText();
             DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");Date convertedDate = fecha.parse("04/04/2021");
-            System.out.println(convertedDate);
-            System.out.println(contagionData.getData_mapa().get("features").get(1).get("properties").get("nom_dept").asText());
-            ArrayList<MunicipalityData> municipalityData = new ArrayList();
-            MunicipalityData municipalityData1;
-            for(int i=0;i<contagionData.getData_mapa().get("features").size();i++){
-                municipalityData1 = new MunicipalityData(contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText(),
-                        contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText(), convertedDate,
-                        contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
-                municipalityData.add(municipalityData1);
-                //System.out.println(municipalityData.get(i));
-            }
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             Date date;
@@ -188,7 +176,7 @@ public class CovidDataJsonUtil {
             CityCovidData cityCovidData;
             MunicipalityCovidData municipalityCovidData;
             Transaction transaction;
-            for(int i=0;i<municipalityData.size();i++){
+            for(int i=0;i<contagionData.getData_mapa().get("features").size();i++){
 
                 covidData = new CovidData();
                 city = new City();
@@ -217,11 +205,8 @@ public class CovidDataJsonUtil {
 
                 cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                 if(!cityData.equals("Unassigned")) {
-                    //System.out.println(city);
                     cityId = cityDao.getCityId(cityData);
-                    System.out.println("cityId = "+cityId);
                     covidDataId = covidDataCSVDao.getCovidDataId();
-                    System.out.println("covidDataId = "+covidDataId);
 
                     cityCovidData = new CityCovidData();
                     cityCovidData.setIdCity(cityId);
@@ -236,11 +221,9 @@ public class CovidDataJsonUtil {
                 municipality.setLon(-1);
                 municipality.setTransaction(transaction);
                 municipalityDao.insertMunicipalityData(municipality);
-                System.out.println(municipality.getMunicipality());
 
                 if(!municipality.getMunicipality().equals("Unassigned")) {
                     municipalityId = municipalityDao.getMunicipalityMaxId();
-                    System.out.println("municipalityId = " + municipalityId);
                     municipalityCovidData.setIdMunicipality(municipalityId);
                     municipalityCovidData.setIdCovidData(covidDataId);
                     municipalityCovidData.setTransaction(transaction);

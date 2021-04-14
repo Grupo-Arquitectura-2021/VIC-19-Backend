@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Mapper
-public interface CovidDataUpdateDao {
+public interface CovidDataCSVDao {
     public void insertData(CovidData covidData);
     public Integer getCovidDataId();
 }

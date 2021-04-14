@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao">
+<mapper namespace="bo.ucb.edu.ingsoft.dao.CovidDataCSVDao">
     <insert id="insertData" parameterType="bo.ucb.edu.ingsoft.model.CovidData">
         INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `id_country`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idPageUrl}, #{idCountry}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},

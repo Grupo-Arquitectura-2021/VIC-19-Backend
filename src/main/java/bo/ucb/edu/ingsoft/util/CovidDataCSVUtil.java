@@ -2,7 +2,7 @@ package bo.ucb.edu.ingsoft.util;
 
 import bo.ucb.edu.ingsoft.dao.CityCovidDataDao;
 import bo.ucb.edu.ingsoft.dao.CityDao;
-import bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao;
+import bo.ucb.edu.ingsoft.dao.CovidDataCSVDao;
 import bo.ucb.edu.ingsoft.model.CityCovidData;
 import bo.ucb.edu.ingsoft.model.CovidData;
 import bo.ucb.edu.ingsoft.model.Transaction;
@@ -20,48 +20,69 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Component
-public class CovidDataUpdateUtil {
 
-    private CovidDataUpdateDao covidDao;
+@Component
+public class CovidDataCSVUtil {
+
+    private CovidDataCSVDao covidDao;
     private CityCovidDataDao cityCovidDataDao;
     private CityDao cityDao;
 
+
     @Autowired
-    public void ScheduledTasks(CovidDataUpdateDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao) {
+    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao) {
         this.covidDao = covidDao;
         this.cityCovidDataDao = cityCovidDataDao;
         this.cityDao = cityDao;
     }
 
 
-    @Scheduled(fixedRate = 10000L)
+
+   @Scheduled(fixedRate = 30000L)
     @GetMapping(value="/who")
     public void whoCovidData() throws ParseException {
         String filePath ="C:/Users/Marioly/Desktop/datoscovidwho.csv";
         String url = "https://covid19.who.int/WHO-COVID-19-global-table-data.csv";
-        creatingEmptyFile(filePath,url);
-        readingFileData(filePath);
+        if (creatingEmptyFile(filePath,url)){
+            //readingFileData(filePath);
+        }else{
+            System.out.println("El archivo no se creó correctamente");
+        }
     }
 
-    @Scheduled(fixedRate = 10000L)
+    @Scheduled(fixedRate = 30000L)
     @GetMapping(value="/arcGis")
     public void arcGisCovidData() throws ParseException {
         String filePath ="C:/Users/Marioly/Desktop/datoscovidarcgis.csv";
         String url = "https://opendata.arcgis.com/datasets/89873d02cfef44928668711cae827105_0.csv?outSR=%7B%22latestWkid%22%3A4326%2C%22wkid%22%3A4326%7D";
-        creatingEmptyFile(filePath,url);
-        readingFileDataArcGis(filePath);
+        if (creatingEmptyFile(filePath,url)){
+            //readingFileDataArcGis(filePath);
+        }else{
+            System.out.println("El archivo no se creó correctamente");
+        }
     }
 
-    @Scheduled(fixedRate = 10000L)
+    @Scheduled(fixedRate = 30000L)
+    @GetMapping(value="/datosGob")
+    public void datosGobCovidData() throws ParseException {
+        String filePath ="C:/Users/Marioly/Desktop/datoscovidgob.csv";
+        String url = "https://datos.gob.bo/dataset/8e2ef657-cfc3-44e1-8552-4a4883aa484e/resource/30cdcb68-ec87-42fb-b4a9-087d81f186c6/download/consolidado_covid_19-mun_se.csv";
+        if (creatingEmptyFile(filePath,url)){
+            readingFileDataDatosGob(filePath);
+        }else{
+            System.out.println("El archivo no se creó correctamente");
+        }
+    }
+
+    @Scheduled(fixedRate = 30000L)
     @GetMapping(value="/csse")
     public void CSSECovidData() throws ParseException {
         String filePath = "C:/Users/Marioly/Desktop/datoscovidcsse.csv";
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        Date date;
         String url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 
         //Restando 1 DIA A LA FECHA ACTUAL
@@ -84,19 +105,111 @@ public class CovidDataUpdateUtil {
         }
         url+="-"+calYear+".csv";
 
-        creatingEmptyFile(filePath, url);
-        readingFileDataCSSE(filePath);
+        if (creatingEmptyFile(filePath,url)){
+            //readingFileDataCSSE(filePath);
+        }else{
+            System.out.println("El archivo no se creó correctamente");
+        }
     }
 
+
+
     //FUNCIONES
-    public void creatingEmptyFile(String filePath, String url) throws ParseException {
+
+    private void readingFileDataDatosGob(String filePath) {
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        String[] datos = null;
+        CovidData covidData;
+        Transaction transaction;
+        String country = "BOLIVIA (PLURINATIONAL STATE OF)";
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Date date;
+        //Restando 4 horas a la hora actual
+        cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
+        date = cal.getTime();
+        int cont = 0;
+        covidData = new CovidData();
+
+        try {
+            boolean flag = true;
+            br = new BufferedReader(new FileReader(filePath));
+            while ((line = br.readLine()) != null && (cont<94)) {
+                if(flag){
+                    flag=false;
+                }else {
+                    cont++;
+                    datos = line.split(cvsSplitBy); // todos los datos
+                    for (int i = 0; i < datos.length; i++) {
+
+                        if ((i == 1)) {
+                        }
+
+
+                        if ((i == 3) ) {
+                        }
+
+                        if ((i == 5)) {
+                            covidData.setConfirmedCases(Integer.parseInt(datos[i]));
+                        }
+
+                        if ((i == 7)) {
+                            covidData.setDeathCases(Integer.parseInt(datos[i]));
+                        }
+
+                        if ((i == 8)) {
+                            covidData.setRecuperated(Integer.parseInt(datos[i]));
+                        }
+                    }
+
+                    transaction = new Transaction();
+                    transaction.setTxDate(date);
+
+                    InetAddress direction = InetAddress.getLocalHost();
+                    String IP_local = direction.getHostAddress();//ip como String
+
+                    transaction.setTxHost(IP_local);
+                    transaction.setTxId(1);
+                    transaction.setTxUpdate(date);
+
+
+                    covidData.setCumulativeCases(-1);
+                    covidData.setVaccinated(-1);
+                    covidData.setIdCountry(1);
+                    covidData.setIdPageUrl(4);
+                    covidData.setDate(convertDate("2020-12-03"));
+                    covidData.setStatus(1);
+                    covidData.setTransaction(transaction);
+
+                    covidDao.insertData(covidData);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public boolean creatingEmptyFile(String filePath, String url) throws ParseException {
         try {
             File file = new File(filePath);
             file.createNewFile();
             System.out.println("Se crea archivo csv vacio " + file.length());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Path no identificado");
         }
+
 
         //Se descarga el archivo
         URL urlObj = null;
@@ -116,8 +229,10 @@ public class CovidDataUpdateUtil {
                 fOutStream.getChannel().transferFrom(rbcObj, 0, Long.MAX_VALUE);
                 //Where member variables are declared:
                 System.out.println("El archivo se descargó correctamente");
+                return true;
             } catch (IOException ioExObj) {
                 System.out.println("Error al descargar el archivo: " + ioExObj.getMessage());
+                return false;
             } finally {
                 try {
                     if(fOutStream != null){
@@ -128,10 +243,12 @@ public class CovidDataUpdateUtil {
                     }
                 } catch (IOException ioExObj) {
                     System.out.println("Error al cerrar el objeto: " + ioExObj.getMessage());
+                    return false;
                 }
             }
         } else {
             System.out.println("El archivo no se encuentra");
+            return false;
         }
     }
 
@@ -331,7 +448,7 @@ public class CovidDataUpdateUtil {
                         city = datos[6];
                         if(!city.equals("Unassigned")) {
                             //System.out.println(city);
-                            cityId = cityDao.getCityId(datos[6]); //sale null, por que?
+                            cityId = cityDao.getCityId(datos[6]);
                             //System.out.println(cityId);
                             lastId = covidDao.getCovidDataId();
                             //System.out.println(lastId);
@@ -359,5 +476,19 @@ public class CovidDataUpdateUtil {
                 }
             }
         }
+    }
+
+    public static Date convertDate(String fecha)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+
+        try {
+            date = formatter.parse(fecha);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

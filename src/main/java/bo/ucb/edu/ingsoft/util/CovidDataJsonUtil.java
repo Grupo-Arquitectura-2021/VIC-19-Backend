@@ -2,6 +2,7 @@ package bo.ucb.edu.ingsoft.util;
 
 import bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao;
 import bo.ucb.edu.ingsoft.dto.*;
+import bo.ucb.edu.ingsoft.model.ContagionData;
 import bo.ucb.edu.ingsoft.model.CovidData;
 import bo.ucb.edu.ingsoft.model.Transaction;
 import bo.ucb.edu.ingsoft.model.Vaccines;
@@ -81,6 +82,7 @@ public class CovidDataJsonUtil {
         }
         return caseData;
     }
+
     public static void getJson() {
         ArrayList<CaseData> caseData = new ArrayList();
         caseData = getJson2();
@@ -141,9 +143,37 @@ public class CovidDataJsonUtil {
         }
     }
 
+    public static void getJsonMunicipios(){
+        try {
+            URL url = new URL("https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+            con.setRequestMethod("GET");
+            con.setRequestProperty("accept", "application/json");
+            InputStream responseStream = con.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+            ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
+            //String stringFecha = municipios1.getData_mapa().get("features").get(4).get("properties").get("_fecha_ultimo").asText();
+            DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");Date converted = fecha.parse("04/04/2021");
+            System.out.println(converted);
+            ArrayList<MunicipalityData> municipalityData = new ArrayList();
+            MunicipalityData municipalityData1;
+            for(int i=0;i<contagionData.getDataMap().get("features").size();i++){
+                municipalityData1 = new MunicipalityData(contagionData.getDataMap().get("features").get(i).get("properties").get("nom_dept").asText(),
+                        contagionData.getDataMap().get("features").get(i).get("properties").get("nom_mun").asText(), converted,
+                        contagionData.getDataMap().get("features").get(i).get("properties").get("_f_0709202").asInt());
+                municipalityData.add(municipalityData1);
+                //System.out.println(municipalityData.get(i));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static String formatearCalendar(Calendar c) {
         Date date = new Date();
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
     }
+
+
 }

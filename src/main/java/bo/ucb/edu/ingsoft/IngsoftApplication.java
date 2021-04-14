@@ -23,7 +23,7 @@ public class IngsoftApplication{
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(IngsoftApplication.class, args);
-		//CovidDataJsonUtil.getJson();
+		CovidDataJsonUtil.getJson();
 
 	}
 }

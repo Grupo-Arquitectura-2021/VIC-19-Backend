@@ -1,8 +1,7 @@
 package bo.ucb.edu.ingsoft;
 
 
-import bo.ucb.edu.ingsoft.util.CovidDataUrlUtil;
-
+import bo.ucb.edu.ingsoft.util.CovidDataJsonUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -24,7 +23,7 @@ public class IngsoftApplication{
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(IngsoftApplication.class, args);
-		//CovidDataUrlUtil.getJson();
+		//CovidDataJsonUtil.getJson();
 
 	}
 }

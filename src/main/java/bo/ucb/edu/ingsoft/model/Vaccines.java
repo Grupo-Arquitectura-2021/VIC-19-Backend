@@ -1,15 +1,13 @@
-package bo.ucb.edu.ingsoft.dto;
+package bo.ucb.edu.ingsoft.model;
 
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-
-public class HistorialCasos {
+public class Vaccines {
     private String country;
-    private ArrayList<String> province;
     private JSONObject timeline;
 
-    public HistorialCasos() {
+    public Vaccines() {
+
     }
 
     public String getCountry() {
@@ -18,14 +16,6 @@ public class HistorialCasos {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public ArrayList<String> getProvince() {
-        return province;
-    }
-
-    public void setProvince(ArrayList<String> province) {
-        this.province = province;
     }
 
     public JSONObject getTimeline() {
@@ -38,9 +28,8 @@ public class HistorialCasos {
 
     @Override
     public String toString() {
-        return "HistorialCasos{" +
+        return "Vaccines{" +
                 "country='" + country + '\'' +
-                ", province=" + province +
                 ", timeline=" + timeline +
                 '}';
     }

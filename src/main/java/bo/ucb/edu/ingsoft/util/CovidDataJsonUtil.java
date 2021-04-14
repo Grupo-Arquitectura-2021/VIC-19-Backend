@@ -1,11 +1,8 @@
 package bo.ucb.edu.ingsoft.util;
 
-import bo.ucb.edu.ingsoft.dao.CovidDataUpdateDao;
+import bo.ucb.edu.ingsoft.dao.*;
 import bo.ucb.edu.ingsoft.dto.*;
-import bo.ucb.edu.ingsoft.model.ContagionData;
-import bo.ucb.edu.ingsoft.model.CovidData;
-import bo.ucb.edu.ingsoft.model.Transaction;
-import bo.ucb.edu.ingsoft.model.Vaccines;
+import bo.ucb.edu.ingsoft.model.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
@@ -28,13 +25,20 @@ import java.util.Date;
 @Component
 public class CovidDataJsonUtil {
 
-    private static CovidDataUpdateDao covidDataUpdateDao;
-
+    private static CityDao cityDao;
+    private static MunicipalityDao municipalityDao;
+    private static CityCovidDataDao cityCovidDataDao;
+    private static MunicipalityCovidDataDao municipalityCovidDataDao;
+    private static CovidDataCSVDao covidDataCSVDao;
     private Transaction transaction;
 
     @Autowired
-    public void CovidDataU(CovidDataUpdateDao covidDataUpdateDao) {
-        this.covidDataUpdateDao = covidDataUpdateDao;
+    public void CovidDataU(CovidDataCSVDao covidDataCSVDao,CityDao cityDao,MunicipalityDao municipalityDao,CityCovidDataDao cityCovidDataDao,MunicipalityCovidDataDao municipalityCovidDataDao) {
+        this.cityDao =cityDao;
+        this.municipalityDao = municipalityDao;
+        this.cityCovidDataDao = cityCovidDataDao;
+        this.municipalityCovidDataDao = municipalityCovidDataDao;
+        this.covidDataCSVDao = covidDataCSVDao;
 
     }
 
@@ -135,7 +139,8 @@ public class CovidDataJsonUtil {
                 covidData.setRecuperated(caseData.get(i).getRecovered());
                 covidData.setDate(caseData.get(i).getDateCas());
                 covidData.setTransaction(transaction);
-                covidDataUpdateDao.insertData(covidData);
+                covidDataCSVDao.insertData(covidData);
+
             }
 
         } catch (Exception e) {
@@ -144,6 +149,10 @@ public class CovidDataJsonUtil {
     }
 
     public static void getJsonMunicipios(){
+        String cityData;
+        Integer cityId = 0;
+        Integer covidDataId = 0;
+        Integer municipalityId = 0;
         try {
             URL url = new URL("https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados");
             HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
@@ -154,17 +163,91 @@ public class CovidDataJsonUtil {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
             //String stringFecha = municipios1.getData_mapa().get("features").get(4).get("properties").get("_fecha_ultimo").asText();
-            DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");Date converted = fecha.parse("04/04/2021");
-            System.out.println(converted);
+            DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");Date convertedDate = fecha.parse("04/04/2021");
+            System.out.println(convertedDate);
+            System.out.println(contagionData.getData_mapa().get("features").get(1).get("properties").get("nom_dept").asText());
             ArrayList<MunicipalityData> municipalityData = new ArrayList();
             MunicipalityData municipalityData1;
-            for(int i=0;i<contagionData.getDataMap().get("features").size();i++){
-                municipalityData1 = new MunicipalityData(contagionData.getDataMap().get("features").get(i).get("properties").get("nom_dept").asText(),
-                        contagionData.getDataMap().get("features").get(i).get("properties").get("nom_mun").asText(), converted,
-                        contagionData.getDataMap().get("features").get(i).get("properties").get("_f_0709202").asInt());
+            for(int i=0;i<contagionData.getData_mapa().get("features").size();i++){
+                municipalityData1 = new MunicipalityData(contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText(),
+                        contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText(), convertedDate,
+                        contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
                 municipalityData.add(municipalityData1);
                 //System.out.println(municipalityData.get(i));
             }
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            Date date;
+            //Restando 4 horas a la hora actual
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
+            date = cal.getTime();
+
+            City city;
+            Municipality municipality;
+            CovidData covidData;
+            CityCovidData cityCovidData;
+            MunicipalityCovidData municipalityCovidData;
+            Transaction transaction;
+            for(int i=0;i<municipalityData.size();i++){
+
+                covidData = new CovidData();
+                city = new City();
+                municipality = new Municipality();
+                cityCovidData = new CityCovidData();
+                municipalityCovidData = new MunicipalityCovidData();
+                transaction = new Transaction();
+                transaction.setTxDate(date);
+                InetAddress ipAddress = InetAddress.getLocalHost();
+                String localIP = ipAddress.getHostAddress();//ip como String
+                transaction.setTxHost(localIP);
+                transaction.setTxId(1);
+                transaction.setTxUpdate(date);
+
+                covidData.setIdCountry(1);
+                covidData.setIdPageUrl(3);
+                covidData.setDeathCases(-1);
+                covidData.setConfirmedCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
+                covidData.setVaccinated(-1);
+                covidData.setCumulativeCases(-1);
+                covidData.setRecuperated(-1);
+                covidData.setDate(convertedDate);
+                covidData.setTransaction(transaction);
+                covidDataCSVDao.insertData(covidData);
+
+
+                cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
+                if(!cityData.equals("Unassigned")) {
+                    //System.out.println(city);
+                    cityId = cityDao.getCityId(cityData);
+                    System.out.println("cityId = "+cityId);
+                    covidDataId = covidDataCSVDao.getCovidDataId();
+                    System.out.println("covidDataId = "+covidDataId);
+
+                    cityCovidData = new CityCovidData();
+                    cityCovidData.setIdCity(cityId);
+                    cityCovidData.setIdCovidData(covidDataId);
+                    cityCovidData.setTransaction(transaction);
+
+                    cityCovidDataDao.insertCityCovidData(cityCovidData);
+                }
+                municipality.setIdDepartament(cityId);
+                municipality.setMunicipality(contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText());
+                municipality.setLat(-1);
+                municipality.setLon(-1);
+                municipality.setTransaction(transaction);
+                municipalityDao.insertMunicipalityData(municipality);
+                System.out.println(municipality.getMunicipality());
+
+                if(!municipality.getMunicipality().equals("Unassigned")) {
+                    municipalityId = municipalityDao.getMunicipalityMaxId();
+                    System.out.println("municipalityId = " + municipalityId);
+                    municipalityCovidData.setIdMunicipality(municipalityId);
+                    municipalityCovidData.setIdCovidData(covidDataId);
+                    municipalityCovidData.setTransaction(transaction);
+                    municipalityCovidDataDao.insertMunicipalityCovidData(municipalityCovidData);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

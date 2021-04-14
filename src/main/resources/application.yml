@@ -4,7 +4,7 @@ spring:
   datasource:
     name: db_covid19
     platform: mysql
-    url: jdbc:mysql://localhost:3306/newcovid?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/db_covid19?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: ""
     hikari:

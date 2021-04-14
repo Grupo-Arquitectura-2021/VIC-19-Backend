@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.ingsoft.dao.MunicipalityDao">
+    <insert id="insertMunicipalityData" parameterType="bo.ucb.edu.ingsoft.model.Municipality">
+        INSERT INTO municipality (`id_municipality`, `id_city`, `municipality`, `lon`, `lat`,
+                    `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null, #{idDepartament},
+                    #{municipality}, #{lon}, #{lat},1, #{transaction.txId}, #{transaction.txDate},
+                    #{transaction.txHost}, #{transaction.txUpdate})
+    </insert>
+    <select id="getMunicipalityId" parameterType="String" resultType="Integer">
+        SELECT
+            a.id_municipality
+        FROM municipality a
+        where a.municipality = #{municipality}
+          and a.status=1
+    </select>
+    <select id="getMunicipalityMaxId" resultType="Integer">
+        SELECT MAX(id_municipality) FROM municipality
+    </select>
+
+</mapper>

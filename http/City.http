@@ -4,7 +4,3 @@ GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json
 
-###
-
-GET http://httpbin.org/cookies
-Cookie: cookie=choco

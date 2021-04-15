@@ -14,7 +14,7 @@
     <resultMap type="bo.ucb.edu.vic19.dto.LocationRequest" id="citiesMap">
         <result column="idLocation" property="idLocation"/>
         <result column="locationName" property="locationName"/>
-        <result column="longitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
     </resultMap>
     <select  id="cities" resultMap="citiesMap">

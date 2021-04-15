@@ -1,0 +1,4 @@
+
+GET http://localhost:8080/country/location
+Accept: application/json
+Content-Type: application/json

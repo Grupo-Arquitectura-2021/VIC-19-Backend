@@ -20,4 +20,16 @@
         SELECT MAX(id_municipality) FROM municipality
     </select>
 
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationRequest" id="municipalitiesMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="municipalities" resultMap="municipalitiesMap">
+        SELECT id_municipality idLocation, municipality locationName, lon longitude, lat latitude
+        FROM municipality
+        WHERE municipality.status=1
+    </select>
+
 </mapper>

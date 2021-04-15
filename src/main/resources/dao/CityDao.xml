@@ -11,4 +11,15 @@
         and city =#{cityName}
     </select>
 
+    <resultMap type="bo.ucb.edu.ingsoft.dto.LocationRequest" id="citiesMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="latitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="cities" resultMap="citiesMap">
+        SELECT id_city idLocation, city locationName, lon longitude, lat latitude
+        FROM city
+        WHERE city.status=1
+    </select>
 </mapper>

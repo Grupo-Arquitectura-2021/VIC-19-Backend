@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 import java.io.InputStream;
@@ -17,6 +19,7 @@ import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +32,7 @@ public class CovidDataJsonUtil {
     private static MunicipalityDao municipalityDao;
     private static CityCovidDataDao cityCovidDataDao;
     private static MunicipalityCovidDataDao municipalityCovidDataDao;
-    private static CovidDataCSVDao covidDataCSVDao;
+    private CovidDataCSVDao covidDataCSVDao;
     private Transaction transaction;
 
     @Autowired
@@ -40,6 +43,15 @@ public class CovidDataJsonUtil {
         this.municipalityCovidDataDao = municipalityCovidDataDao;
         this.covidDataCSVDao = covidDataCSVDao;
 
+    }
+    //@Scheduled(cron = "5 10 * * 1")
+    //@Scheduled(cron = "0 15 15 L * ?")
+    //@Scheduled(fixedRate = 3000L)
+    @GetMapping(value = "/swagger")
+    public void swaggerCovidData() throws ParseException {
+        String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
+        readDataJsonSwagger(url);
+        System.out.println("Se compilo si o no ===================== ");
     }
 
     public static ArrayList<CaseData> getJson2(){
@@ -93,6 +105,68 @@ public class CovidDataJsonUtil {
         ArrayList<VaccineData> vaccineData = new ArrayList();
         try {
             URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("accept", "application/json");
+            InputStream responseStream = con.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+            Vaccines vaccines = mapper.readValue(responseStream, Vaccines.class);
+
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DAY_OF_YEAR, -29);
+
+            VaccineData vaccineData1;
+            for(int i=0;i<vaccines.getTimeline().size();i++){
+                vaccineData1 = new VaccineData(vaccines.getCountry(),formatearCalendar(c),(Integer) vaccines.getTimeline().get(formatearCalendar(c)));
+                vaccineData.add(vaccineData1);
+                c.add(Calendar.DAY_OF_YEAR, 1);
+            }
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            Date date;
+            //Restando 4 horas a la hora actual
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
+            date = cal.getTime();
+            CovidData covidData;
+            Transaction transaction;
+
+            for(int i=0;i<vaccineData.size();i++){
+                covidData = new CovidData();
+                transaction = new Transaction();
+                transaction.setTxDate(date);
+
+                InetAddress ipAddress = InetAddress.getLocalHost();
+                String localIP = ipAddress.getHostAddress();//ip como String
+
+                transaction.setTxHost(localIP);
+                transaction.setTxId(1);
+                transaction.setTxUpdate(date);
+                covidData.setIdCountry(1);
+                covidData.setIdPageUrl(3);
+                covidData.setDeathCases(caseData.get(i).getDeaths());
+                covidData.setConfirmedCases(caseData.get(i).getCases());
+                covidData.setVaccinated(vaccineData.get(i).getAmountData());
+                covidData.setCumulativeCases(caseData.get(i).getCases());
+                covidData.setRecuperated(caseData.get(i).getRecovered());
+                covidData.setDate(caseData.get(i).getDateCas());
+                covidData.setTransaction(transaction);
+                //covidDataCSVDao.insertData(covidData);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readDataJsonSwagger(String urlJson) {
+        ArrayList<CaseData> caseData = new ArrayList();
+        caseData = getJson2();
+        ArrayList<VaccineData> vaccineData = new ArrayList();
+        try {
+            //URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays");
+            URL url = new URL(urlJson);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
@@ -200,13 +274,13 @@ public class CovidDataJsonUtil {
                 covidData.setRecuperated(-1);
                 covidData.setDate(convertedDate);
                 covidData.setTransaction(transaction);
-                covidDataCSVDao.insertData(covidData);
+                //covidDataCSVDao.insertData(covidData);
 
 
                 cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                 if(!cityData.equals("Unassigned")) {
                     cityId = cityDao.getCityId(cityData);
-                    covidDataId = covidDataCSVDao.getCovidDataId();
+                    //covidDataId = covidDataCSVDao.getCovidDataId();
 
                     cityCovidData = new CityCovidData();
                     cityCovidData.setIdCity(cityId);
@@ -240,6 +314,12 @@ public class CovidDataJsonUtil {
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
     }
+/*
 
+    @Override
+    public void run(String... args) throws Exception {
+        //swaggerCovidData();
+    }
 
+ */
 }

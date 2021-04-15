@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bo.ucb.edu.ingsoft.dao.CityCovidDataDao">
-    <insert id="insertCityCovidData" parameterType="bo.ucb.edu.ingsoft.model.CityCovidData">
+<mapper namespace="bo.ucb.edu.vic19.dao.CityCovidDataDao">
+    <insert id="insertCityCovidData" parameterType="bo.ucb.edu.vic19.model.CityCovidData">
         INSERT INTO city_covid_data (`id_city_covid_data`, `id_city`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idCity}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
         )

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bo.ucb.edu.ingsoft.dao.MunicipalityDao">
-    <insert id="insertMunicipalityData" parameterType="bo.ucb.edu.ingsoft.model.Municipality">
+<mapper namespace="bo.ucb.edu.vic19.dao.MunicipalityDao">
+    <insert id="insertMunicipalityData" parameterType="bo.ucb.edu.vic19.model.Municipality">
         INSERT INTO municipality (`id_municipality`, `id_city`, `municipality`, `lon`, `lat`,
                     `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null, #{idDepartament},
                     #{municipality}, #{lon}, #{lat},1, #{transaction.txId}, #{transaction.txDate},

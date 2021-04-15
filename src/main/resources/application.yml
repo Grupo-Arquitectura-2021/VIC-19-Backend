@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ingsoft
+    name: vic19
   datasource:
     name: db_covid19
     platform: mysql

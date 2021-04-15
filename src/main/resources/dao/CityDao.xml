@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bo.ucb.edu.ingsoft.dao.CityDao">
+<mapper namespace="bo.ucb.edu.vic19.dao.CityDao">
     <select id="getCityId" parameterType="String" resultType="Integer">
         SELECT
             c.id_city
@@ -11,7 +11,7 @@
         and city =#{cityName}
     </select>
 
-    <resultMap type="bo.ucb.edu.ingsoft.dto.LocationRequest" id="citiesMap">
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationRequest" id="citiesMap">
         <result column="idLocation" property="idLocation"/>
         <result column="locationName" property="locationName"/>
         <result column="longitude" property="latitude"/>

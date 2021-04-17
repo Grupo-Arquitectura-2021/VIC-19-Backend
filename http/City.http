@@ -4,3 +4,8 @@ GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json
 
+###
+
+GET http://localhost:8080/city/1/"2014-04-04"
+Accept: application/json
+Content-Type: application/json

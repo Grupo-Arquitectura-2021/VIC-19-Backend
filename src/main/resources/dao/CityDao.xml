@@ -22,4 +22,35 @@
         FROM city
         WHERE city.status=1
     </select>
+    <resultMap type="bo.ucb.edu.vic19.dto.CovidDataRequest" id="dataCityMap" >
+        <result column="idCity" property="idCity"/>
+        <result column="nameCity" property="nameCity"/>
+        <result column="dateCity" property="dateCity"/>
+        <result column="deathCases" property="deathCases"/>
+        <result column="confirmedCases" property="confirmedCases"/>
+        <result column="vaccinated" property="vaccinated"/>
+        <result column="cumulativeCases" property="cumulativeCases"/>
+        <result column="recuperated" property="recuperated"/>
+    </resultMap>
+    <select id="covidDataListCity" resultMap="dataCityMap">
+        SELECT
+            a.id_city idCity,
+            a.city nameCity,
+            b.date dateCity,
+            b.death_cases deathCases,
+            b.confirmed_cases confirmedCases,
+            b.vaccinated vaccinated,
+            b.cumulative_cases cumulativeCases,
+            b.recuperated recuperated
+        FROM   city a, covid_data b, city_covid_data d
+        WHERE
+            d.id_city = #{idCity}
+          and b.date = #{dateCovid}
+          and a.id_city = d.id_city
+          and b.id_covid_data = d.id_covid_data
+          and b.status = 1
+    </select>
+
+
+
 </mapper>

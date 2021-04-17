@@ -2,3 +2,11 @@
 GET http://localhost:8080/country/location
 Accept: application/json
 Content-Type: application/json
+
+###
+
+GET http://localhost:8080/country/2/2021-02-04
+Accept: application/json
+Content-Type: application/json
+
+###

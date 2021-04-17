@@ -3,9 +3,8 @@ package bo.ucb.edu.vic19.dto;
 import java.util.Date;
 
 public class CovidDataRequest {
-    private Integer idCity;
-    private String nameCity;
-    private Date dateCity;
+    private String nameLocationCovid;
+    private String dateLocationCovid;
     private Integer deathCases;
     private Integer confirmedCases;
     private Integer vaccinated;
@@ -15,28 +14,20 @@ public class CovidDataRequest {
     public CovidDataRequest() {
     }
 
-    public Integer getIdCity() {
-        return idCity;
+    public String getNameLocationCovid() {
+        return nameLocationCovid;
     }
 
-    public void setIdCity(Integer idCity) {
-        this.idCity = idCity;
+    public void setNameLocationCovid(String nameLocationCovid) {
+        this.nameLocationCovid = nameLocationCovid;
     }
 
-    public String getNameCity() {
-        return nameCity;
+    public String getDateLocationCovid() {
+        return dateLocationCovid;
     }
 
-    public void setNameCity(String nameCity) {
-        this.nameCity = nameCity;
-    }
-
-    public Date getDateCity() {
-        return dateCity;
-    }
-
-    public void setDateCity(Date dateCity) {
-        this.dateCity = dateCity;
+    public void setDateLocationCovid(String dateLocationCovid) {
+        this.dateLocationCovid = dateLocationCovid;
     }
 
     public Integer getDeathCases() {
@@ -82,9 +73,8 @@ public class CovidDataRequest {
     @Override
     public String toString() {
         return "CovidDataRequest{" +
-                "idCity=" + idCity +
-                ", nameCity='" + nameCity + '\'' +
-                ", dateCity=" + dateCity +
+                "nameLocationCovid='" + nameLocationCovid + '\'' +
+                ", dateLocationCovid='" + dateLocationCovid + '\'' +
                 ", deathCases=" + deathCases +
                 ", confirmedCases=" + confirmedCases +
                 ", vaccinated=" + vaccinated +

@@ -16,4 +16,34 @@
         WHERE country.status=1
     </select>
 
+    <select id="covidDataCountry" resultMap="dataMap">
+        SELECT
+            a.name as nameLocationCovid,
+            b.date as dateLocationCovid,
+            SUM(b.death_cases) as deathCases,
+            SUM(b.confirmed_cases) as confirmedCases,
+            SUM(b.vaccinated) as vaccinated,
+            SUM(b.cumulative_cases) as cumulativeCases,
+            SUM(b.recuperated) as recuperated
+
+        FROM
+            country a, covid_data b
+
+        WHERE
+            a.id_country = #{countryId}
+          and b.date = #{dateCovid}
+          and a.id_country = b.id_country
+          and a.status = 1
+          and b.status = 1
+    </select>
+
+    <resultMap id="dataMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">
+        <result column="nameLocationCovid" property="nameLocationCovid"/>
+        <result column="dateLocationCovid" property="dateLocationCovid"/>
+        <result column="deathCases" property="deathCases"/>
+        <result column="confirmedCases" property="confirmedCases"/>
+        <result column="vaccinated" property="vaccinated"/>
+        <result column="cumulativeCases" property="cumulativeCases"/>
+        <result column="recuperated" property="recuperated"/>
+    </resultMap>
 </mapper>

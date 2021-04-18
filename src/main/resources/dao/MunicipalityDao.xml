@@ -35,6 +35,7 @@
         SELECT id_municipality idLocation, municipality locationName, lon longitude, lat latitude
         FROM municipality
         WHERE municipality.status=1
+        and municipality.id_city=#{cityId}
     </select>
 
     <select id="covidDataMunicipality" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">

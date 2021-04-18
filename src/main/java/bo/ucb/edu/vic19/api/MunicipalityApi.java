@@ -20,9 +20,9 @@ public class MunicipalityApi {
         this.municipalityBl = municipalityBl;
     }
 
-    @RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getMunicipalities(){
-        return municipalityBl.getMunicipalities();
+    @RequestMapping(path = "/location/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<LocationResponse> getMunicipalities(@PathVariable Integer cityId){
+        return municipalityBl.getMunicipalities(cityId);
     }
 
     @GetMapping(path = "/{municipalityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)

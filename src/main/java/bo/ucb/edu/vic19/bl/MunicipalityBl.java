@@ -17,8 +17,8 @@ public class MunicipalityBl {
         this.municipalityDao = municipalityDao;
     }
 
-    public List<LocationResponse> getMunicipalities(){
-        return municipalityDao.municipalities();
+    public List<LocationResponse> getMunicipalities(Integer cityId){
+        return municipalityDao.municipalities(cityId);
     }
 
 

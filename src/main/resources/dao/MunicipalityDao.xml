@@ -17,7 +17,10 @@
           and a.status=1
     </select>
     <select id="getMunicipalityMaxId" resultType="Integer">
-        SELECT MAX(id_municipality) FROM municipality
+        SELECT a.id_municipality
+        FROM municipality a
+        WHERE a.municipality = #{municipalityDataName}
+          and a.id_city = #{cityId}
     </select>
 
     <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="municipalitiesMap">
@@ -32,7 +35,7 @@
         WHERE municipality.status=1
     </select>
 
-    <select id="covidDataMunicipality" resultMap="dataMap">
+    <select id="covidDataMunicipality" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.municipality as nameLocationCovid,
             b.date as dateLocationCovid,
@@ -53,7 +56,29 @@
           and b.status = 1
     </select>
 
-    <resultMap id="dataMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">
+
+    <select id="covidDataListMunicipality" resultMap="listMunicipalityMap">
+        SELECT
+            a.municipality as nameLocationCovid,
+            b.date as dateLocationCovid,
+            SUM(b.death_cases) as deathCases,
+            SUM(b.confirmed_cases) as confirmedCases,
+            SUM(b.vaccinated) as vaccinated,
+            SUM(b.cumulative_cases) as cumulativeCases,
+            SUM(b.recuperated) as recuperated
+
+        FROM
+            municipality a, covid_data b, municipality_covid_data d
+
+        WHERE
+            b.date = #{dateCovid}
+          and a.id_municipality = d.id_municipality
+          and b.id_covid_data = d.id_covid_data
+          and b.status = 1
+          GROUP BY a.id_municipality
+    </select>
+
+    <resultMap id="listMunicipalityMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">
         <result column="nameLocationCovid" property="nameLocationCovid"/>
         <result column="dateLocationCovid" property="dateLocationCovid"/>
         <result column="deathCases" property="deathCases"/>

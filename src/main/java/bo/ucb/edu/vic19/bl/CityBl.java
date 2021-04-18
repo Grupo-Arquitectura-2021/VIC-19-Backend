@@ -22,9 +22,18 @@ public class CityBl {
         return cityDao.cities();
     }
 
-    public List<CovidDataRequest> covidDataCity(Integer cityId, String dateCovid){
-        List<CovidDataRequest> covidDataCity=cityDao.covidDataCity(cityId, dateCovid);
+    public CovidDataRequest covidDataCity(Integer cityId, String dateCovid){
+        CovidDataRequest covidDataCity=cityDao.covidDataCity(cityId, dateCovid);
         return covidDataCity;
     }
 
+    public List<CovidDataRequest> covidDataListCity(String dateCovid){
+        List<CovidDataRequest> covidDataListCity=cityDao.covidDataListCity(dateCovid);
+        return covidDataListCity;
+    }
+
+    public List<CovidDataRequest> covidDataListCityMunicipality(String nameCity,String dateCovid){
+        List<CovidDataRequest> covidDataListCityMunicipality=cityDao.covidDataListCityMunicipality(nameCity, dateCovid);
+        return covidDataListCityMunicipality;
+    }
 }

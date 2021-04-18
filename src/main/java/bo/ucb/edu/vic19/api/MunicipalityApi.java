@@ -26,9 +26,16 @@ public class MunicipalityApi {
     }
 
     @GetMapping(path = "/{municipalityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CovidDataRequest> covidDataMunicipality(@PathVariable String municipalityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+    public CovidDataRequest covidDataMunicipality(@PathVariable String municipalityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
 
-        List<CovidDataRequest> covidDataMunicipality=municipalityBl.covidDataMunicipality(Integer.parseInt(municipalityId),dateCovid);
-        return covidDataMunicipality;
+        return municipalityBl.covidDataMunicipality(Integer.parseInt(municipalityId),dateCovid);
     }
+
+    @GetMapping(path = "/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataListMunicipality(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+
+        List<CovidDataRequest> covidDataListMunicipality=municipalityBl.covidDataListMunicipality(dateCovid);
+        return covidDataListMunicipality;
+    }
+
 }

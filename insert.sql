@@ -18,16 +18,15 @@ COMMIT;
 
 -- INSERTS CITY
 START TRANSACTION;
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES
-(null,'La Paz', -68.15,-16.5,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Santa Cruz', -63.18117,-17.78629,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Cochabamba', -66.1568,-17.3895,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Tarija', -64.72956,-21.53549,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Chuquisaca', -65.26274,-19.03332,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Oruro', -67.15,-17.98333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Pando', -68.76918,-11.02671,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'La Paz', -68.15,-16.5,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Santa Cruz', -63.18117,-17.78629,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Cochabamba', -66.1568,-17.3895,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Tarija', -64.72956,-21.53549,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Chuquisaca', -65.26274,-19.03332,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Oruro', -67.15,-17.98333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Pando', -68.76918,-11.02671,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 COMMIT;
 
 
@@ -357,4 +356,16 @@ INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, statu
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 4, 'URIONDO', -64.65353238, -21.6952294, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 4, 'TOMAYAPO (EL PUENTE)', -65.04500492, -21.26868514, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 4, 'YUNCHARA', -65.25002533, -21.82443623, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+COMMIT;
+
+
+-- INSERTS URL
+START TRANSACTION;
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://covid19.who.int/WHO-COVID-19-global-table-data.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://opendata.arcgis.com/datasets/89873d02cfef44928668711cae827105_0.csv?outSR=%7B%22latestWkid%22%3A4326%2C%22wkid%22%3A4326%7D',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://datos.gob.bo/dataset/8e2ef657-cfc3-44e1-8552-4a4883aa484e/resource/30cdcb68-ec87-42fb-b4a9-087d81f186c6/download/consolidado_covid_19-mun_se.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://disease.sh/v3/covid-19/historical/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 COMMIT;

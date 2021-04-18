@@ -276,7 +276,7 @@ public class CovidDataJsonUtil {
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
 
-                covidData.setIdPageUrl(3);
+                covidData.setIdPageUrl(6);
                 covidData.setIdCountry(1);
                 covidData.setDeathCases(-1);
                 covidData.setConfirmedCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());

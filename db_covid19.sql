@@ -183,6 +183,22 @@ CREATE TABLE Page_url (
                           CONSTRAINT Page_url_pk PRIMARY KEY (id_page_url)
 );
 
+-- Table: News
+CREATE TABLE News (
+                      id_news int NOT NULL AUTO_INCREMENT,
+                      news_title varchar(100) NOT NULL,
+                      description varchar(400) NOT NULL,
+                      news_date date NOT NULL,
+                      news_images varchar(255) NOT NULL,
+                      news_url varchar(300) NOT NULL,
+                      status int NOT NULL,
+                      tx_id int NOT NULL,
+                      tx_date datetime NOT NULL,
+                      tx_host varchar(100) NOT NULL,
+                      tx_update datetime NOT NULL,
+                      CONSTRAINT id_news PRIMARY KEY (id_news)
+);
+
 -- Table: Shelter
 CREATE TABLE Shelter (
                          id_shelter int NOT NULL AUTO_INCREMENT,
@@ -266,26 +282,3 @@ ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_Covid_data FOREIGN KEY Table
 
 -- End of file.
 
--- INSERTS
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES
-(null,'La Paz',-16.5, -68.15,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Santa Cruz',-17.78629, -63.18117,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Cochabamba',-17.3895, -66.1568,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Tarija',-21.53549, -64.72956,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Chuquisaca',-19.03332, -65.26274,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Oruro',-17.98333, -67.15,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Pando',-11.02671, -68.76918,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Beni',-14.83333, -64.9,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'Potosi',-19.58361, -65.75306,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45')
-
-
-INSERT INTO `country` (id_country, name, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 'Bolivia', -16.290154, -63.5886531, 1, 1,  '2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-
-INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES
-(null,'https://covid19.who.int/WHO-COVID-19-global-table-data.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'https://opendata.arcgis.com/datasets/89873d02cfef44928668711cae827105_0.csv?outSR=%7B%22latestWkid%22%3A4326%2C%22wkid%22%3A4326%7D',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
-(null,'https://datos.gob.bo/dataset/8e2ef657-cfc3-44e1-8552-4a4883aa484e/resource/30cdcb68-ec87-42fb-b4a9-087d81f186c6/download/consolidado_covid_19-mun_se.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-(null,'https://disease.sh/v3/covid-19/historical/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-(null,'https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-(null,'https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');

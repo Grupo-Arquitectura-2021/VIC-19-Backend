@@ -2,7 +2,7 @@ package bo.ucb.edu.vic19.model;
 
 public class Municipality {
     private Integer idMunicipality;
-    private Integer idDepartament;
+    private Integer idCity;
     private String municipality;
     private float lon;
     private float lat;
@@ -21,12 +21,12 @@ public class Municipality {
         this.idMunicipality = idMunicipality;
     }
 
-    public Integer getIdDepartament() {
-        return idDepartament;
+    public Integer getIdCity() {
+        return idCity;
     }
 
-    public void setIdDepartament(Integer idDepartament) {
-        this.idDepartament = idDepartament;
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
     }
 
     public String getMunicipality() {
@@ -73,7 +73,7 @@ public class Municipality {
     public String toString() {
         return "Municipality{" +
                 "idMunicipality=" + idMunicipality +
-                ", idDepartament=" + idDepartament +
+                ", idDepartament=" + idCity +
                 ", municipality='" + municipality + '\'' +
                 ", lon=" + lon +
                 ", lat=" + lat +

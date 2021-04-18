@@ -292,7 +292,7 @@ public class CovidDataJsonUtil {
                     cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                     if(!cityData.equals("Unassigned")) {
                         cityId = cityDao.getCityId(cityData);
-                        covidDataId = covidDataCSVDao.getCovidDataId();
+                        covidDataId = covidDataCSVDao.getCovidDataIdMax();
 
                         cityCovidData = new CityCovidData();
                         cityCovidData.setIdCity(cityId);
@@ -386,7 +386,7 @@ public class CovidDataJsonUtil {
 
                     //cityCovidDataDao.insertCityCovidData(cityCovidData);
                 }
-                municipality.setIdDepartament(cityId);
+                municipality.setIdCity(cityId);
                 municipality.setMunicipality(contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText());
                 municipality.setLat(-1);
                 municipality.setLon(-1);

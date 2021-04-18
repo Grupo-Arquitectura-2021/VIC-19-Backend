@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CovidDataCSVDao {
     public void insertData(CovidData covidData);
-    public Integer getCovidDataId();
+    public Integer getCovidDataIdMax();
     public Integer selectDataExist(CovidData covidData,String dateSelect);
 }

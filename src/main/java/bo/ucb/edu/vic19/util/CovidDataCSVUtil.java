@@ -1,11 +1,7 @@
 package bo.ucb.edu.vic19.util;
 
-import bo.ucb.edu.vic19.dao.CityCovidDataDao;
-import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dao.CovidDataCSVDao;
-import bo.ucb.edu.vic19.model.CityCovidData;
-import bo.ucb.edu.vic19.model.CovidData;
-import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.dao.*;
+import bo.ucb.edu.vic19.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -30,13 +26,17 @@ public class CovidDataCSVUtil {
     private CovidDataCSVDao covidDao;
     private CityCovidDataDao cityCovidDataDao;
     private CityDao cityDao;
+    private MunicipalityDao municipalityDao;
+    private MunicipalityCovidDataDao municipalityCovidDataDao;
 
 
     @Autowired
-    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao) {
+    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao) {
         this.covidDao = covidDao;
         this.cityCovidDataDao = cityCovidDataDao;
         this.cityDao = cityDao;
+        this.municipalityDao = municipalityDao;
+        this.municipalityCovidDataDao = municipalityCovidDataDao;
     }
 
 
@@ -123,15 +123,17 @@ public class CovidDataCSVUtil {
         String[] datos = null;
         CovidData covidData;
         Transaction transaction;
-        String country = "BOLIVIA (PLURINATIONAL STATE OF)";
+        String city = null, municipality=null;
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         Date date;
+        Municipality municipalityOb;
+        int cityId, municipalityId, lastId;
+        MunicipalityCovidData municipalityCovidData;
         //Restando 4 horas a la hora actual
         cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
         date = cal.getTime();
         int cont = 0;
-        covidData = new CovidData();
 
         try {
             boolean flag = true;
@@ -140,15 +142,21 @@ public class CovidDataCSVUtil {
                 if(flag){
                     flag=false;
                 }else {
+                    municipalityOb = new Municipality();
+                    municipalityCovidData =new MunicipalityCovidData();
+                    covidData = new CovidData();
+
                     cont++;
                     datos = line.split(cvsSplitBy); // todos los datos
                     for (int i = 0; i < datos.length; i++) {
 
                         if ((i == 1)) {
+                            city = datos[i];
                         }
 
-
                         if ((i == 3) ) {
+                            municipality = datos [i];
+                            municipalityOb.setMunicipality(municipality);
                         }
 
                         if ((i == 5)) {
@@ -182,8 +190,24 @@ public class CovidDataCSVUtil {
                     covidData.setDate(convertDate("2020-12-03"));
                     covidData.setStatus(1);
                     covidData.setTransaction(transaction);
+                    municipalityOb.setTransaction(transaction);
 
                     covidDao.insertData(covidData);
+
+                    cityId = cityDao.getCityId(city);
+                    municipalityOb.setIdCity(cityId);
+                    //System.out.println("ID ciudad "+cityId);
+                    municipalityDao.insertMunicipalityData(municipalityOb);
+
+                    lastId = covidDao.getCovidDataIdMax();
+                    municipalityId = municipalityDao.getMunicipalityId(municipality);
+
+                    municipalityCovidData.setIdCovidData(lastId);
+                    municipalityCovidData.setIdMunicipality(municipalityId);
+                    municipalityCovidData.setTransaction(transaction);
+
+                    municipalityCovidDataDao.insertMunicipalityCovidData(municipalityCovidData);
+
                 }
             }
         } catch (FileNotFoundException e) {
@@ -450,7 +474,7 @@ public class CovidDataCSVUtil {
                             //System.out.println(city);
                             cityId = cityDao.getCityId(datos[6]);
                             //System.out.println(cityId);
-                            lastId = covidDao.getCovidDataId();
+                            lastId = covidDao.getCovidDataIdMax();
                             //System.out.println(lastId);
 
                         cityCovidData = new CityCovidData();

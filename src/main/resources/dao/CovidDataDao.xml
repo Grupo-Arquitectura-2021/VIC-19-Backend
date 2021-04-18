@@ -10,6 +10,10 @@
         )
     </insert>
 
+    <select id="getCovidDataIdMax" resultType="Integer">
+        SELECT MAX(id_covid_data) FROM covid_data
+    </select>
+
     <select id="getCovidDataId" resultType="Integer">
         SELECT a.id_municipality
         FROM municipality a

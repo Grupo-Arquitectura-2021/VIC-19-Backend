@@ -1,6 +1,7 @@
 package bo.ucb.edu.vic19.util;
 
 import bo.ucb.edu.vic19.dao.*;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -17,6 +19,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -28,22 +32,24 @@ public class CovidDataCSVUtil {
     private CityDao cityDao;
     private MunicipalityDao municipalityDao;
     private MunicipalityCovidDataDao municipalityCovidDataDao;
+    private CountryDao countryDao;
 
 
     @Autowired
-    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao) {
+    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao,CountryDao countryDao) {
         this.covidDao = covidDao;
         this.cityCovidDataDao = cityCovidDataDao;
         this.cityDao = cityDao;
         this.municipalityDao = municipalityDao;
         this.municipalityCovidDataDao = municipalityCovidDataDao;
+        this.countryDao=countryDao;
     }
 
 
-
+/*
    @Scheduled(fixedRate = 30000L)
     @GetMapping(value="/who")
-    public void whoCovidData() throws ParseException {
+   public void whoCovidData() throws ParseException {
         String filePath ="C:/Users/Marioly/Desktop/datoscovidwho.csv";
         String url = "https://covid19.who.int/WHO-COVID-19-global-table-data.csv";
         if (creatingEmptyFile(filePath,url)){
@@ -75,7 +81,7 @@ public class CovidDataCSVUtil {
         }else{
             System.out.println("El archivo no se creó correctamente");
         }
-    }
+    }*/
 
     @Scheduled(fixedRate = 30000L)
     @GetMapping(value="/csse")
@@ -185,7 +191,6 @@ public class CovidDataCSVUtil {
 
                     covidData.setCumulativeCases(-1);
                     covidData.setVaccinated(-1);
-                    covidData.setIdCountry(1);
                     covidData.setIdPageUrl(4);
                     covidData.setDate(convertDate("2020-12-03"));
                     covidData.setStatus(1);
@@ -321,7 +326,6 @@ public class CovidDataCSVUtil {
                         covidData.setDeathCases(-1);
                         covidData.setRecuperated(Integer.parseInt(datos[9]));
                         covidData.setVaccinated(-1);
-                        covidData.setIdCountry(1);
                         covidData.setIdPageUrl(3);
                         covidData.setDate(date);
                         covidData.setStatus(1);
@@ -389,7 +393,6 @@ public class CovidDataCSVUtil {
                         covidData.setDeathCases(Integer.parseInt(datos[11]));
                         covidData.setRecuperated(0);
                         covidData.setVaccinated(0);
-                        covidData.setIdCountry(1);
                         covidData.setIdPageUrl(1);
                         covidData.setDate(date);
                         covidData.setStatus(1);
@@ -414,7 +417,46 @@ public class CovidDataCSVUtil {
             }
         }
     }
+    @Scheduled(fixedRate = 3000000L)
+    @GetMapping(value="/ReadCSv")
+    public void readCSV() throws IOException {
+        List<LocationResponse> countries=countryDao.countries();
+        URL content = new URL("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-18-2021.csv");
+        InputStream stream = content.openStream();
+        Scanner inputStream = new Scanner(stream);
+        List<CountryCovidData> covidCountries= new ArrayList<>();
+        List<CovidData> covidDataList=new ArrayList<>();
+        countries.forEach((co)->{
+            CovidData covidData=new CovidData();
+            covidData.setConfirmedCases(0);
+            covidData.setDeathCases(0);
+            covidData.setRecuperated(0);
+            covidData.setStatus(1);
+            covidData.setDate(new Date());
+            covidData.setIdPageUrl(3);
+            covidData.setVaccinated(0);
+            covidDataList.add(covidData);
+        });
+        while (inputStream.hasNext()) {
+            String data = inputStream.nextLine();
+            String[] values = data.split(",");
+            if(values.length>3){
+                for(int i=0;i<countries.size();i++){
+                    if(countries.get(i).getLocationName().equals(values[3])){
+                       covidDataList.get(i).setConfirmedCases(Integer.parseInt(values[7])+covidDataList.get(i).getConfirmedCases());
+                        covidDataList.get(i).setDeathCases(Integer.parseInt(values[8])+covidDataList.get(i).getDeathCases());
+                        covidDataList.get(i).setRecuperated(Integer.parseInt(values[9])+covidDataList.get(i).getRecuperated());
+                    }
+                }
+            }
+        }
+        for(int i=0;i<countries.size();i++){
+            System.out.print(covidDataList.get(i).getConfirmedCases());
+            System.out.print(covidDataList.get(i).getDeathCases());
+            System.out.print(covidDataList.get(i).getRecuperated());
+        }
 
+    }
     public void readingFileDataArcGis(String filePath) throws ParseException {
         BufferedReader br = null;
         String line = "";
@@ -460,7 +502,6 @@ public class CovidDataCSVUtil {
                         covidData.setDeathCases(Integer.parseInt(datos[14]));
                         covidData.setRecuperated(0);
                         covidData.setVaccinated(0);
-                        covidData.setIdCountry(1);
                         covidData.setIdPageUrl(2);
                         covidData.setDate(date);
                         covidData.setStatus(1);

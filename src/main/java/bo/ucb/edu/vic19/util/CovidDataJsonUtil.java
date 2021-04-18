@@ -144,7 +144,6 @@ public class CovidDataJsonUtil {
                 transaction.setTxHost(localIP);
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
-                covidData.setIdCountry(1);
                 covidData.setIdPageUrl(3);
                 covidData.setDeathCases(caseData.get(i).getDeaths());
                 covidData.setConfirmedCases(caseData.get(i).getCases());
@@ -206,7 +205,6 @@ public class CovidDataJsonUtil {
                 transaction.setTxHost(localIP);
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
-                covidData.setIdCountry(1);
                 covidData.setIdPageUrl(3);
                 covidData.setDeathCases(caseData.get(i).getDeaths());
                 covidData.setConfirmedCases(caseData.get(i).getCases());
@@ -277,7 +275,6 @@ public class CovidDataJsonUtil {
                 transaction.setTxUpdate(date);
 
                 covidData.setIdPageUrl(6);
-                covidData.setIdCountry(1);
                 covidData.setDeathCases(-1);
                 covidData.setConfirmedCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
                 covidData.setVaccinated(-1);
@@ -361,8 +358,6 @@ public class CovidDataJsonUtil {
                 transaction.setTxHost(localIP);
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
-
-                covidData.setIdCountry(1);
                 covidData.setIdPageUrl(3);
                 covidData.setDeathCases(-1);
                 covidData.setConfirmedCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());

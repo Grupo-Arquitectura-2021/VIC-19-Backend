@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bo.ucb.edu.vic19.dao.CovidDataCSVDao">
     <insert id="insertData" parameterType="bo.ucb.edu.vic19.model.CovidData">
-        INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `id_country`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
-            null, #{idPageUrl}, #{idCountry}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},
+        INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
+            null, #{idPageUrl}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},
              #{transaction.txUpdate}
         )
     </insert>
@@ -25,7 +25,6 @@
         SELECT COUNT(*)
         FROM covid_data a
         WHERE a.id_page_url = #{covidData.idPageUrl}
-          and a.id_country = #{covidData.idCountry}
           and a.death_cases = #{covidData.deathCases}
           and a.confirmed_cases = #{covidData.confirmedCases}
           and a.vaccinated = #{covidData.vaccinated}

@@ -2,9 +2,9 @@ package bo.ucb.edu.vic19.dto;
 
 public class LocationResponse {
     private Integer idLocation;
-    private String name;
-    private float lon;
-    private float lat;
+    private String locationName;
+    private float longitude;
+    private float latitude;
 
     public LocationResponse() {
     }
@@ -17,37 +17,37 @@ public class LocationResponse {
         this.idLocation = idLocation;
     }
 
-    public String getName() {
-        return name;
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
-    public float getLon() {
-        return lon;
+    public float getLongitude() {
+        return longitude;
     }
 
-    public void setLon(float lon) {
-        this.lon = lon;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 
-    public float getLat() {
-        return lat;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
     @Override
     public String toString() {
-        return "LocationRequest{" +
+        return "LocationResponse{" +
                 "idLocation=" + idLocation +
-                ", locationName='" + name + '\'' +
-                ", longitude=" + lon +
-                ", latitude=" + lat +
+                ", locationName='" + locationName + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
                 '}';
     }
 }

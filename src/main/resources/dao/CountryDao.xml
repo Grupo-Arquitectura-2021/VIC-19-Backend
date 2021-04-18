@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bo.ucb.edu.vic19.dao.CountryDao">
 
-    <resultMap type="bo.ucb.edu.vic19.dto.LocationRequest" id="countriesMap">
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="countriesMap">
         <result column="idLocation" property="idLocation"/>
         <result column="locationName" property="locationName"/>
         <result column="longitude" property="longitude"/>

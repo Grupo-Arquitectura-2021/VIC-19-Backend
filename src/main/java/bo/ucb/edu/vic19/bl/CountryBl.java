@@ -2,7 +2,7 @@ package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.LocationRequest;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class CountryBl {
         this.countryDao = countryDao;
     }
 
-    public List<LocationRequest> getCountries(){
+    public List<LocationResponse> getCountries(){
         return countryDao.countries();
     }
 

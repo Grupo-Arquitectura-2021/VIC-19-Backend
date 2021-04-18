@@ -2,7 +2,7 @@
 -- Last modification date: 2021-04-07 19:26:28.298
 
 -- tables
-
+USE db_covid19;
 -- Table: City_covid_data
 CREATE TABLE City_covid_data (
                                  id_city_covid_data int NOT NULL AUTO_INCREMENT,

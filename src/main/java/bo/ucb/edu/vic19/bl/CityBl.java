@@ -3,7 +3,7 @@ package bo.ucb.edu.vic19.bl;
 import bo.ucb.edu.vic19.dao.CityDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 
-import bo.ucb.edu.vic19.dto.LocationRequest;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CityBl {
         this.cityDao = cityDao;
     }
 
-    public List<LocationRequest> getCities(){
+    public List<LocationResponse> getCities(){
         return cityDao.cities();
     }
 

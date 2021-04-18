@@ -11,7 +11,7 @@
         and city =#{cityName}
     </select>
 
-    <resultMap type="bo.ucb.edu.vic19.dto.LocationRequest" id="citiesMap">
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="citiesMap">
         <result column="idLocation" property="idLocation"/>
         <result column="locationName" property="locationName"/>
         <result column="longitude" property="longitude"/>

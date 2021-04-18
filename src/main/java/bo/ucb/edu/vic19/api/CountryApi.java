@@ -2,7 +2,7 @@ package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.CountryBl;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.LocationRequest;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class CountryApi {
     }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationRequest> getCountries(){
+    public java.util.List<LocationResponse> getCountries(){
         return countryBl.getCountries();
     }
     @GetMapping(path = "/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)

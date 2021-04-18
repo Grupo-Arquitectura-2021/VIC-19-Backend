@@ -2,14 +2,12 @@ package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.CityBl;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.LocationRequest;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +21,7 @@ public class CityApi {
     }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationRequest> getCities(){
+    public java.util.List<LocationResponse> getCities(){
         return cityBl.getCities();
     }
 

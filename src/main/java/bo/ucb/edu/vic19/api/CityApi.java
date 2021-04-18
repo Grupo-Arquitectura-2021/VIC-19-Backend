@@ -28,10 +28,20 @@ public class CityApi {
     }
 
     @GetMapping(path = "/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CovidDataRequest> covidDataCity(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+    public CovidDataRequest covidDataCity(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return cityBl.covidDataCity(Integer.parseInt(cityId),dateCovid);
+    }
 
-        List<CovidDataRequest> covidDataCity=cityBl.covidDataCity(Integer.parseInt(cityId),dateCovid);
-        return covidDataCity;
+    @GetMapping(path = "/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataListCity(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        List<CovidDataRequest> covidDataListCity=cityBl.covidDataListCity(dateCovid);
+        return covidDataListCity;
+    }
+
+    @GetMapping(path = "/{nameCity}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataListCityMunicipality(@PathVariable String nameCity, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        List<CovidDataRequest> covidDataListCityMunicipality=cityBl.covidDataListCityMunicipality(nameCity,dateCovid);
+        return covidDataListCityMunicipality;
     }
 
 }

@@ -12,5 +12,7 @@ import java.util.List;
 public interface CityDao {
     public Integer getCityId(String cityName);
     public List<LocationRequest> cities();
-    public List<CovidDataRequest> covidDataCity(Integer cityId, String dateCovid);
+    public CovidDataRequest covidDataCity(Integer cityId, String dateCovid);
+    public List<CovidDataRequest> covidDataListCity(String dateCovid);
+    public List<CovidDataRequest> covidDataListCityMunicipality(String nameCity, String dateCovid);
 }

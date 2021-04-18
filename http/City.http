@@ -12,3 +12,14 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:8080/city/2021-04-14
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/city/La Paz/municipality/2021-04-04
+Accept: application/json
+Content-Type: application/json
+
+###

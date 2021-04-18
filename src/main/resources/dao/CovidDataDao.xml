@@ -11,7 +11,23 @@
     </insert>
 
     <select id="getCovidDataId" resultType="Integer">
-        SELECT MAX(id_covid_data) FROM covid_data
+        SELECT a.id_municipality
+        FROM municipality a
+        WHERE a.municipality = "San lorenzo"
+          and a.id_city = 7
     </select>
 
+    <select id="selectDataExist" resultType="Integer">
+        SELECT COUNT(*)
+        FROM covid_data a
+        WHERE a.id_page_url = #{covidData.idPageUrl}
+          and a.id_country = #{covidData.idCountry}
+          and a.death_cases = #{covidData.deathCases}
+          and a.confirmed_cases = #{covidData.confirmedCases}
+          and a.vaccinated = #{covidData.vaccinated}
+          and a.cumulative_cases = #{covidData.cumulativeCases}
+          and a.recuperated = #{covidData.recuperated}
+          and a.date = #{dateSelect}
+          and a.status = 1
+    </select>
 </mapper>

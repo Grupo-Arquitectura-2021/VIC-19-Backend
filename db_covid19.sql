@@ -286,3 +286,6 @@ INSERT INTO `page_url`(`id_page_url`, `url`, `status`, `tx_id`, `tx_date`, `tx_h
 (null,'https://opendata.arcgis.com/datasets/89873d02cfef44928668711cae827105_0.csv?outSR=%7B%22latestWkid%22%3A4326%2C%22wkid%22%3A4326%7D',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
 (null,'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45'),
 (null,'https://datos.gob.bo/dataset/8e2ef657-cfc3-44e1-8552-4a4883aa484e/resource/30cdcb68-ec87-42fb-b4a9-087d81f186c6/download/consolidado_covid_19-mun_se.csv',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+(null,'https://disease.sh/v3/covid-19/historical/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+(null,'https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+(null,'https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados',1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');

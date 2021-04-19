@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Component
-public class CovidDataJsonUtil {
+public class CovidDataJsonUtil {/*
 
     private CityDao cityDao;
     private MunicipalityDao municipalityDao;

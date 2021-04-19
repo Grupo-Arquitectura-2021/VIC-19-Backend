@@ -36,4 +36,9 @@ public class CityBl {
         List<CovidDataRequest> covidDataListCityMunicipality=cityDao.covidDataListCityMunicipality(nameCity, dateCovid);
         return covidDataListCityMunicipality;
     }
+
+    public List<CovidDataRequest> covidDataCityAllInfo(int cityId, String dateCovid) {
+        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
+        return covidDataListCityAllInfo;
+    }
 }

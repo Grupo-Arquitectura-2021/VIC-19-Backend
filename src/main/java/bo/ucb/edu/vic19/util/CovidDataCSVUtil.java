@@ -34,16 +34,18 @@ public class CovidDataCSVUtil {
     private MunicipalityDao municipalityDao;
     private MunicipalityCovidDataDao municipalityCovidDataDao;
     private CountryDao countryDao;
+    private CountryCovidDataDao countryCovidDataDao;
 
 
     @Autowired
-    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao,CountryDao countryDao) {
+    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao,CountryDao countryDao, CountryCovidDataDao countryCovidDataDao) {
         this.covidDao = covidDao;
         this.cityCovidDataDao = cityCovidDataDao;
         this.cityDao = cityDao;
         this.municipalityDao = municipalityDao;
         this.municipalityCovidDataDao = municipalityCovidDataDao;
         this.countryDao=countryDao;
+        this.countryCovidDataDao = countryCovidDataDao;
     }
 
 
@@ -84,20 +86,18 @@ public class CovidDataCSVUtil {
         }
     }*/
 
-    @Async
-    @Scheduled(fixedRate = 30000L)
-    @GetMapping(value="/csse")
-    public void CSSECovidData() throws ParseException {
-        String filePath = "C:/Users/Marioly/Desktop/datoscovidcsse.csv";
+    @Scheduled(fixedRate = 3000000L)
+    @GetMapping(value="/ReadCSv")
+    public void readCSV() throws IOException {
+        List<LocationResponse> countries=countryDao.countries();
+        List<String> countriesFound = new ArrayList<>();
+        String url="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
         String fecha ="";
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        String url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-
-        //Restando 1 DIA A LA FECHA ACTUAL
-        int calMinusOne = (cal.get(Calendar.DAY_OF_MONTH)- 1);
-        int calMonth = (cal.get(Calendar.MONTH)+1);
-        int calYear = (cal.get(Calendar.YEAR));
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(new Date());
+        int calMinusOne = cal1.get(Calendar.DAY_OF_MONTH)- 2;
+        int calMonth = (cal1.get(Calendar.MONTH)+1);
+        int calYear = (cal1.get(Calendar.YEAR));
         if(calMonth<10){
             fecha+="0"+calMonth+"-";
             url+="0"+calMonth+"-";
@@ -120,50 +120,117 @@ public class CovidDataCSVUtil {
         url+="-"+calYear+".csv";
         fecha+="-"+calYear;
 
-        if (creatingEmptyFile(filePath,url)){
-            //readingFileDataCSSE(filePath);
-        }else{
-            System.out.println("El archivo no se creó correctamente");
-        }
-    }
+        URL content = new URL(url);
 
-    @Scheduled(fixedRate = 3000000L)
-    @GetMapping(value="/ReadCSv")
-    public void readCSV() throws IOException {
-        List<LocationResponse> countries=countryDao.countries();
-        URL content = new URL("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-18-2021.csv");
         InputStream stream = content.openStream();
         Scanner inputStream = new Scanner(stream);
         List<CountryCovidData> covidCountries= new ArrayList<>();
         List<CovidData> covidDataList=new ArrayList<>();
-        countries.forEach((co)->{
-            CovidData covidData=new CovidData();
-            covidData.setConfirmedCases(0);
-            covidData.setDeathCases(0);
-            covidData.setRecuperated(0);
-            covidData.setStatus(1);
-            covidData.setDate(new Date());
-            covidData.setIdPageUrl(3);
-            covidData.setVaccinated(0);
-            covidDataList.add(covidData);
-        });
+        Date date;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
+        date = cal.getTime();
+        int lastId = 0;
+        int c2 = 0;
+        String currentCountry = null, currentCountry2=null, auxString = null;
+        boolean primero=false;
+        int c = 0, aux=0;
+        boolean reset=true, firstRound = true, flag = true, flag2 = true, repeated = false;
         while (inputStream.hasNext()) {
             String data = inputStream.nextLine();
-            String[] values = data.split(",");
-            if(values.length>3){
-                for(int i=0;i<countries.size();i++){
-                    if(countries.get(i).getLocationName().equals(values[3])){
-                        covidDataList.get(i).setConfirmedCases(Integer.parseInt(values[7])+covidDataList.get(i).getConfirmedCases());
-                        covidDataList.get(i).setDeathCases(Integer.parseInt(values[8])+covidDataList.get(i).getDeathCases());
-                        covidDataList.get(i).setRecuperated(Integer.parseInt(values[9])+covidDataList.get(i).getRecuperated());
+            if (flag) {
+                flag = false;
+            } else {
+                String[] values = data.split(",");
+                currentCountry = values[3];
+
+                String data2 = inputStream.nextLine();
+                String[] values2 = data2.split(",");
+                currentCountry2 = values2[3];
+
+                if(reset) {
+                    if(values[3].equals(auxString)){
+                        c = aux;
+                        flag2=false;
+                        if(!values[3].equals(values2[3])){
+                            c2+=Integer.parseInt(values[7]);
+
+                        }
+                    }else{
+                        c = Integer.parseInt(values[7]);
                     }
                 }
+
+
+                if (currentCountry.equals(currentCountry2)) {
+                    repeated = true;
+                    if(flag2==false){
+                        //System.out.println("values[7] flag: " + values[7]);
+                        c += Integer.parseInt(values[7]);
+                        //System.out.println("values2[7] flag: " + values2[7]);
+                        c += Integer.parseInt(values2[7]);
+                        firstRound = false;
+
+                }else{
+                        if (firstRound == true) {
+                            //System.out.println("values2[7] first Round: " + values2[7]);
+                            c += Integer.parseInt(values2[7]);
+                            firstRound = false;
+                        } else {
+                            //System.out.println("values[7]: " + values[7]);
+                            c += Integer.parseInt(values[7]);
+                            //System.out.println("values2[7]: " + values2[7]);
+                            c += Integer.parseInt(values2[7]);
+                        }
+                    }
+                    reset = false;
+
+                }else{
+                    if(countryDao.countryId(currentCountry)!=null){
+                        Transaction transaction = new Transaction();
+                        transaction.setTxDate(date);
+
+                        InetAddress direction = InetAddress.getLocalHost();
+                        String IP_local = direction.getHostAddress();//ip como String
+
+                        transaction.setTxHost(IP_local);
+                        transaction.setTxId(1);
+                        transaction.setTxUpdate(date);
+
+                        CovidData covidData = new CovidData();
+
+                        covidData.setVaccinated(-1);
+                        covidData.setRecuperated(-1);
+                        covidData.setConfirmedCases(-1);
+                        covidData.setCumulativeCases(c);
+                        covidData.setDeathCases(-1);
+                        covidData.setVaccinated(-1);
+                        covidData.setIdPageUrl(4);
+                        covidData.setDate(convertDateb(fecha));
+                        covidData.setStatus(1);
+                        covidData.setTransaction(transaction);
+
+                        covidDao.insertData(covidData);
+
+                        lastId = covidDao.getCovidDataIdMax();
+
+                        CountryCovidData countryCovidData=new CountryCovidData();
+                        countryCovidData.setIdCountry(countryDao.countryId(currentCountry));
+                        countryCovidData.setIdCovidData(lastId);
+                        countryCovidData.setTransaction(transaction);
+                        countryCovidDataDao.insertCountryCovidData(countryCovidData);
+                    }
+                    c2 = c;
+                    reset = true;
+                    firstRound=true;
+                    flag2=true;
+                }
+
+                auxString = currentCountry2;
+                aux = Integer.parseInt(values2[7]);
             }
-        }
-        for(int i=0;i<countries.size();i++){
-            System.out.print(covidDataList.get(i).getConfirmedCases());
-            System.out.print(covidDataList.get(i).getDeathCases());
-            System.out.print(covidDataList.get(i).getRecuperated());
+
         }
 
     }
@@ -194,7 +261,7 @@ public class CovidDataCSVUtil {
         try {
             boolean flag = true;
             br = new BufferedReader(new FileReader(filePath));
-            while ((line = br.readLine()) != null && (cont<94)) {
+            while ((line = br.readLine()) != null && (cont<93)) {
                 if(flag){
                     flag=false;
                 }else {

@@ -129,8 +129,8 @@ public class CovidDataCSVUtil {
             String data = inputStream.nextLine();
            String data2 = inputStream.nextLine();
 
-           String death = inputStream.nextLine();
-           String death2 = inputStream.nextLine();
+           String death = inputStream2.nextLine();
+           String death2 = inputStream2.nextLine();
             String[] values = data.split(",");
            String[] values2 = data2.split(",");
            String[] deathV = death.split(",");

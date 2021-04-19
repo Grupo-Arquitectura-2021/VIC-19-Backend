@@ -2,7 +2,7 @@ package bo.ucb.edu.vic19.model;
 
 public class Shelter {
     private Integer idShelter;
-    private Integer idDepartament;
+    private Integer idCity;
     private String name;
     private Integer amount;
     private float lon;
@@ -22,12 +22,12 @@ public class Shelter {
         this.idShelter = idShelter;
     }
 
-    public Integer getIdDepartament() {
-        return idDepartament;
+    public Integer getIdCity() {
+        return idCity;
     }
 
-    public void setIdDepartament(Integer idDepartament) {
-        this.idDepartament = idDepartament;
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
     }
 
     public String getName() {
@@ -82,7 +82,7 @@ public class Shelter {
     public String toString() {
         return "Shelter{" +
                 "idShelter=" + idShelter +
-                ", idDepartament=" + idDepartament +
+                ", idDepartament=" + idCity +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
                 ", lon=" + lon +

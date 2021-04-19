@@ -25,8 +25,8 @@ INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_dat
 INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Chuquisaca', -65.26274,-19.03332,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Oruro', -67.15,-17.98333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Pando', -68.76918,-11.02671,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lat`,`lon`,   `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 COMMIT;
 
 
@@ -253,7 +253,7 @@ INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, statu
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'LLALLAGUA', -66.58186746, -18.42316312, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'VILLAZÓN', -65.59782948, -22.0211963, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'TUPIZA', -65.73312015, -21.43470553, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, '"COLCHA""K"" (V.MARTIN)"', -67.6595135, -20.73963899, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'COLCHA"K" (V.MARTIN)', -67.6595135, -20.73963899, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'UNCÍA', -66.56071071, -18.47475124, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'UYUNI (THOLA PAMPA)', -66.82785416, -20.47198582, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'BETANZOS', -65.45271773, -19.55414299, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
@@ -262,7 +262,7 @@ INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, statu
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'PUNA', -65.51905564, -19.7907291, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'VITICHI', -65.49606174, -20.20852378, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'TOMAVE', -66.4219591, -20.13709371, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, '"CAIZA ""D"""', -65.65567019, -20.00724619, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'CAIZA "D"', -65.65567019, -20.00724619, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'OCURI', -65.79575085, -18.841491, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'POCOATA', -66.16438862, -18.70161851, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 INSERT INTO municipality(id_municipality, id_city, municipality, lon, lat, status, tx_id, tx_date, tx_host, tx_update) VALUES (null, 9, 'CHAYANTA', -66.44444466, -18.46182405, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');

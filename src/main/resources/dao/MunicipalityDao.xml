@@ -42,11 +42,11 @@
         SELECT
             a.municipality as nameLocationCovid,
             b.date as dateLocationCovid,
-            SUM(b.death_cases) as deathCases,
-            SUM(b.confirmed_cases) as confirmedCases,
-            SUM(b.vaccinated) as vaccinated,
-            SUM(b.cumulative_cases) as cumulativeCases,
-            SUM(b.recuperated) as recuperated
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
 
         FROM
             municipality a, covid_data b, municipality_covid_data d
@@ -64,11 +64,11 @@
         SELECT
             a.municipality as nameLocationCovid,
             b.date as dateLocationCovid,
-            SUM(b.death_cases) as deathCases,
-            SUM(b.confirmed_cases) as confirmedCases,
-            SUM(b.vaccinated) as vaccinated,
-            SUM(b.cumulative_cases) as cumulativeCases,
-            SUM(b.recuperated) as recuperated
+            MAX(b.death_cases) as deathCases,
+            MAX(b.confirmed_cases) as confirmedCases,
+            MAX(b.vaccinated) as vaccinated,
+            MAX(b.cumulative_cases) as cumulativeCases,
+            MAX(b.recuperated) as recuperated
 
         FROM
             municipality a, covid_data b, municipality_covid_data d

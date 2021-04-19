@@ -1,15 +1,17 @@
 package bo.ucb.edu.vic19.dto;
 
+import java.util.Date;
+
 public class VaccineData {
 
     private String country;
-    private String dateIng;
+    private Date dateIng;
     private Integer amountData;
 
     public VaccineData() {
     }
 
-    public VaccineData(String country, String dateIng, Integer amountData) {
+    public VaccineData(String country, Date dateIng, Integer amountData) {
         this.country = country;
         this.dateIng = dateIng;
         this.amountData = amountData;
@@ -24,11 +26,11 @@ public class VaccineData {
         this.country = country;
     }
 
-    public String getDateIng() {
+    public Date getDateIng() {
         return dateIng;
     }
 
-    public void setDateIng(String dateIng) {
+    public void setDateIng(Date dateIng) {
         this.dateIng = dateIng;
     }
 
@@ -44,7 +46,7 @@ public class VaccineData {
     public String toString() {
         return "VaccineData{" +
                 "country='" + country + '\'' +
-                ", dateIng='" + dateIng + '\'' +
+                ", dateIng=" + dateIng +
                 ", amountData=" + amountData +
                 '}';
     }

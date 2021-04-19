@@ -7,4 +7,11 @@
         INSERT INTO municipality_covid_data (`id_municipality_covid_data`, `id_municipality`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`)
         VALUES (null ,#{idMunicipality}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate})
     </insert>
+
+    <select id="selectIdDataCovidExist" resultType="Integer">
+        SELECT COUNT(*)
+        FROM municipality_covid_data a
+        WHERE
+            a.id_municipality = #{idMunicipalityCovidData}
+    </select>
 </mapper>

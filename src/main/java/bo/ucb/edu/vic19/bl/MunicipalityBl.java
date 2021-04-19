@@ -23,8 +23,7 @@ public class MunicipalityBl {
 
 
     public CovidDataRequest covidDataMunicipality(Integer municipalityId, String dateCovid){
-        CovidDataRequest covidDataMunicipality=municipalityDao.covidDataMunicipality(municipalityId, dateCovid);
-        return covidDataMunicipality;
+        return municipalityDao.covidDataMunicipality(municipalityId, dateCovid);
     }
 
     public List<CovidDataRequest> covidDataListMunicipality(String dateCovid){

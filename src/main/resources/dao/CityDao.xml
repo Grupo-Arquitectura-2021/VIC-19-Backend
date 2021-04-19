@@ -28,11 +28,11 @@
         SELECT
             a.city as nameLocationCovid,
             b.date as dateLocationCovid,
-            SUM(b.death_cases) as deathCases,
-            SUM(b.confirmed_cases) as confirmedCases,
-            SUM(b.vaccinated) as vaccinated,
-            SUM(b.cumulative_cases) as cumulativeCases,
-            SUM(b.recuperated) as recuperated
+            MAX(b.death_cases) as deathCases,
+            MAX(b.confirmed_cases) as confirmedCases,
+            MAX(b.vaccinated) as vaccinated,
+            MAX(b.cumulative_cases) as cumulativeCases,
+            MAX(b.recuperated) as recuperated
 
         FROM
             city a, covid_data b, city_covid_data d
@@ -49,11 +49,11 @@
         SELECT
             a.city as nameLocationCovid,
             b.date as dateLocationCovid,
-            SUM(b.death_cases) as deathCases,
-            SUM(b.confirmed_cases) as confirmedCases,
-            SUM(b.vaccinated) as vaccinated,
-            SUM(b.cumulative_cases) as cumulativeCases,
-            SUM(b.recuperated) as recuperated
+            MAX(b.death_cases) as deathCases,
+            MAX(b.confirmed_cases) as confirmedCases,
+            MAX(b.vaccinated) as vaccinated,
+            MAX(b.cumulative_cases) as cumulativeCases,
+            MAX(b.recuperated) as recuperated
 
         FROM
             city a, covid_data b, city_covid_data d
@@ -80,11 +80,11 @@
         SELECT
             e.municipality as nameLocationCovid,
             b.date as dateLocationCovid,
-            SUM(b.death_cases) as deathCases,
-            SUM(b.confirmed_cases) as confirmedCases,
-            SUM(b.vaccinated) as vaccinated,
-            SUM(b.cumulative_cases) as cumulativeCases,
-            SUM(b.recuperated) as recuperated
+            MAX(b.death_cases) as deathCases,
+            MAX(b.confirmed_cases) as confirmedCases,
+            MAX(b.vaccinated) as vaccinated,
+            MAX(b.cumulative_cases) as cumulativeCases,
+            MAX(b.recuperated) as recuperated
 
         FROM
             city a, covid_data b, city_covid_data d, municipality e, municipality_covid_data f

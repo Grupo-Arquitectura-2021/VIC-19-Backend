@@ -86,49 +86,6 @@ public class CovidDataCSVUtil {
         }
     }*/
 
-    @Async
-    //@Scheduled(fixedRate = 30000L)
-    @GetMapping(value="/csse")
-    public void CSSECovidData() throws ParseException {
-        String filePath = "C:/Users/Marioly/Desktop/datoscovidcsse.csv";
-        String fecha ="";
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        String url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-
-        //Restando 1 DIA A LA FECHA ACTUAL
-        int calMinusOne = (cal.get(Calendar.DAY_OF_MONTH)- 1);
-        int calMonth = (cal.get(Calendar.MONTH)+1);
-        int calYear = (cal.get(Calendar.YEAR));
-        if(calMonth<10){
-            fecha+="0"+calMonth+"-";
-            url+="0"+calMonth+"-";
-            if(calMinusOne<10) {
-                url += "0" + calMinusOne;
-                fecha += "0" + calMinusOne;
-            }else{
-                url+= calMinusOne;
-                fecha += calMinusOne;
-            }
-        }else{
-            if(calMinusOne<10) {
-                url += calMonth+"-"+"0" + calMinusOne;
-                fecha += calMonth+"-"+"0" + calMinusOne;
-            }else{
-                url+=calMonth+"-"+calMinusOne;
-                fecha +=calMonth+"-"+calMinusOne;
-            }
-        }
-        url+="-"+calYear+".csv";
-        fecha+="-"+calYear;
-
-        if (creatingEmptyFile(filePath,url)){
-            //readingFileDataCSSE(filePath);
-        }else{
-            System.out.println("El archivo no se creó correctamente");
-        }
-    }
-
     @Scheduled(fixedRate = 3000000L)
     @GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException {

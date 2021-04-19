@@ -41,4 +41,5 @@ public class CityBl {
         List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
         return covidDataListCityAllInfo;
     }
+
 }

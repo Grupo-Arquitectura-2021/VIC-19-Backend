@@ -3,4 +3,10 @@ GET http://localhost:8080/country/allInfo/1/2021-04-02
 Accept: application/json
 Content-Type: application/json
 
+### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/mediaAllInfo/1/2021-04-02
+Accept: application/json
+Content-Type: application/json
+
 ###

@@ -16,6 +16,13 @@
         WHERE country.status=1
     </select>
 
+    <select  id="countryName" resultType="String">
+        SELECT name
+        FROM country
+        WHERE country.status=1
+        AND id_country = #{countryId}
+    </select>
+
     <select id="covidDataListCountryAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.name as nameLocationCovid,

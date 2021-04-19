@@ -2,6 +2,7 @@ package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.CountryBl;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
+import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,5 +35,10 @@ public class CountryApi {
     @GetMapping(path = "/allInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
+    }
+
+    @GetMapping(path = "/mediaAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestMedia covidDataCountryMediaAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return countryBl.mediaCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
     }
 }

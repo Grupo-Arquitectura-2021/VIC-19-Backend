@@ -1,17 +1,12 @@
 package bo.ucb.edu.vic19.dto;
 
-import java.util.Date;
-
-public class CovidDataRequest {
+public class CovidDataRequestMedia {
     private String nameLocationCovid;
     private String dateLocationCovid;
-    private Integer deathCases;
-    private Integer confirmedCases;
-    private Integer vaccinated;
-    private Integer recuperated;
-
-    public CovidDataRequest() {
-    }
+    private float deathCases;
+    private float confirmedCases;
+    private float vaccinated;
+    private float cumulativeCases;
 
     public String getNameLocationCovid() {
         return nameLocationCovid;
@@ -29,46 +24,60 @@ public class CovidDataRequest {
         this.dateLocationCovid = dateLocationCovid;
     }
 
-    public Integer getDeathCases() {
+    public float getDeathCases() {
         return deathCases;
     }
 
-    public void setDeathCases(Integer deathCases) {
+    public void setDeathCases(float deathCases) {
         this.deathCases = deathCases;
     }
 
-    public Integer getConfirmedCases() {
+    public float getConfirmedCases() {
         return confirmedCases;
     }
 
-    public void setConfirmedCases(Integer confirmedCases) {
+    public void setConfirmedCases(float confirmedCases) {
         this.confirmedCases = confirmedCases;
     }
 
-    public Integer getVaccinated() {
+    public float getVaccinated() {
         return vaccinated;
     }
 
-    public void setVaccinated(Integer vaccinated) {
+    public void setVaccinated(float vaccinated) {
         this.vaccinated = vaccinated;
     }
 
-    public Integer getRecuperated() {
+    public float getCumulativeCases() {
+        return cumulativeCases;
+    }
+
+    public void setCumulativeCases(float cumulativeCases) {
+        this.cumulativeCases = cumulativeCases;
+    }
+
+    public float getRecuperated() {
         return recuperated;
     }
 
-    public void setRecuperated(Integer recuperated) {
+    public void setRecuperated(float recuperated) {
         this.recuperated = recuperated;
+    }
+
+    private float recuperated;
+
+    public CovidDataRequestMedia() {
     }
 
     @Override
     public String toString() {
-        return "CovidDataRequest{" +
+        return "CovidDataRequestMedia{" +
                 "nameLocationCovid='" + nameLocationCovid + '\'' +
                 ", dateLocationCovid='" + dateLocationCovid + '\'' +
                 ", deathCases=" + deathCases +
                 ", confirmedCases=" + confirmedCases +
                 ", vaccinated=" + vaccinated +
+                ", cumulativeCases=" + cumulativeCases +
                 ", recuperated=" + recuperated +
                 '}';
     }

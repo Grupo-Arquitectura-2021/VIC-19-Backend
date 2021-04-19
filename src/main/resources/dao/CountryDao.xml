@@ -16,6 +16,13 @@
         WHERE country.status=1
     </select>
 
+    <select  id="countryId" resultType="Integer">
+        SELECT id_country
+        FROM country
+        WHERE status=1
+        AND name = #{country}
+    </select>
+
     <select id="covidDataCountry" resultMap="dataMap">
         SELECT
             a.name as nameLocationCovid,

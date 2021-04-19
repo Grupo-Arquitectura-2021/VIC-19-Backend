@@ -26,7 +26,6 @@ public class Vic19Application{
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(Vic19Application.class, args);
-
 	}
 }
 @EnableWebSecurity

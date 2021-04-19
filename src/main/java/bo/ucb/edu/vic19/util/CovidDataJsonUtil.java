@@ -32,22 +32,24 @@ public class CovidDataJsonUtil {
 
     private CityDao cityDao;
     private MunicipalityDao municipalityDao;
+    private CountryCovidDataDao countryCovidDataDao;
     private CityCovidDataDao cityCovidDataDao;
     private MunicipalityCovidDataDao municipalityCovidDataDao;
     private CovidDataCSVDao covidDataCSVDao;
     private Transaction transaction;
 
     @Autowired
-    public void CovidDataU(CovidDataCSVDao covidDataCSVDao,CityDao cityDao,MunicipalityDao municipalityDao,CityCovidDataDao cityCovidDataDao,MunicipalityCovidDataDao municipalityCovidDataDao) {
+    public void CovidDataU(CovidDataCSVDao covidDataCSVDao,CityDao cityDao,MunicipalityDao municipalityDao,CountryCovidDataDao countryCovidDataDao,CityCovidDataDao cityCovidDataDao,MunicipalityCovidDataDao municipalityCovidDataDao) {
         this.cityDao =cityDao;
         this.municipalityDao = municipalityDao;
+        this.countryCovidDataDao = countryCovidDataDao;
         this.cityCovidDataDao = cityCovidDataDao;
         this.municipalityCovidDataDao = municipalityCovidDataDao;
         this.covidDataCSVDao = covidDataCSVDao;
 
     }
 
-    @Scheduled(fixedRate = 30000L)
+    @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/siip")
     public void siipCovidData() throws ParseException {
         String url = "https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados";
@@ -79,6 +81,7 @@ public class CovidDataJsonUtil {
             City city;
             Municipality municipality;
             CovidData covidData;
+            CountryCovidData countryCovidData;
             CityCovidData cityCovidData;
             MunicipalityCovidData municipalityCovidData;
             Transaction transaction;
@@ -98,23 +101,28 @@ public class CovidDataJsonUtil {
                 transaction.setTxUpdate(date);
 
                 covidData.setIdPageUrl(6);
-                covidData.setIdCountry(1);
                 covidData.setDeathCases(-1);
-                covidData.setConfirmedCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
+                covidData.setConfirmedCases(-1);
                 covidData.setVaccinated(-1);
-                covidData.setCumulativeCases(-1);
+                covidData.setCumulativeCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
                 covidData.setRecuperated(-1);
-                selectData = covidDataCSVDao.selectDataExist(covidData,dateSelect);
                 covidData.setDate(convertedDate);
                 covidData.setTransaction(transaction);
                 cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                 cityId = cityDao.getCityId(cityData);
                 municipalityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText();
                 municipalityId = municipalityDao.getMunicipalityMaxId(cityId, municipalityData);
+                //selectData = covidDataCSVDao.selectDataExist(dateSelect,municipalityId);
+                selectData = covidDataCSVDao.selectDataCovidExist(covidData,dateSelect);
                 if(selectData == 0){
                     covidDataCSVDao.insertData(covidData);
+                    covidDataId = covidDataCSVDao.getCovidDataIdMax();
+                    countryCovidData = new CountryCovidData();
+                    countryCovidData.setIdCountry(1);
+                    countryCovidData.setIdCovidData(covidDataId);
+                    countryCovidData.setTransaction(transaction);
+                    countryCovidDataDao.insertCountryCovidData(countryCovidData);
                     if(!cityData.equals("Unassigned")) {
-                        covidDataId = covidDataCSVDao.getCovidDataId();
                         cityCovidData = new CityCovidData();
                         cityCovidData.setIdCity(cityId);
                         cityCovidData.setIdCovidData(covidDataId);
@@ -127,12 +135,18 @@ public class CovidDataJsonUtil {
                         municipalityCovidData.setTransaction(transaction);
                         municipalityCovidDataDao.insertMunicipalityCovidData(municipalityCovidData);
                     }
-                }else {
+                }
+                else {
                     municipalityCovidDataId = municipalityCovidDataDao.selectIdDataCovidExist(municipalityId);
                     if(municipalityCovidDataId == 0){
                         covidDataCSVDao.insertData(covidData);
+                        covidDataId = covidDataCSVDao.getCovidDataIdMax();
+                        countryCovidData = new CountryCovidData();
+                        countryCovidData.setIdCountry(1);
+                        countryCovidData.setIdCovidData(covidDataId);
+                        countryCovidData.setTransaction(transaction);
+                        countryCovidDataDao.insertCountryCovidData(countryCovidData);
                         if(!cityData.equals("Unassigned")) {
-                            covidDataId = covidDataCSVDao.getCovidDataId();
                             cityCovidData = new CityCovidData();
                             cityCovidData.setIdCity(cityId);
                             cityCovidData.setIdCovidData(covidDataId);
@@ -147,6 +161,7 @@ public class CovidDataJsonUtil {
                         }
                     }
                 }
+
             }
 
         } catch (Exception e) {
@@ -154,7 +169,7 @@ public class CovidDataJsonUtil {
         }
     }
 
-    @Scheduled(fixedRate = 30000L)
+    @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/swagger")
     public void swaggerCovidData() throws ParseException {
         String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
@@ -206,6 +221,7 @@ public class CovidDataJsonUtil {
     public void readDataJsonSwagger(String urlJson) {
         String dateSelect;
         Integer selectData;
+        Integer covidDataId = 0;
         ArrayList<CaseData> caseData = new ArrayList();
         caseData = getJson();
         ArrayList<VaccineData> vaccineData = new ArrayList();
@@ -236,9 +252,10 @@ public class CovidDataJsonUtil {
             cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
             date = cal.getTime();
             CovidData covidData;
+            CountryCovidData countryCovidData;
             Transaction transaction;
 
-            for(int i=0;i<vaccineData.size();i++){
+            for(int i=0;i<vaccineData.size()-1;i++){
                 covidData = new CovidData();
                 transaction = new Transaction();
                 transaction.setTxDate(date);
@@ -247,8 +264,7 @@ public class CovidDataJsonUtil {
                 transaction.setTxHost(localIP);
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
-                covidData.setIdCountry(1);
-                covidData.setIdPageUrl(3);
+                covidData.setIdPageUrl(4);
                 covidData.setDeathCases(caseData.get(i).getDeaths());
                 covidData.setConfirmedCases(caseData.get(i).getCases());
                 covidData.setVaccinated(vaccineData.get(i).getAmountData());
@@ -256,10 +272,17 @@ public class CovidDataJsonUtil {
                 covidData.setRecuperated(caseData.get(i).getRecovered());
                 covidData.setDate(caseData.get(i).getDateCas());
                 covidData.setTransaction(transaction);
-                dateSelect = fechaSelect.format(vaccineData.get(i).getDateIng());
-                selectData = covidDataCSVDao.selectDataExist(covidData,dateSelect);
+                dateSelect = fechaSelect.format(caseData.get(i).getDateCas());
+                //dateSelect = fechaSelect.format(vaccineData.get(i).getDateIng());
+                selectData = covidDataCSVDao.selectDataCovidExist(covidData,dateSelect);
                 if (selectData == 0){
                     covidDataCSVDao.insertData(covidData);
+                    covidDataId = covidDataCSVDao.getCovidDataIdMax();
+                    countryCovidData = new CountryCovidData();
+                    countryCovidData.setIdCountry(1);
+                    countryCovidData.setIdCovidData(covidDataId);
+                    countryCovidData.setTransaction(transaction);
+                    countryCovidDataDao.insertCountryCovidData(countryCovidData);
                 }
             }
         } catch (Exception e) {

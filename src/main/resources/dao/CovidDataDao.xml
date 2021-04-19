@@ -4,27 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bo.ucb.edu.vic19.dao.CovidDataCSVDao">
     <insert id="insertData" parameterType="bo.ucb.edu.vic19.model.CovidData">
-        INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `id_country`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
-            null, #{idPageUrl}, #{idCountry}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},
+        INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
+            null, #{idPageUrl}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},
              #{transaction.txUpdate}
         )
     </insert>
+
+    <select id="getCovidDataIdMax" resultType="Integer">
+        SELECT MAX(id_covid_data) FROM covid_data
+    </select>
 
     <select id="getCovidDataId" resultType="Integer">
         SELECT MAX(id_covid_data) FROM covid_data
     </select>
 
-    <select id="selectDataExist" resultType="Integer">
+    <select id="selectDataCovidExist" resultType="Integer">
         SELECT COUNT(*)
         FROM covid_data a
         WHERE a.id_page_url = #{covidData.idPageUrl}
-          and a.id_country = #{covidData.idCountry}
           and a.death_cases = #{covidData.deathCases}
           and a.confirmed_cases = #{covidData.confirmedCases}
           and a.vaccinated = #{covidData.vaccinated}
           and a.cumulative_cases = #{covidData.cumulativeCases}
           and a.recuperated = #{covidData.recuperated}
           and a.date = #{dateSelect}
+          and a.status = 1
+    </select>
+
+    <select id="selectDataExist" resultType="Integer">
+        SELECT COUNT(*)
+        FROM covid_data a
+        INNER JOIN municipality_covid_data mcd
+            ON a.id_covid_data = mcd.id_covid_data
+        WHERE a.date = #{dateSelect}
+          and mcd.id_municipality = #{municipalityId}
           and a.status = 1
     </select>
 </mapper>

@@ -4,10 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bo.ucb.edu.vic19.dao.MunicipalityDao">
     <insert id="insertMunicipalityData" parameterType="bo.ucb.edu.vic19.model.Municipality">
-        INSERT INTO municipality (`id_municipality`, `id_city`, `municipality`, `lon`, `lat`,
-                    `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null, #{idDepartament},
-                    #{municipality}, #{lon}, #{lat},1, #{transaction.txId}, #{transaction.txDate},
-                    #{transaction.txHost}, #{transaction.txUpdate})
+        INSERT INTO municipality (`id_municipality`, `id_city`, `municipality`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`)
+        SELECT null, #{idCity}, #{municipality}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
+        WHERE NOT EXISTS
+            (SELECT municipality
+             FROM municipality
+             WHERE municipality = #{municipality})
     </insert>
     <select id="getMunicipalityId" parameterType="String" resultType="Integer">
         SELECT
@@ -33,17 +35,18 @@
         SELECT id_municipality idLocation, municipality locationName, lon longitude, lat latitude
         FROM municipality
         WHERE municipality.status=1
+        and municipality.id_city=#{cityId}
     </select>
 
     <select id="covidDataMunicipality" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.municipality as nameLocationCovid,
             b.date as dateLocationCovid,
-            MAX(b.death_cases) as deathCases,
-            MAX(b.confirmed_cases) as confirmedCases,
-            MAX(b.vaccinated) as vaccinated,
-            MAX(b.cumulative_cases) as cumulativeCases,
-            MAX(b.recuperated) as recuperated
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
 
         FROM
             municipality a, covid_data b, municipality_covid_data d

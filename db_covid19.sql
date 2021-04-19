@@ -48,7 +48,6 @@ CREATE TABLE Country (
 CREATE TABLE Covid_data (
                             id_covid_data int NOT NULL AUTO_INCREMENT,
                             id_page_url int NOT NULL,
-                            id_country int NOT NULL,
                             death_cases int NOT NULL,
                             confirmed_cases int NOT NULL,
                             vaccinated int NOT NULL,
@@ -170,7 +169,17 @@ CREATE TABLE Municipality_covid_data (
                                          tx_update datetime NOT NULL,
                                          CONSTRAINT Municipality_covid_data_pk PRIMARY KEY (id_municipality_covid_data)
 );
-
+CREATE TABLE country_covid_data (
+                                         id_country_covid_data int NOT NULL AUTO_INCREMENT,
+                                         id_country int NOT NULL,
+                                         id_covid_data int NOT NULL,
+                                         status int NOT NULL,
+                                         tx_id int NOT NULL,
+                                         tx_date datetime NOT NULL,
+                                         tx_host varchar(100) NOT NULL,
+                                         tx_update datetime NOT NULL,
+                                         CONSTRAINT Country_covid_data_pk PRIMARY KEY (id_country_covid_data)
+);
 -- Table: Page_url
 CREATE TABLE Page_url (
                           id_page_url int NOT NULL AUTO_INCREMENT,

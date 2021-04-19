@@ -1,12 +1,12 @@
 
-GET http://localhost:8080/municipality/location
+GET http://localhost:8080/municipality/location/1
 Accept: application/json
 Content-Type: application/json
 
 
 ###
 
-GET http://localhost:8080/municipality/200/2021-04-04
+GET http://localhost:8080/municipality/1/2021-04-04
 Accept: application/json
 Content-Type: application/json
 

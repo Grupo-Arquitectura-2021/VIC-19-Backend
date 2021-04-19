@@ -18,15 +18,15 @@ COMMIT;
 
 -- INSERTS CITY
 START TRANSACTION;
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'La Paz', -68.15,-16.5,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Santa Cruz', -63.18117,-17.78629,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Cochabamba', -66.1568,-17.3895,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Tarija', -64.72956,-21.53549,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Chuquisaca', -65.26274,-19.03332,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Oruro', -67.15,-17.98333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Pando', -68.76918,-11.02671,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
-INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'La Paz', -68.15,-16.5,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Santa Cruz', -63.18117,-17.78629,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Cochabamba', -66.1568,-17.3895,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Tarija', -64.72956,-21.53549,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Chuquisaca', -65.26274,-19.03332,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Oruro', -67.15,-17.98333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Pando', -68.76918,-11.02671,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Beni', -64.9,-14.83333,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`,  `lat`,`lon`,  `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null,'Potosi', -65.75306,-19.58361,1,1,'2021-04-11 14:43:45','192.168.31.150','2021-04-11 14:43:45');
 COMMIT;
 
 

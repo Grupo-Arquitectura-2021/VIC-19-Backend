@@ -5,7 +5,6 @@ import java.util.Date;
 public class CovidData {
     private Integer idCovidData;
     private Integer idPageUrl;
-    private Integer idCountry;
     private Integer deathCases;
     private Integer confirmedCases;
     private Integer vaccinated;
@@ -33,14 +32,6 @@ public class CovidData {
 
     public void setIdPageUrl(Integer idPageUrl) {
         this.idPageUrl = idPageUrl;
-    }
-
-    public Integer getIdCountry() {
-        return idCountry;
-    }
-
-    public void setIdCountry(Integer idCountry) {
-        this.idCountry = idCountry;
     }
 
     public Integer getDeathCases() {
@@ -112,7 +103,6 @@ public class CovidData {
         return "CovidData{" +
                 "idCovidData=" + idCovidData +
                 ", idPageUrl=" + idPageUrl +
-                ", idCountry=" + idCountry +
                 ", deathCases=" + deathCases +
                 ", confirmedCases=" + confirmedCases +
                 ", vaccinated=" + vaccinated +

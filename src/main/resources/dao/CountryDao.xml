@@ -44,7 +44,7 @@
         AND name = #{country}
     </select>
 
-    <select id="covidDataCountry" resultMap="dataMap">
+    <select id="covidDataCountry" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.name as nameLocationCovid,
             b.date as dateLocationCovid,

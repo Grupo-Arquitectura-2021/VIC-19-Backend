@@ -20,5 +20,5 @@ Content-Type: application/json
 }
 
 ### delete news
-DELETE http://localhost:8080/news/delete/2
+DELETE http://localhost:8080/news/delete/3
 Accept: application/json

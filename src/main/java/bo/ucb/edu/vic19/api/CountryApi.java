@@ -30,4 +30,9 @@ public class CountryApi {
         List<CovidDataRequest> covidDataCountry=countryBl.covidDataCountry(Integer.parseInt(countryId),dateCovid);
         return covidDataCountry;
     }
+
+    @GetMapping(path = "/allInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
+    }
 }

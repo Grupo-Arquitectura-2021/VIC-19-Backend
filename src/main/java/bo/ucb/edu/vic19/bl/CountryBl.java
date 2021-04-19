@@ -25,4 +25,9 @@ public class CountryBl {
         List<CovidDataRequest> covidDataCountry=countryDao.covidDataCountry(countryId, dateCovid);
         return covidDataCountry;
     }
+
+    public List<CovidDataRequest> covidDataCountryAllInfo(int cityId, String dateCovid) {
+        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(cityId, dateCovid);
+        return covidDataListCountryAllInfo;
+    }
 }

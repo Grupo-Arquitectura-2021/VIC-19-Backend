@@ -187,7 +187,7 @@ public class CovidDataCSVUtil {
                    cityCovidData.setIdCovidData(idCovidData);
                    cityCovidData.setStatus(1);
                    cityCovidData.setTransaction(transaction);
-                   covidDataDao.insertCityCovidData(cityCovidData);
+                   //covidDataDao.insertCityCovidData(cityCovidData);
                }
            }
             i++;

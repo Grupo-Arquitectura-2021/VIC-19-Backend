@@ -11,7 +11,7 @@
              FROM municipality
              WHERE municipality = #{municipality})
     </insert>
-    <select id="getMunicipalityWithName"  resultType="bo.ucb.edu.vic19.model.Municipality">
+    <select id="getMunicipalityIdWithName"  resultType="Integer">
         SELECT
             a.id_municipality
         FROM municipality a

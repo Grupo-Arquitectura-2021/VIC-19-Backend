@@ -54,7 +54,7 @@ public class CovidDataJsonUtil {
     public void readDataJsonSiip(String urlJson){
         String cityData,municipalityName;
         Integer covidDataId = 0;
-        Municipality municipality;
+        Integer municipality;
         Integer selectData = 0;
         try {
             URL url = new URL(urlJson);
@@ -65,7 +65,8 @@ public class CovidDataJsonUtil {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
-            DateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");Date convertedDate = fecha.parse("2021-04-04");
+            DateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedDate = fecha.parse("2021-04-04");
             String dateSelect = fecha.format(convertedDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());Date date;
@@ -91,12 +92,22 @@ public class CovidDataJsonUtil {
 
                 cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                 idCity=cityDao.getCityId(cityData);
-                municipality = municipalityDao.getMunicipalityWithName(municipalityName,idCity);
+                municipality = municipalityDao.getMunicipalityIdWithName(municipalityName,idCity);
                 if(municipality!=null){
-                    selectData = covidDataDao.verifyMunicipalityCovidData(dateSelect,municipality.getIdMunicipality());
+                    selectData = covidDataDao.verifyMunicipalityCovidData(dateSelect,municipality);
+
                     if(selectData == 0){
+                        covidData.setIdPageUrl(6);
+                        covidData.setDeathCases(-1);
+                        covidData.setConfirmedCases(-1);
+                        covidData.setVaccinated(-1);
+                        covidData.setCumulativeCases(contagionData.getData_mapa().get("features").get(i).get("properties").get("_f_0709202").asInt());
+                        covidData.setRecuperated(-1);
+                        covidData.setDate(convertedDate);
+                        covidData.setTransaction(transaction);
                         covidDataDao.insertCovidData(covidData);
-                        municipalityCovidData.setIdMunicipality(municipality.getIdMunicipality());
+                        covidDataId=covidDataDao.getLastIdCovidData();
+                        municipalityCovidData.setIdMunicipality(municipality);
                         municipalityCovidData.setIdCovidData(covidDataId);
                         municipalityCovidData.setTransaction(transaction);
                         covidDataDao.insertMunicipalityCovidData(municipalityCovidData);

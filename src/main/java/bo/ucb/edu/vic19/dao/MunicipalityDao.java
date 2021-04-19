@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface MunicipalityDao {
-    public Municipality getMunicipalityWithName(String municipalityDataName,Integer IdCity);
+    public Integer getMunicipalityIdWithName(String municipalityDataName,Integer IdCity);
     public List<LocationResponse> municipalities(Integer cityId);
     public CovidDataRequest covidDataMunicipality(Integer municipalityId, String dateCovid);
     public List<CovidDataRequest> covidDataListMunicipality(String dateCovid);

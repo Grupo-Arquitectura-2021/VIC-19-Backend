@@ -16,8 +16,10 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 
 
@@ -38,7 +40,6 @@ public class CovidDataCSVUtil {
         this.municipalityDao = municipalityDao;
         this.countryDao = countryDao;
     }
-}
 
 /*
    @Scheduled(fixedRate = 30000L)
@@ -76,51 +77,25 @@ public class CovidDataCSVUtil {
             System.out.println("El archivo no se creó correctamente");
         }
     }*/
-/*
+
     @Scheduled(fixedRate = 3000000L)
     @GetMapping(value="/ReadCSv")
-    public void readCSV() throws IOException {
-        List<LocationResponse> countries=countryDao.countries();
-        List<String> countriesFound = new ArrayList<>();
-        String url="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-        String fecha ="";
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(new Date());
-        int calMinusOne = cal1.get(Calendar.DAY_OF_MONTH)- 2;
-        int calMonth = (cal1.get(Calendar.MONTH)+1);
-        int calYear = (cal1.get(Calendar.YEAR));
-        if(calMonth<10){
-            fecha+="0"+calMonth+"-";
-            url+="0"+calMonth+"-";
-            if(calMinusOne<10) {
-                url += "0" + calMinusOne;
-                fecha += "0" + calMinusOne;
-            }else{
-                url+= calMinusOne;
-                fecha += calMinusOne;
-            }
-        }else{
-            if(calMinusOne<10) {
-                url += calMonth+"-"+"0" + calMinusOne;
-                fecha += calMonth+"-"+"0" + calMinusOne;
-            }else{
-                url+=calMonth+"-"+calMinusOne;
-                fecha +=calMonth+"-"+calMinusOne;
-            }
-        }
-        url+="-"+calYear+".csv";
-        fecha+="-"+calYear;
+    public void readCSV() throws IOException, ParseException {
+        List<LocationResponse> cities=cityDao.cities();
+        String url="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/confirmados.csv";
+        String url2="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/decesos.csv";
 
         URL content = new URL(url);
-
+        URL content2 = new URL(url2);
         InputStream stream = content.openStream();
+        InputStream stream2 = content2.openStream();
         Scanner inputStream = new Scanner(stream);
+        Scanner inputStream2 = new Scanner(stream2);
         Date date;
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
         date = cal.getTime();
-        List<CountryCovidData> covidCountries= new ArrayList<>();
         List<CovidData> covidDataList=new ArrayList<>();
         Transaction transaction = new Transaction();
         transaction.setTxDate(date);
@@ -131,32 +106,92 @@ public class CovidDataCSVUtil {
         transaction.setTxHost(IP_local);
         transaction.setTxId(1);
         transaction.setTxUpdate(date);
-        countries.forEach((co)->{
+        cities.forEach((co)->{
             CovidData covidData=new CovidData();
             covidData.setConfirmedCases(0);
             covidData.setDeathCases(0);
-            covidData.setRecuperated(0);
+            covidData.setRecuperated(-1);
             covidData.setStatus(1);
-            covidData.setDate(date);
             covidData.setIdPageUrl(3);
             covidData.setVaccinated(-1);
-            covidData.setCumulativeCases(-1);
+            covidData.setCumulativeCases(0);
             covidData.setTransaction(transaction);
             covidDataList.add(covidData);
         });
+        inputStream.nextLine();
+        inputStream2.nextLine();
+        int i=0;
+        Integer idCovidData;
+        CityCovidData cityCovidData;
+        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        Integer verifyCities=1;
        while (inputStream.hasNext()) {
             String data = inputStream.nextLine();
+           String data2 = inputStream.nextLine();
+
+           String death = inputStream.nextLine();
+           String death2 = inputStream.nextLine();
             String[] values = data.split(",");
-            if(values.length>3){
-                for(int i=0;i<countries.size();i++){
-                    if(countries.get(i).getLocationName().equals(values[3])){
-                        covidDataList.get(i).setConfirmedCases(Integer.parseInt(values[7])+covidDataList.get(i).getConfirmedCases());
-                        covidDataList.get(i).setDeathCases(Integer.parseInt(values[8])+covidDataList.get(i).getDeathCases());
-                        covidDataList.get(i).setRecuperated(Integer.parseInt(values[9])+covidDataList.get(i).getRecuperated());
-                    }
-                }
+           String[] values2 = data2.split(",");
+           String[] deathV = death.split(",");
+           String[] deathV2 = death2.split(",");
+            covidDataList.get(0).setConfirmedCases(Integer.parseInt(values[1])-Integer.parseInt(values2[1]));
+           covidDataList.get(0).setDeathCases(Integer.parseInt(deathV[1])-Integer.parseInt(deathV2[1]));
+            covidDataList.get(0).setCumulativeCases(Integer.parseInt(values[1]));
+
+           covidDataList.get(1).setConfirmedCases(Integer.parseInt(values[3])-Integer.parseInt(values2[3]));
+           covidDataList.get(1).setDeathCases(Integer.parseInt(deathV[3])-Integer.parseInt(deathV2[3]));
+           covidDataList.get(1).setCumulativeCases(Integer.parseInt(values[3]));
+
+           covidDataList.get(2).setConfirmedCases(Integer.parseInt(values[2])-Integer.parseInt(values2[2]));
+           covidDataList.get(2).setDeathCases(Integer.parseInt(deathV[2])-Integer.parseInt(deathV2[2]));
+           covidDataList.get(2).setCumulativeCases(Integer.parseInt(values[2]));
+
+           covidDataList.get(3).setConfirmedCases(Integer.parseInt(values[6])-Integer.parseInt(values2[6]));
+           covidDataList.get(3).setDeathCases(Integer.parseInt(deathV[6])-Integer.parseInt(deathV2[6]));
+           covidDataList.get(3).setCumulativeCases(Integer.parseInt(values[6]));
+
+           covidDataList.get(4).setConfirmedCases(Integer.parseInt(values[7])-Integer.parseInt(values2[7]));
+           covidDataList.get(4).setDeathCases(Integer.parseInt(deathV[7])-Integer.parseInt(deathV2[7]));
+           covidDataList.get(4).setCumulativeCases(Integer.parseInt(values[7]));
+
+           covidDataList.get(5).setConfirmedCases(Integer.parseInt(values[4])-Integer.parseInt(values2[4]));
+           covidDataList.get(5).setDeathCases(Integer.parseInt(deathV[4])-Integer.parseInt(deathV2[4]));
+           covidDataList.get(5).setCumulativeCases(Integer.parseInt(values[4]));
+
+           covidDataList.get(6).setConfirmedCases(Integer.parseInt(values[9])-Integer.parseInt(values2[9]));
+           covidDataList.get(6).setDeathCases(Integer.parseInt(deathV[9])-Integer.parseInt(deathV2[9]));
+           covidDataList.get(6).setCumulativeCases(Integer.parseInt(values[9]));
+
+           covidDataList.get(7).setConfirmedCases(Integer.parseInt(values[8])-Integer.parseInt(values2[8]));
+           covidDataList.get(7).setDeathCases(Integer.parseInt(deathV[8])-Integer.parseInt(deathV2[8]));
+           covidDataList.get(7).setCumulativeCases(Integer.parseInt(values[8]));
+
+           covidDataList.get(8).setConfirmedCases(Integer.parseInt(values[5])-Integer.parseInt(values2[5]));
+           covidDataList.get(8).setDeathCases(Integer.parseInt(deathV[5])-Integer.parseInt(deathV2[5]));
+           covidDataList.get(8).setCumulativeCases(Integer.parseInt(values[5]));
+
+           for(int j=0;j<covidDataList.size();j++){
+               covidDataList.get(j).setDate((fmt.parse(values[0])));
+               verifyCities=covidDataDao.verifyCityCovidData(values[0],cities.get(j).getIdLocation());
+
+               if(verifyCities==0){
+                   covidDataDao.insertCovidData(covidDataList.get(j));
+                   idCovidData=covidDataDao.getLastIdCovidData();
+                   cityCovidData=new CityCovidData();
+                   cityCovidData.setIdCity(cities.get(j).getIdLocation());
+                   cityCovidData.setIdCovidData(idCovidData);
+                   cityCovidData.setStatus(1);
+                   cityCovidData.setTransaction(transaction);
+                   covidDataDao.insertCityCovidData(cityCovidData);
+               }
+           }
+            i+=2;
+            if(i>100){
+                break;
             }
         }
+       /*
         Integer lastId=1;
        Integer verify=1;
         for(int i=0;i<covidDataList.size();i++){
@@ -173,6 +208,8 @@ public class CovidDataCSVUtil {
                 }
             }
         }*/
+    }
+}
         /*while (inputStream.hasNext()) {
             String data = inputStream.nextLine();
             if (flag) {

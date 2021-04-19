@@ -33,6 +33,27 @@
         and municipality.id_city=#{cityId}
     </select>
 
+    <select id="covidDataListMunAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
+        SELECT
+            a.municipality as nameLocationCovid,
+            b.date as dateLocationCovid,
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
+
+        FROM
+            municipality a, covid_data b, municipality_covid_data d
+
+        WHERE
+            b.date &lt;= #{dateCovid}
+          and a.id_municipality = d.id_municipality
+          and d.id_municipality = #{muniId}
+          and b.id_covid_data = d.id_covid_data
+          and b.status = 1
+    </select>
+
     <select id="covidDataMunicipality" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.municipality as nameLocationCovid,

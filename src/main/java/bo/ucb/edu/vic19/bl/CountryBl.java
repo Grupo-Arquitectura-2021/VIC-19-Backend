@@ -21,8 +21,13 @@ public class CountryBl {
         return countryDao.countries();
     }
 
-    public List<CovidDataRequest> covidDataCountry(Integer countryId, String dateCovid){
-        List<CovidDataRequest> covidDataCountry=countryDao.covidDataCountry(countryId, dateCovid);
+    public CovidDataRequest covidDataCountry(Integer countryId, String dateCovid){
+        CovidDataRequest covidDataCountry=countryDao.covidDataCountry(countryId, dateCovid);
         return covidDataCountry;
+    }
+
+    public List<CovidDataRequest> covidDataCountryAllInfo(int cityId, String dateCovid) {
+        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(cityId, dateCovid);
+        return covidDataListCountryAllInfo;
     }
 }

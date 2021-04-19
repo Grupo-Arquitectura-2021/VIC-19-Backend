@@ -154,9 +154,16 @@ public class CovidDataJsonUtil {
             for(int i=0;i<innerObjectRec.size();i++){
                 arr=new ArrayList();
                 arr.add(date);
-                arr.add(Integer.parseInt(""+innerObjectCas.get(formatearCalendar(cal))));
-                arr.add(Integer.parseInt(""+innerObjectDea.get(formatearCalendar(cal))));
-                arr.add(Integer.parseInt(""+innerObjectRec.get(formatearCalendar(cal))));
+                if(innerObjectCas.get(formatearCalendar(cal))==null){
+                    arr.add(-1);
+                    arr.add(-1);
+                    arr.add(-1);
+                }
+                else{
+                    arr.add(Integer.parseInt(""+innerObjectCas.get(formatearCalendar(cal))));
+                    arr.add(Integer.parseInt(""+innerObjectDea.get(formatearCalendar(cal))));
+                    arr.add(Integer.parseInt(""+innerObjectRec.get(formatearCalendar(cal))));
+                }
                 caseData.add(arr);
                 cal.add(Calendar.DAY_OF_YEAR, 1);
                 date = cal.getTime();
@@ -167,6 +174,7 @@ public class CovidDataJsonUtil {
         }
         return caseData;
     }
+
     public ArrayList<ArrayList> getJsonVaccine(String country,Integer length){
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
@@ -186,7 +194,13 @@ public class CovidDataJsonUtil {
             for(int i=0;i<vaccines.getTimeline().size();i++){
                 arr=new ArrayList();
                 arr.add(date);
-                arr.add((Integer) vaccines.getTimeline().get(formatearCalendar(c)));
+                if((Integer) vaccines.getTimeline().get(formatearCalendar(c))==null){
+                    arr.add(-1);
+                }
+                else{
+
+                    arr.add((Integer) vaccines.getTimeline().get(formatearCalendar(c)));
+                }
                 vaccineData.add(arr);
                 c.add(Calendar.DAY_OF_YEAR, 1);
                 date = c.getTime();
@@ -261,6 +275,7 @@ public class CovidDataJsonUtil {
         }
         }
         catch (Exception e){
+            e.printStackTrace();
         }
     }
 

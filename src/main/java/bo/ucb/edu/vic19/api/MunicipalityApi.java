@@ -37,4 +37,9 @@ public class MunicipalityApi {
         return covidDataListMunicipality;
     }
 
+    @GetMapping(path = "/allInfo/{muniId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataMuniAllInfo(@PathVariable String muniId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return municipalityBl.covidDataMunAllInfo(Integer.parseInt(muniId),dateCovid);
+    }
+
 }

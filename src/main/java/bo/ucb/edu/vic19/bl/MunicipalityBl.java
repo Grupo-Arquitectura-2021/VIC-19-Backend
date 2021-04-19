@@ -31,4 +31,8 @@ public class MunicipalityBl {
         return covidDataListMunicipality;
     }
 
+    public List<CovidDataRequest> covidDataMunAllInfo(int muniId, String dateCovid) {
+        List<CovidDataRequest> covidDataListMunAllInfo=municipalityDao.covidDataListMunAllInfo(muniId, dateCovid);
+        return covidDataListMunAllInfo;
+    }
 }

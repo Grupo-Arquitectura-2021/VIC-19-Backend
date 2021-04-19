@@ -35,11 +35,11 @@
 
         FROM
             country a, covid_data b
-
+        INNER JOIN covid_data b
+        on b.id_country=a.id_country
         WHERE
             a.id_country = #{countryId}
           and b.date = #{dateCovid}
-          and a.id_country = b.id_country
           and a.status = 1
           and b.status = 1
     </select>

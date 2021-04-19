@@ -4,14 +4,12 @@ import bo.ucb.edu.vic19.dao.*;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.*;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -20,34 +18,27 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
 @Component
 public class CovidDataCSVUtil {
 
-    private CovidDataCSVDao covidDao;
-    private CityCovidDataDao cityCovidDataDao;
+    private CovidDataDao covidDataDao;
     private CityDao cityDao;
     private MunicipalityDao municipalityDao;
-    private MunicipalityCovidDataDao municipalityCovidDataDao;
     private CountryDao countryDao;
-    private CountryCovidDataDao countryCovidDataDao;
 
 
     @Autowired
-    public void ScheduledTasks(CovidDataCSVDao covidDao, CityCovidDataDao cityCovidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, MunicipalityCovidDataDao municipalityCovidDataDao,CountryDao countryDao, CountryCovidDataDao countryCovidDataDao) {
-        this.covidDao = covidDao;
-        this.cityCovidDataDao = cityCovidDataDao;
+    public void ScheduledTasks(CovidDataDao covidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, CountryDao countryDao) {
+
+        this.covidDataDao = covidDataDao;
         this.cityDao = cityDao;
         this.municipalityDao = municipalityDao;
-        this.municipalityCovidDataDao = municipalityCovidDataDao;
-        this.countryDao=countryDao;
-        this.countryCovidDataDao = countryCovidDataDao;
+        this.countryDao = countryDao;
     }
-
+}
 
 /*
    @Scheduled(fixedRate = 30000L)
@@ -85,7 +76,7 @@ public class CovidDataCSVUtil {
             System.out.println("El archivo no se creó correctamente");
         }
     }*/
-
+/*
     @Scheduled(fixedRate = 3000000L)
     @GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException {
@@ -124,20 +115,65 @@ public class CovidDataCSVUtil {
 
         InputStream stream = content.openStream();
         Scanner inputStream = new Scanner(stream);
-        List<CountryCovidData> covidCountries= new ArrayList<>();
-        List<CovidData> covidDataList=new ArrayList<>();
         Date date;
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
         date = cal.getTime();
-        int lastId = 0;
-        int c2 = 0;
-        String currentCountry = null, currentCountry2=null, auxString = null;
-        boolean primero=false;
-        int c = 0, aux=0;
-        boolean reset=true, firstRound = true, flag = true, flag2 = true, repeated = false;
-        while (inputStream.hasNext()) {
+        List<CountryCovidData> covidCountries= new ArrayList<>();
+        List<CovidData> covidDataList=new ArrayList<>();
+        Transaction transaction = new Transaction();
+        transaction.setTxDate(date);
+
+        InetAddress direction = InetAddress.getLocalHost();
+        String IP_local = direction.getHostAddress();//ip como String
+
+        transaction.setTxHost(IP_local);
+        transaction.setTxId(1);
+        transaction.setTxUpdate(date);
+        countries.forEach((co)->{
+            CovidData covidData=new CovidData();
+            covidData.setConfirmedCases(0);
+            covidData.setDeathCases(0);
+            covidData.setRecuperated(0);
+            covidData.setStatus(1);
+            covidData.setDate(date);
+            covidData.setIdPageUrl(3);
+            covidData.setVaccinated(-1);
+            covidData.setCumulativeCases(-1);
+            covidData.setTransaction(transaction);
+            covidDataList.add(covidData);
+        });
+       while (inputStream.hasNext()) {
+            String data = inputStream.nextLine();
+            String[] values = data.split(",");
+            if(values.length>3){
+                for(int i=0;i<countries.size();i++){
+                    if(countries.get(i).getLocationName().equals(values[3])){
+                        covidDataList.get(i).setConfirmedCases(Integer.parseInt(values[7])+covidDataList.get(i).getConfirmedCases());
+                        covidDataList.get(i).setDeathCases(Integer.parseInt(values[8])+covidDataList.get(i).getDeathCases());
+                        covidDataList.get(i).setRecuperated(Integer.parseInt(values[9])+covidDataList.get(i).getRecuperated());
+                    }
+                }
+            }
+        }
+        Integer lastId=1;
+       Integer verify=1;
+        for(int i=0;i<covidDataList.size();i++){
+            if(covidDataList.get(i).getConfirmedCases()!=0&&covidDataList.get(i).getDeathCases()!=0&&covidDataList.get(i).getRecuperated()!=0){
+                verify=covidDataDao.verifyCountryCovidData(date.toString(),countries.get(i).getIdLocation());
+                if(verify==0){
+                    covidDataDao.insertCovidData(covidDataList.get(i));
+                    lastId= covidDataDao.getLastIdCovidData();
+                    CountryCovidData countryCovidData=new CountryCovidData();
+                    countryCovidData.setIdCountry(countries.get(i).getIdLocation());
+                    countryCovidData.setIdCovidData(lastId);
+                    countryCovidData.setTransaction(transaction);
+                    covidDataDao.insertCountryCovidData(countryCovidData);
+                }
+            }
+        }*/
+        /*while (inputStream.hasNext()) {
             String data = inputStream.nextLine();
             if (flag) {
                 flag = false;
@@ -233,12 +269,12 @@ public class CovidDataCSVUtil {
 
         }
 
-    }
+    }*/
 
 
 
     //FUNCIONES
-
+/*
     private void readingFileDataDatosGob(String filePath) {
         BufferedReader br = null;
         String line = "";
@@ -601,7 +637,7 @@ public class CovidDataCSVUtil {
                         cityCovidData.setIdCovidData(lastId);
                         cityCovidData.setTransaction(transaction);
 
-                        cityCovidDataDao.insertCityCovidData(cityCovidData);
+                        covidDataDao.insertCityCovidData(cityCovidData);
                         }
                     }
                 }
@@ -647,5 +683,5 @@ public class CovidDataCSVUtil {
             e.printStackTrace();
         }
         return date;
-    }
-}
+    }*/
+

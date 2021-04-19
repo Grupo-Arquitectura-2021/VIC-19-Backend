@@ -170,7 +170,7 @@ public class CovidDataJsonUtil {
     public ArrayList<ArrayList> getJsonVaccine(String country,Integer length){
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
-            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays="+length.toString());
+            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+length.toString());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");

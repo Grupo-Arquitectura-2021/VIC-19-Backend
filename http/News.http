@@ -1,0 +1,24 @@
+### getting the list of news
+
+GET http://localhost:8080/news/list
+Accept: application/json
+Content-Type: application/json
+
+### adding a new news
+
+POST http://localhost:8080/news/addnews
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idNews": 1,
+  "title": "Viene tercera ola",
+  "content": "Basado en la cantidad de los ultimos casos se puede confirmar la llegada de una tercera ola de contagios",
+  "dateNews": "2021-04-18",
+  "urlImage": "",
+  "source": "https://s.france24.com/media/display/bb75a678-973a-11eb-867f-005056bff430/w:980/p:16x9/vacunas%20bolivia.webp"
+}
+
+### delete news
+DELETE http://localhost:8080/news/delete/2
+Accept: application/json

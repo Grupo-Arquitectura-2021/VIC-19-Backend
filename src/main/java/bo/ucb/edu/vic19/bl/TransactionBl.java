@@ -1,10 +1,13 @@
 package bo.ucb.edu.vic19.bl;
 
+import bo.ucb.edu.vic19.dao.TransactionDao;
+import bo.ucb.edu.vic19.model.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionBl {
-/*
+
     private TransactionDao transactionDao;
 
     @Autowired
@@ -23,6 +26,4 @@ public class TransactionBl {
         return transaction;
     }
 
-
- */
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.vic19.dao.NewsDao">
+    <insert id="addNews" parameterType="bo.ucb.edu.vic19.model.News">
+        INSERT INTO news
+        VALUES (
+            null,
+            #{title},#{content},
+            #{dateNews},#{urlImage},
+            #{source},#{status},
+            #{txDate},
+            #{txHost},
+            #{txUpdate}
+        )
+    </insert>
+
+    <update id="deleteNews">
+        UPDATE news
+        SET status=0
+        WHERE (id_news = #{idNews})
+    </update>
+
+    <select id="getNews" resultMap="newsMap">
+        SELECT a.id_news    as idNews,
+               a.news_title     as title,
+               a.description   as content,
+               a.news_date as dateNews,
+               a.news_images  as urlImage,
+               a.news_url   as source
+        FROM news a
+        WHERE a.status = 1
+
+    </select>
+    <resultMap id="newsMap" type="bo.ucb.edu.vic19.dto.NewsResponse">
+        <result column="idNews" property="idNews"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="dateNews" property="dateNews"/>
+        <result column="urlImage" property="urlImage"/>
+        <result column="source" property="source"/>
+    </resultMap>
+</mapper>

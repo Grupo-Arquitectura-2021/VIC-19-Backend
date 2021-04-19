@@ -6,7 +6,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/city/1/2021-04-04
+GET http://localhost:8080/city/1/2021-04-14
 Accept: application/json
 Content-Type: application/json
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/city/Tarija/municipality/2021-04-04
+GET http://localhost:8080/city/Beni/municipality/2021-04-06
 Accept: application/json
 Content-Type: application/json
 

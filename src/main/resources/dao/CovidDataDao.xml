@@ -11,10 +11,7 @@
     </insert>
 
     <select id="getCovidDataId" resultType="Integer">
-        SELECT a.id_municipality
-        FROM municipality a
-        WHERE a.municipality = "San lorenzo"
-          and a.id_city = 7
+        SELECT MAX(id_covid_data) FROM covid_data
     </select>
 
     <select id="selectDataExist" resultType="Integer">

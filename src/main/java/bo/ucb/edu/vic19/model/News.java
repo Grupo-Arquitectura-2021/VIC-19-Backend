@@ -4,10 +4,10 @@ public class News {
     private Integer idNews;
     private String title;
     private String content;
-    private Date dateTime;
+    private Date dateNews;
     private String urlImage;
     private String source;
-    private String status;
+    private Integer status;
     private Transaction transaction;
 
     public News() {
@@ -38,12 +38,12 @@ public class News {
         this.content = content;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getDateNews() {
+        return dateNews;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setDateNews(Date dateNews) {
+        this.dateNews = dateNews;
     }
 
     public String getUrlImage() {
@@ -62,11 +62,11 @@ public class News {
         this.source = source;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -84,7 +84,7 @@ public class News {
                 "idNews=" + idNews +'\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", dateTime='" + dateTime + '\'' +
+                ", dateTime='" + dateNews + '\'' +
                 ", urlImage='" + urlImage + '\'' +
                 ", source='" + source + '\'' +
                 ", status='" + status + '\'' +

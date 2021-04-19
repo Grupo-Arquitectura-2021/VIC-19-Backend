@@ -12,5 +12,5 @@ public interface CountryDao {
     public CovidDataRequest covidDataCountry(Integer countryId, String dateCovid);
     public Integer countryId(String country);
 
-    List<CovidDataRequest> covidDataListCountryAllInfo(int cityId, String dateCovid);
+    List<CovidDataRequest> covidDataListCountryAllInfo(int countryId, String dateCovid);
 }

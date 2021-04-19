@@ -19,12 +19,12 @@
     <select id="covidDataListCountryAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.name as nameLocationCovid,
-            b.date as dateLocationCovid,
-            b.death_cases as deathCases,
-            b.confirmed_cases as confirmedCases,
-            b.vaccinated as vaccinated,
-            b.cumulative_cases as cumulativeCases,
-            b.recuperated as recuperated
+            (b.date) as dateLocationCovid,
+            (b.death_cases) as deathCases,
+            (b.confirmed_cases) as confirmedCases,
+            (b.vaccinated) as vaccinated,
+            (b.cumulative_cases) as cumulativeCases,
+            (b.recuperated) as recuperated
 
         FROM
             country a, covid_data b, country_covid_data d
@@ -47,12 +47,12 @@
     <select id="covidDataCountry" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.name as nameLocationCovid,
-            b.date as dateLocationCovid,
-            b.death_cases as deathCases,
-            b.confirmed_cases as confirmedCases,
-            b.vaccinated as vaccinated,
-            b.cumulative_cases as cumulativeCases,
-            b.recuperated as recuperated
+            MAX(b.date) as dateLocationCovid,
+                MAX(b.death_cases) as deathCases,
+                    MAX(b.confirmed_cases) as confirmedCases,
+                        MAX(b.vaccinated) as vaccinated,
+                            MAX(b.cumulative_cases) as cumulativeCases,
+                                MAX(b.recuperated) as recuperated
 
         FROM
             country a
@@ -62,7 +62,7 @@
         on b.id_covid_data=cdc.id_covid_data
         WHERE
             a.id_country = #{countryId}
-          and b.date = #{dateCovid}
+          and b.date &lt;=  #{dateCovid}
           and a.status = 1
           and b.status = 1
           and cdc.status = 1

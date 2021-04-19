@@ -47,8 +47,8 @@ public class NewsApi {
     @RequestMapping(value = "/delete/{idNews}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public void productDelete(@PathVariable("idNews") Integer idNews, HttpServletRequest request) {
-        Transaction transaction = TransactionUtil.createTransaction(request);
-        transactionBl.createTransaction(transaction);
+//        Transaction transaction = TransactionUtil.createTransaction(request);
+//        transactionBl.createTransaction(transaction);
         newsBl.newsDelete(idNews);
     }
 

@@ -27,7 +27,7 @@
     <select id="covidDataCity" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.city as nameLocationCovid,
-            b.date as dateLocationCovid,
+            MAX(b.date) as dateLocationCovid,
             MAX(b.death_cases) as deathCases,
             MAX(b.confirmed_cases) as confirmedCases,
             MAX(b.vaccinated) as vaccinated,
@@ -39,7 +39,7 @@
 
         WHERE
             a.id_city = #{cityId}
-          and b.date = #{dateCovid}
+          and b.date &lt;= #{dateCovid}
           and a.id_city = d.id_city
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
@@ -48,7 +48,7 @@
     <select id="covidDataListCity" resultMap="listCityMap">
         SELECT
             a.city as nameLocationCovid,
-            b.date as dateLocationCovid,
+            MAX(b.date) as dateLocationCovid,
             MAX(b.death_cases) as deathCases,
             MAX(b.confirmed_cases) as confirmedCases,
             MAX(b.vaccinated) as vaccinated,
@@ -59,7 +59,7 @@
             city a, covid_data b, city_covid_data d
 
         WHERE
-            b.date = #{dataCovid}
+            b.date &lt;= #{dataCovid}
           and a.id_city = d.id_city
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
@@ -79,7 +79,7 @@
     <select id="covidDataListCityMunicipality" resultMap="listCityMap">
         SELECT
             e.municipality as nameLocationCovid,
-            b.date as dateLocationCovid,
+            MAX(b.date) as dateLocationCovid,
             MAX(b.death_cases) as deathCases,
             MAX(b.confirmed_cases) as confirmedCases,
             MAX(b.vaccinated) as vaccinated,
@@ -91,7 +91,7 @@
 
         WHERE
             a.city = #{nameCity}
-          and b.date = #{dateCovid}
+          and b.date &lt;= #{dateCovid}
           and a.id_city = d.id_city
           and b.id_covid_data = d.id_covid_data
           and e.id_municipality = f.id_municipality

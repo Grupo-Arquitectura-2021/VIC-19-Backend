@@ -27,21 +27,24 @@
         SELECT
             a.name as nameLocationCovid,
             b.date as dateLocationCovid,
-            MAX(b.death_cases) as deathCases,
-            MAX(b.confirmed_cases) as confirmedCases,
-            MAX(b.vaccinated) as vaccinated,
-            MAX(b.cumulative_cases) as cumulativeCases,
-            MAX(b.recuperated) as recuperated
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
 
         FROM
-            country a, covid_data b
+            country a
+        INNER JOIN country_covid_data cdc
+        on cdc.id_country=a.id_country
         INNER JOIN covid_data b
-        on b.id_country=a.id_country
+        on b.id_covid_data=cdc.id_covid_data
         WHERE
             a.id_country = #{countryId}
           and b.date = #{dateCovid}
           and a.status = 1
           and b.status = 1
+          and cdc.status = 1
     </select>
 
     <resultMap id="dataMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">

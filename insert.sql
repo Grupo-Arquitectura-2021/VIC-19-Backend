@@ -4,30 +4,29 @@
 use db_covid19;
 -- INSERTS COUNTRY
 START TRANSACTION;
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (1, 'Bolivia', -16.2902, -63.5887, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (2, 'Bolivia', -65.2696, -19.031, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (3, 'Paraguay', -57.5775, -25.2644, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (4, 'Argentina', -58.6341, -34.7316, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (5, 'Chile', -70.6605, -33.434, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (6, 'Peru', -76.9938, -12.0066, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (7, 'Brazil', -47.8851, -15.8036, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (8, 'Uruguay', -56.1826, -34.7589, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (9, 'Ecuador', -78.4571, -0.137592, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (10, 'Colombia', -74.0678, 4.709, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (11, 'Venezuela', -66.9995, 10.4263, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (1, 'Bolivia', -65.2696, -19.031, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (2, 'Paraguay', -57.5775, -25.2644, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (3, 'Argentina', -58.6341, -34.7316, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (4, 'Chile', -70.6605, -33.434, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (5, 'Peru', -76.9938, -12.0066, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (6, 'Brazil', -47.8851, -15.8036, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (7, 'Uruguay', -56.1826, -34.7589, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (8, 'Ecuador', -78.4571, -0.137592, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (9, 'Colombia', -74.0678, 4.709, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
+INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (10, 'Venezuela', -66.9995, 10.4263, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');
 COMMIT;
 
 -- INSERTS CITY
 START TRANSACTION;
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (1, 'La Paz', -68.0697, -16.0835, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (2, 'Santa Cruz', -61.0566, -17.7097, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (3, 'Cochabamba', -65.0579, -17.1983, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (4, 'Tarija', -64.1447, -21.6005, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (5, 'Chuquisaca', -64.3766, -19.7981, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (6, 'Oruro', -67.9526, -19.3581, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (7, 'Pando', -66.7855, -11.5978, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (8, 'Beni', -64.827, -14.0017, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
-INSERT INTO `db_covid19`.`city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (9, 'Potosi', -67.129, -21.2568, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (1, 'La Paz', -68.0697, -16.0835, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (2, 'Santa Cruz', -61.0566, -17.7097, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (3, 'Cochabamba', -65.0579, -17.1983, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (4, 'Tarija', -64.1447, -21.6005, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (5, 'Chuquisaca', -64.3766, -19.7981, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (6, 'Oruro', -67.9526, -19.3581, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (7, 'Pando', -66.7855, -11.5978, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (8, 'Beni', -64.827, -14.0017, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
+INSERT INTO `city` (`id_city`, `city`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (9, 'Potosi', -67.129, -21.2568, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
 COMMIT;
 
 

@@ -2,22 +2,64 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bo.ucb.edu.vic19.dao.CovidDataCSVDao">
-    <insert id="insertData" parameterType="bo.ucb.edu.vic19.model.CovidData">
+<mapper namespace="bo.ucb.edu.vic19.dao.CovidDataDao">
+    <insert id="insertCovidData" parameterType="bo.ucb.edu.vic19.model.CovidData">
         INSERT INTO covid_data (`id_covid_data`, `id_page_url`, `death_cases`, `confirmed_cases`, `vaccinated`, `cumulative_cases`, `recuperated`, `date`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idPageUrl}, #{deathCases}, #{confirmedCases}, #{vaccinated}, #{cumulativeCases}, #{recuperated}, #{date}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},
              #{transaction.txUpdate}
         )
     </insert>
 
-    <select id="getCovidDataIdMax" resultType="Integer">
-        SELECT MAX(id_covid_data) FROM covid_data
+
+    <insert id="insertCountryCovidData" parameterType="bo.ucb.edu.vic19.model.CountryCovidData">
+        INSERT INTO country_covid_data (`id_country_covid_data`, `id_country`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
+            null, #{idCountry}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
+        )
+    </insert>
+    <select id="verifyCountryCovidData" resultType="Integer">
+        SELECT COUNT(*)
+        FROM country_covid_data mcd
+        INNER JOIN covid_data cd
+        on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_country = #{IdCountry}
+            and cd.date=#{date}
     </select>
 
-    <select id="getCovidDataId" resultType="Integer">
-        SELECT MAX(id_covid_data) FROM covid_data
+    <insert id="insertCityCovidData" parameterType="bo.ucb.edu.vic19.model.CityCovidData">
+        INSERT INTO city_covid_data (`id_city_covid_data`, `id_city`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
+            null, #{idCity}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
+        )
+    </insert>
+    <select id="verifyCityCovidData" resultType="Integer">
+        SELECT COUNT(*)
+        FROM city_covid_data mcd
+        INNER JOIN covid_data cd
+        on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_city = #{IdCity}
+            and cd.date=#{date}
     </select>
 
+    <insert id="insertMunicipalityCovidData" parameterType="bo.ucb.edu.vic19.model.MunicipalityCovidData">
+        INSERT INTO municipality_covid_data (`id_municipality_covid_data`, `id_municipality`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`)
+        VALUES (null ,#{idMunicipality}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate})
+    </insert>
+
+    <select id="verifyMunicipalityCovidData" resultType="Integer">
+        SELECT COUNT(*)
+        FROM municipality_covid_data mcd
+        INNER JOIN covid_data cd
+        on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_municipality = #{IdMunicipality}
+            and cd.date=#{date}
+    </select>
+
+
+    <select id="getLastIdCovidData" resultType="Integer">
+        SELECT LAST_INSERT_ID();
+    </select>
     <select id="selectDataCovidExist" resultType="Integer">
         SELECT COUNT(*)
         FROM covid_data a

@@ -11,18 +11,13 @@
              FROM municipality
              WHERE municipality = #{municipality})
     </insert>
-    <select id="getMunicipalityId" parameterType="String" resultType="Integer">
+    <select id="getMunicipalityWithName"  resultType="bo.ucb.edu.vic19.model.Municipality">
         SELECT
             a.id_municipality
         FROM municipality a
-        where a.municipality = #{municipality}
+        where a.municipality = #{municipalityDataName}
+          and a.id_city=#{IdCity}
           and a.status=1
-    </select>
-    <select id="getMunicipalityMaxId" resultType="Integer">
-        SELECT a.id_municipality
-        FROM municipality a
-        WHERE a.municipality = #{municipalityDataName}
-          and a.id_city = #{cityId}
     </select>
 
     <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="municipalitiesMap">

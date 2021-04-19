@@ -2,7 +2,7 @@ package bo.ucb.edu.vic19.model;
 
 public class Hospital {
     private Integer idHospital;
-    private Integer idDepartament;
+    private Integer idCity;
     private String name;
     private float lon;
     private float lat;
@@ -21,12 +21,12 @@ public class Hospital {
         this.idHospital = idHospital;
     }
 
-    public Integer getIdDepartament() {
-        return idDepartament;
+    public Integer getIdCity() {
+        return idCity;
     }
 
-    public void setIdDepartament(Integer idDepartament) {
-        this.idDepartament = idDepartament;
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
     }
 
     public String getName() {
@@ -73,7 +73,7 @@ public class Hospital {
     public String toString() {
         return "Hospital{" +
                 "idHospital=" + idHospital +
-                ", idDepartament=" + idDepartament +
+                ", idDepartament=" + idCity +
                 ", name='" + name + '\'' +
                 ", lon=" + lon +
                 ", lat=" + lat +

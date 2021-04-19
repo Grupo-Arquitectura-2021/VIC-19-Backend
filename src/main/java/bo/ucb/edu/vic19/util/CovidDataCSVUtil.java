@@ -125,16 +125,20 @@ public class CovidDataCSVUtil {
         CityCovidData cityCovidData;
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         Integer verifyCities=1;
+        String varAux=inputStream.nextLine();
+        String varAux2=inputStream.nextLine();
        while (inputStream.hasNext()) {
-            String data = inputStream.nextLine();
+            String data = varAux;
            String data2 = inputStream.nextLine();
 
-           String death = inputStream.nextLine();
-           String death2 = inputStream.nextLine();
+           String death = varAux2;
+           String death2 = inputStream2.nextLine();
             String[] values = data.split(",");
            String[] values2 = data2.split(",");
            String[] deathV = death.split(",");
            String[] deathV2 = death2.split(",");
+           varAux=data2;
+           varAux2=death;
             covidDataList.get(0).setConfirmedCases(Integer.parseInt(values[1])-Integer.parseInt(values2[1]));
            covidDataList.get(0).setDeathCases(Integer.parseInt(deathV[1])-Integer.parseInt(deathV2[1]));
             covidDataList.get(0).setCumulativeCases(Integer.parseInt(values[1]));
@@ -186,7 +190,7 @@ public class CovidDataCSVUtil {
                    covidDataDao.insertCityCovidData(cityCovidData);
                }
            }
-            i+=2;
+            i++;
             if(i>100){
                 break;
             }

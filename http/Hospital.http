@@ -1,0 +1,10 @@
+## Obtiene las locaciones de una linea de hospital
+GET http://localhost:8080/hospital/location/1
+Accept: application/json
+Content-Type: application/json
+
+###
+##Obtiene las locaciones de hospitales de una ciudad
+GET http://localhost:8080/hospital/locationsByCity/1
+Accept: application/json
+Content-Type: application/json

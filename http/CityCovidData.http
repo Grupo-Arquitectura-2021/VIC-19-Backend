@@ -1,8 +1,13 @@
 
 ## Mostrar covid data de una ciudad desde el inicio de los datos hasta la fecha indicada
-GET http://192.168.31.150:8080/city/allInfo/1/2021-04-02
+GET http://localhost:8080/city/allInfo/1/2021-04-02
 Accept: application/json
 Content-Type: application/json
 
+### Mostrar media de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/city/mediaAllInfo/1/2021-04-02
+Accept: application/json
+Content-Type: application/json
 
 ###

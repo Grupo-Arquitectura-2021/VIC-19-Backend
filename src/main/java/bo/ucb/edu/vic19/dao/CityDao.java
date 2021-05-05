@@ -12,10 +12,11 @@ public interface CityDao {
     public Integer getCityId(String cityName);
     public List<LocationResponse> cities();
     public CovidDataRequest covidDataCity(Integer cityId, String dateCovid);
+    public String cityName(Integer cityId);
 
     public List<CovidDataRequest> covidDataListCity(String dateCovid);
 
     public List<CovidDataRequest> covidDataListCityMunicipality(String nameCity, String dateCovid);
 
-    List<CovidDataRequest> covidDataListCityAllInfo(int cityId, String dateCovid);
+    List<CovidDataRequest> covidDataListCityAllInfo(Integer cityId, String dateCovid);
 }

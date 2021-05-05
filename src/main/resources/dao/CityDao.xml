@@ -8,7 +8,14 @@
             c.id_city
         FROM city c
         where c.status=1
-        and city =#{cityName}
+        and c.name =#{cityName}
+    </select>
+
+    <select  id="cityName" resultType="String">
+        SELECT city
+        FROM city
+        WHERE city.status=1
+        AND id_city = #{cityId}
     </select>
 
     <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="citiesMap">

@@ -43,4 +43,8 @@ public class HospitalBl {
         hospitalDao.deleteHospital(hospital);
         return hospital;
     }
+
+    public List<LocationResponse> getHospitalLocations() {
+        return hospitalDao.getHospitalLocations();
+    }
 }

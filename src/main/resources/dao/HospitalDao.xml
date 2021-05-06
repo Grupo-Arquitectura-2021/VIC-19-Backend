@@ -30,6 +30,19 @@
         and hospital.id_city=#{cityId}
     </select>
 
+
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="hospitalLocations">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="getHospitalLocations" resultMap="hospitalLocations">
+        SELECT id_hospital idLocation, name locationName, lon longitude, lat latitude
+        FROM hospital
+        WHERE hospital.status=1
+    </select>
+
     <insert id="insertHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">
         INSERT INTO hospital (`id_hospital`, `id_city`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null,#{idCity}, #{name}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate}

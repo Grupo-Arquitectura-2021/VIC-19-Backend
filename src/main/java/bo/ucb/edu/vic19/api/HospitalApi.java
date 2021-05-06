@@ -27,6 +27,11 @@ public class HospitalApi {
         return hospitalBl.getHospitalLocation(hospitalId);
     }
 
+    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<LocationResponse> getHospitalLocation(){
+        return hospitalBl.getHospitalLocations();
+    }
+
     @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public java.util.List<LocationResponse> getHospitalLocationsByCity(@PathVariable Integer cityId){
         return hospitalBl.getHospitalLocationsByCityId(cityId);

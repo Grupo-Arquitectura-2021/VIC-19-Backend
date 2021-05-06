@@ -8,7 +8,7 @@
             c.id_city
         FROM city c
         where c.status=1
-        and c.name =#{cityName}
+        and c.city =#{cityName}
     </select>
 
     <select  id="cityName" resultType="String">

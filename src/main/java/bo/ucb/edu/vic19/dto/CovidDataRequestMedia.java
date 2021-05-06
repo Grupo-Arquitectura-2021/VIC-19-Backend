@@ -6,7 +6,6 @@ public class CovidDataRequestMedia {
     private float deathCases;
     private float confirmedCases;
     private float vaccinated;
-    private float cumulativeCases;
 
     public String getNameLocationCovid() {
         return nameLocationCovid;
@@ -48,14 +47,6 @@ public class CovidDataRequestMedia {
         this.vaccinated = vaccinated;
     }
 
-    public float getCumulativeCases() {
-        return cumulativeCases;
-    }
-
-    public void setCumulativeCases(float cumulativeCases) {
-        this.cumulativeCases = cumulativeCases;
-    }
-
     public float getRecuperated() {
         return recuperated;
     }
@@ -77,7 +68,6 @@ public class CovidDataRequestMedia {
                 ", deathCases=" + deathCases +
                 ", confirmedCases=" + confirmedCases +
                 ", vaccinated=" + vaccinated +
-                ", cumulativeCases=" + cumulativeCases +
                 ", recuperated=" + recuperated +
                 '}';
     }

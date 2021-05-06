@@ -33,6 +33,13 @@
         and municipality.id_city=#{cityId}
     </select>
 
+    <select  id="municipalityName" resultType="String">
+        SELECT municipality
+        FROM municipality
+        WHERE municipality.status=1
+        AND id_municipality = #{municipalityId}
+    </select>
+
     <select id="covidDataListMunAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.municipality as nameLocationCovid,

@@ -37,10 +37,21 @@ public class CountryBl {
         int size=covidDataListCountryAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
         float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
         for(int i=0; i<size; i++){
-            sumVac+=covidDataListCountryAllInfo.get(i).getVaccinated();
-            sumRec+=covidDataListCountryAllInfo.get(i).getRecuperated();
-            sumConf+=covidDataListCountryAllInfo.get(i).getConfirmedCases();
-            sumDeath+=covidDataListCountryAllInfo.get(i).getDeathCases();
+            if(covidDataListCountryAllInfo.get(i).getVaccinated() >= 0){
+                sumVac+=covidDataListCountryAllInfo.get(i).getVaccinated();
+            }
+
+            if(covidDataListCountryAllInfo.get(i).getRecuperated() >= 0){
+                sumRec+=covidDataListCountryAllInfo.get(i).getRecuperated();
+            }
+
+            if(covidDataListCountryAllInfo.get(i).getConfirmedCases() >= 0){
+                sumConf+=covidDataListCountryAllInfo.get(i).getConfirmedCases();
+            }
+
+            if(covidDataListCountryAllInfo.get(i).getDeathCases() >= 0){
+                sumDeath+=covidDataListCountryAllInfo.get(i).getDeathCases();
+            }
         }
         mediaConf = (float) sumConf/size;
         mediaDeath = (float) sumDeath/size;

@@ -1,7 +1,12 @@
 ## Mostrar covid data de un municipio desde el inicio de los datos hasta la fecha indicada
-GET http://192.168.31.150:8080/municipality/allInfo/1/2021-04-05
+GET http://localhost:8080/municipality/allInfo/6/2021-04-29
 Accept: application/json
 Content-Type: application/json
 
+### Mostrar media de datos de un municipio desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/municipality/mediaAllInfo/8/2021-04-29
+Accept: application/json
+Content-Type: application/json
 
 ###

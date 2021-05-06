@@ -48,10 +48,21 @@ public class CityBl {
         int size=covidDataListCityAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
         float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
         for(int i=0; i<size; i++){
-            sumVac+=covidDataListCityAllInfo.get(i).getVaccinated();
-            sumRec+=covidDataListCityAllInfo.get(i).getRecuperated();
-            sumConf+=covidDataListCityAllInfo.get(i).getConfirmedCases();
-            sumDeath+=covidDataListCityAllInfo.get(i).getDeathCases();
+            if(covidDataListCityAllInfo.get(i).getVaccinated() >= 0){
+                sumVac+=covidDataListCityAllInfo.get(i).getVaccinated();
+            }
+
+            if(covidDataListCityAllInfo.get(i).getRecuperated() >= 0){
+                sumRec+=covidDataListCityAllInfo.get(i).getRecuperated();
+            }
+
+            if(covidDataListCityAllInfo.get(i).getConfirmedCases() >= 0){
+                sumConf+=covidDataListCityAllInfo.get(i).getConfirmedCases();
+            }
+
+            if(covidDataListCityAllInfo.get(i).getDeathCases() >= 0){
+                sumDeath+=covidDataListCityAllInfo.get(i).getDeathCases();
+            }
         }
         mediaConf = (float) sumConf/size;
         mediaDeath = (float) sumDeath/size;

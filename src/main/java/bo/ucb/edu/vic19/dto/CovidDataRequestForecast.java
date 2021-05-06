@@ -6,7 +6,6 @@ public class CovidDataRequestForecast {
     private float deathCases;
     private float confirmedCases;
     private float vaccinated;
-    private float cumulativeCases;
 
     public String getNameLocationCovid() {
         return nameLocationCovid;
@@ -48,11 +47,14 @@ public class CovidDataRequestForecast {
         this.vaccinated = vaccinated;
     }
 
-    public float getCumulativeCases() {
-        return cumulativeCases;
-    }
-
-    public void setCumulativeCases(float cumulativeCases) {
-        this.cumulativeCases = cumulativeCases;
+    @Override
+    public String toString() {
+        return "CovidDataRequestForecast{" +
+                "nameLocationCovid='" + nameLocationCovid + '\'' +
+                ", dateLocationCovid='" + dateLocationCovid + '\'' +
+                ", deathCases=" + deathCases +
+                ", confirmedCases=" + confirmedCases +
+                ", vaccinated=" + vaccinated +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.HospitalBl;
 import bo.ucb.edu.vic19.bl.MunicipalityBl;
+import bo.ucb.edu.vic19.dto.HospitalRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -30,6 +31,11 @@ public class HospitalApi {
     @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public java.util.List<LocationResponse> getHospitalLocation(){
         return hospitalBl.getHospitalLocations();
+    }
+
+    @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<HospitalRequest> getHospitalAllInfo(){
+        return hospitalBl.getHospitalAllInfo();
     }
 
     @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

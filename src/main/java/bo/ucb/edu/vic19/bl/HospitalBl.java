@@ -3,6 +3,7 @@ package bo.ucb.edu.vic19.bl;
 import bo.ucb.edu.vic19.dao.HospitalDao;
 import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dao.TransactionDao;
+import bo.ucb.edu.vic19.dto.HospitalRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -46,5 +47,9 @@ public class HospitalBl {
 
     public List<LocationResponse> getHospitalLocations() {
         return hospitalDao.getHospitalLocations();
+    }
+
+    public List<HospitalRequest> getHospitalAllInfo() {
+        return hospitalDao.getHospitalAllInfo();
     }
 }

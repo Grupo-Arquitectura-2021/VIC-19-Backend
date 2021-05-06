@@ -10,6 +10,12 @@ Accept: application/json
 Content-Type: application/json
 
 ###
+## Obtiene la informacion de todos los hospitales
+GET http://localhost:8080/hospital/allInfo
+Accept: application/json
+Content-Type: application/json
+
+###
 ##Obtiene las locaciones de hospitales de una ciudad
 GET http://localhost:8080/hospital/locationsByCity/1
 Accept: application/json

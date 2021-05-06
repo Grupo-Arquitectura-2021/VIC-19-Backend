@@ -1,5 +1,6 @@
 package bo.ucb.edu.vic19.dao;
 
+import bo.ucb.edu.vic19.dto.HospitalRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Hospital;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,4 +18,6 @@ public interface HospitalDao {
     public void deleteHospital(Hospital hospital);
 
     List<LocationResponse> getHospitalLocations();
+
+    List<HospitalRequest> getHospitalAllInfo();
 }

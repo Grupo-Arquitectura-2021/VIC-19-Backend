@@ -65,9 +65,9 @@ public class CovidDataJsonUtil {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
-            DateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
-            Date convertedDate = fecha.parse("2021-04-04");
-            String dateSelect = fecha.format(convertedDate);
+            DateFormat dataDate = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedDate = dataDate.parse("2021-04-04");
+            String dateSelect = dataDate.format(convertedDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());Date date;
             cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
@@ -84,12 +84,11 @@ public class CovidDataJsonUtil {
                 transaction = new Transaction();
                 transaction.setTxDate(date);
                 InetAddress ipAddress = InetAddress.getLocalHost();
-                String localIP = ipAddress.getHostAddress();//ip como String
+                String localIP = ipAddress.getHostAddress();
                 transaction.setTxHost(localIP);
                 transaction.setTxId(1);
                 transaction.setTxUpdate(date);
                 municipalityName = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_mun").asText();
-
                 cityData = contagionData.getData_mapa().get("features").get(i).get("properties").get("nom_dept").asText();
                 idCity=cityDao.getCityId(cityData);
                 municipality = municipalityDao.getMunicipalityIdWithName(municipalityName,idCity);
@@ -127,7 +126,7 @@ public class CovidDataJsonUtil {
         String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
     }*/
 
-    public static ArrayList<ArrayList> getJson(String country,Integer length){
+    public static ArrayList<ArrayList> getJsonHistoricalData(String country,Integer length){
         ArrayList<ArrayList> caseData = new ArrayList();
         JSONParser parser = new JSONParser();
         try {
@@ -139,9 +138,9 @@ public class CovidDataJsonUtil {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             CaseHistory caseHistory = mapper.readValue(responseStream, CaseHistory.class);
-            String str11 = caseHistory.getTimeline().toString();
-            String str21 = str11.replaceAll("\\\\", "");
-            Object obj = parser.parse(str21);
+            String strReplacement1 = caseHistory.getTimeline().toString();
+            String strReplacement2 = strReplacement1.replaceAll("\\\\", "");
+            Object obj = parser.parse(strReplacement2);
             JSONObject jsonObject = (JSONObject) obj;
             JSONObject innerObjectRec = (JSONObject) jsonObject.get("recovered");
             JSONObject innerObjectCas = (JSONObject) jsonObject.get("cases");
@@ -154,15 +153,15 @@ public class CovidDataJsonUtil {
             for(int i=0;i<innerObjectRec.size();i++){
                 arr=new ArrayList();
                 arr.add(date);
-                if(innerObjectCas.get(formatearCalendar(cal))==null){
+                if(innerObjectCas.get(formatCalendar(cal))==null){
                     arr.add(-1);
                     arr.add(-1);
                     arr.add(-1);
                 }
                 else{
-                    arr.add(Integer.parseInt(""+innerObjectCas.get(formatearCalendar(cal))));
-                    arr.add(Integer.parseInt(""+innerObjectDea.get(formatearCalendar(cal))));
-                    arr.add(Integer.parseInt(""+innerObjectRec.get(formatearCalendar(cal))));
+                    arr.add(Integer.parseInt(""+innerObjectCas.get(formatCalendar(cal))));
+                    arr.add(Integer.parseInt(""+innerObjectDea.get(formatCalendar(cal))));
+                    arr.add(Integer.parseInt(""+innerObjectRec.get(formatCalendar(cal))));
                 }
                 caseData.add(arr);
                 cal.add(Calendar.DAY_OF_YEAR, 1);
@@ -178,7 +177,9 @@ public class CovidDataJsonUtil {
     public ArrayList<ArrayList> getJsonVaccine(String country,Integer length){
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
-            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+length.toString());
+            Integer lengthPlus1 = length+1;
+            System.out.println("longitud: "+lengthPlus1.toString());
+            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
@@ -191,15 +192,14 @@ public class CovidDataJsonUtil {
             c.add(Calendar.DAY_OF_YEAR, -length);
             date = c.getTime();
             ArrayList arr;
-            for(int i=0;i<vaccines.getTimeline().size();i++){
+            for(int i=0;i<vaccines.getTimeline().size()-1;i++){
                 arr=new ArrayList();
                 arr.add(date);
-                if((Integer) vaccines.getTimeline().get(formatearCalendar(c))==null){
+                if((Integer) vaccines.getTimeline().get(formatCalendar(c))==null){
                     arr.add(-1);
                 }
                 else{
-
-                    arr.add((Integer) vaccines.getTimeline().get(formatearCalendar(c)));
+                    arr.add((Integer) vaccines.getTimeline().get(formatCalendar(c)));
                 }
                 vaccineData.add(arr);
                 c.add(Calendar.DAY_OF_YEAR, 1);
@@ -213,18 +213,18 @@ public class CovidDataJsonUtil {
             return null;
         }
     }
-    @Scheduled(fixedRate = 300000L)
+    @Scheduled(fixedRate = 30000L)
     @GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {
             List<LocationResponse> countries=countryDao.countries();
             for(int i=0;i<countries.size();i++){
-                var general=getJson(countries.get(i).getLocationName(),100);
-                var vaccine=getJsonVaccine(countries.get(i).getLocationName(),100);
+                var general=getJsonHistoricalData(countries.get(i).getLocationName(),3);
+                var vaccine=getJsonVaccine(countries.get(i).getLocationName(),3);
                 Date date;
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());
-                DateFormat fechaSelect = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat dateSelect = new SimpleDateFormat("yyyy-MM-dd");
                 cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)- 4);
                 date = cal.getTime();
                 CovidData covidData;
@@ -243,7 +243,7 @@ public class CovidDataJsonUtil {
                     transaction.setTxId(1);
                     transaction.setTxUpdate(date);
                     covidData.setIdPageUrl(4);
-                    if(j== 0){
+                    if(j == 0){
                         covidData.setDeathCases((Integer)general.get(j).get(2));
                         covidData.setConfirmedCases((Integer) general.get(i).get(1));
                         covidData.setVaccinated((Integer)vaccine.get(i).get(1));
@@ -260,7 +260,7 @@ public class CovidDataJsonUtil {
                     }
                     covidData.setDate((Date) general.get(j).get(0));
                     covidData.setTransaction(transaction);
-                    dateString=fechaSelect.format((Date) general.get(j).get(0));
+                    dateString=dateSelect.format((Date) general.get(j).get(0));
                     selectData = covidDataDao.verifyCountryCovidData(dateString,countries.get(i).getIdLocation());
                     if (selectData == 0){
                         covidDataDao.insertCovidData(covidData);
@@ -279,8 +279,7 @@ public class CovidDataJsonUtil {
         }
     }
 
-    public static String formatearCalendar(Calendar c) {
-        Date date = new Date();
+    public static String formatCalendar(Calendar c) {
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
     }

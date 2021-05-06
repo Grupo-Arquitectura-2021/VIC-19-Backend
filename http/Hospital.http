@@ -8,3 +8,26 @@ Content-Type: application/json
 GET http://localhost:8080/hospital/locationsByCity/1
 Accept: application/json
 Content-Type: application/json
+
+###
+##Agrega los datos de un hospital
+POST http://localhost:8080/hospital/addHospital
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idCity": 1,
+  "name": "Hospital de Clinicas",
+  "lon": -68.1186046495648,
+  "lat": -16.50703525
+}
+
+###
+##Elimina los datos de un hospital
+PUT http://localhost:8080/hospital/deleteHospital
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idHospital": 1
+}

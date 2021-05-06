@@ -23,11 +23,23 @@
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
     </resultMap>
-    <select  id="getHospitalLocationsByCity" resultMap="hospitalLocationByCityMap">
+    <select  id="getHospitalLocationsByCityId" resultMap="hospitalLocationByCityMap">
         SELECT id_hospital idLocation, name locationName, lon longitude, lat latitude
         FROM hospital
         WHERE hospital.status=1
         and hospital.id_city=#{cityId}
     </select>
+
+    <insert id="insertHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">
+        INSERT INTO hospital (`id_hospital`, `id_city`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
+            null,#{idCity}, #{name}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate}
+        )
+    </insert>
+
+    <update id="deleteHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">
+        UPDATE hospital
+        SET status = 0
+        WHERE id_hospital = #{idHospital}
+    </update>
 
 </mapper>

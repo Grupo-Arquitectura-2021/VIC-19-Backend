@@ -1,15 +1,15 @@
 package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.DrugstoreBl;
+import bo.ucb.edu.vic19.dto.CovidDataRequest;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Drugstore;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.util.TransactionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
@@ -29,5 +29,15 @@ public class DrugstoreApi {
         Transaction transaction = transactionUtil.createTransaction(request);
         drugstoreBl.createDrugstore(drugstore,transaction);
         return drugstore;
+    }
+
+    @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<LocationResponse> getDrugstores(){
+        return drugstoreBl.getDrugstores();
+    }
+
+    @GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LocationResponse getDrugstoreLocation(@PathVariable String drugstoreId){
+        return drugstoreBl.getDrugstoreLocation(Integer.parseInt(drugstoreId));
     }
 }

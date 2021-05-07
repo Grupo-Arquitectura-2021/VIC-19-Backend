@@ -8,4 +8,24 @@
         (null, #{idCity}, #{name}, #{lon}, #{lat}, 1, #{transaction.txId},
          #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate})
     </insert>
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="getDrugstoresMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select id="getDrugstores" resultMap="getDrugstoresMap">
+        SELECT id_drugstore idLocation, name locationName, lon longitude, lat latitude
+        FROM drugstore
+        WHERE drugstore.status = 1
+    </select>
+    <select id="getDrugstoreLocation" resultType="bo.ucb.edu.vic19.dto.LocationResponse">
+        SELECT id_drugstore as idLocation,
+               name as locationName,
+               lon as longitude,
+               lat as latitude
+        FROM drugstore
+        WHERE drugstore.id_drugstore = #{drugstoreId}
+          and drugstore.status = 1
+    </select>
 </mapper>

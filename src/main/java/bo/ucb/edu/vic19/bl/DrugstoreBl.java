@@ -2,10 +2,13 @@ package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.DrugstoreDao;
 import bo.ucb.edu.vic19.dao.TransactionDao;
+import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Drugstore;
 import bo.ucb.edu.vic19.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DrugstoreBl {
@@ -26,6 +29,14 @@ public class DrugstoreBl {
         return drugstore;
     }
 
+    public List<LocationResponse> getDrugstores(){
+        return drugstoreDao.getDrugstores();
+    }
+
+    public LocationResponse getDrugstoreLocation(Integer drugstoreId){
+        LocationResponse getDrugstoreLocation=drugstoreDao.getDrugstoreLocation(drugstoreId);
+        return getDrugstoreLocation;
+    }
 
 
 }

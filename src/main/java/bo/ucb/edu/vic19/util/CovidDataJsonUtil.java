@@ -213,7 +213,7 @@ public class CovidDataJsonUtil {
             return null;
         }
     }
-    @Scheduled(fixedRate = 30000L)
+    @Scheduled(fixedRate = 3000000L)
     @GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {

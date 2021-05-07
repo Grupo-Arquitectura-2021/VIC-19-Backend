@@ -9,6 +9,15 @@ public class CovidDataRequest {
     private Integer confirmedCases;
     private Integer vaccinated;
     private Integer recuperated;
+    private Integer cumulativeCases;
+
+    public Integer getCumulativeCases() {
+        return cumulativeCases;
+    }
+
+    public void setCumulativeCases(Integer cumulativeCases) {
+        this.cumulativeCases = cumulativeCases;
+    }
 
     public CovidDataRequest() {
     }
@@ -70,6 +79,7 @@ public class CovidDataRequest {
                 ", confirmedCases=" + confirmedCases +
                 ", vaccinated=" + vaccinated +
                 ", recuperated=" + recuperated +
+                ", cumulativeCases=" + cumulativeCases +
                 '}';
     }
 }

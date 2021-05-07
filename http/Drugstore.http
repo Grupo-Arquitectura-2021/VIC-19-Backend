@@ -1,0 +1,13 @@
+
+POST http://localhost:8080/drugstore
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idCity": 1,
+  "name": "Farmacia Chavez",
+  "lon": -68.12027017331768,
+  "lat": -16.483746282554062
+
+}
+

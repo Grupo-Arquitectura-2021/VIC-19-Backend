@@ -38,5 +38,9 @@ public class DrugstoreBl {
         return getDrugstoreLocation;
     }
 
+    public List<LocationResponse> getDrugstoresByCity(Integer cityId){
+        return drugstoreDao.getDrugstoresByCity(cityId);
+    }
+
 
 }

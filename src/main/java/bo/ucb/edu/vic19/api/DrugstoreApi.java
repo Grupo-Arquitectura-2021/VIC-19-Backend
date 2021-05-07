@@ -37,7 +37,12 @@ public class DrugstoreApi {
     }
 
     @GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LocationResponse getDrugstoreLocation(@PathVariable String drugstoreId){
-        return drugstoreBl.getDrugstoreLocation(Integer.parseInt(drugstoreId));
+    public LocationResponse getDrugstoreLocation(@PathVariable Integer drugstoreId){
+        return drugstoreBl.getDrugstoreLocation(drugstoreId);
+    }
+
+    @GetMapping(path = "/location/city/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<LocationResponse> getDrugstoresByCity(@PathVariable Integer cityId){
+        return drugstoreBl.getDrugstoresByCity(cityId);
     }
 }

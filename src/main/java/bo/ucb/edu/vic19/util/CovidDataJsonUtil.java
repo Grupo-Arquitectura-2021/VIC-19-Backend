@@ -43,7 +43,6 @@ public class CovidDataJsonUtil {
         this.countryDao=countryDao;
 
     }
-
     @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/siip")
     public void siipCovidData() throws ParseException {
@@ -178,8 +177,7 @@ public class CovidDataJsonUtil {
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
             Integer lengthPlus1 = length+1;
-            System.out.println("longitud: "+lengthPlus1.toString());
-            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1);
+            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1.toString());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
@@ -199,6 +197,7 @@ public class CovidDataJsonUtil {
                     arr.add(-1);
                 }
                 else{
+
                     arr.add((Integer) vaccines.getTimeline().get(formatCalendar(c)));
                 }
                 vaccineData.add(arr);
@@ -213,14 +212,14 @@ public class CovidDataJsonUtil {
             return null;
         }
     }
-    @Scheduled(fixedRate = 3000000L)
+    @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {
             List<LocationResponse> countries=countryDao.countries();
             for(int i=0;i<countries.size();i++){
-                var general=getJsonHistoricalData(countries.get(i).getLocationName(),3);
-                var vaccine=getJsonVaccine(countries.get(i).getLocationName(),3);
+                var general=getJsonHistoricalData(countries.get(i).getLocationName(),100);
+                var vaccine=getJsonVaccine(countries.get(i).getLocationName(),100);
                 Date date;
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());

@@ -69,4 +69,11 @@
         WHERE id_hospital = #{idHospital}
     </update>
 
+    <update id="updateHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">
+        UPDATE hospital
+        SET name = #{name}, id_city = #{idCity}, lon = #{lon}, lat = #{lat}
+        WHERE id_hospital = #{idHospital}
+        AND status = 1;
+    </update>
+
 </mapper>

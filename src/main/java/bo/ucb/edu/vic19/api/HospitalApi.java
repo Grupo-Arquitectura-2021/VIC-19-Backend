@@ -58,4 +58,10 @@ public class HospitalApi {
         return hospitalBl.deleteHospital(hospital);
     }
 
+    //Metodo que actualiza un hospital a traves del requestMethod PUT
+    @RequestMapping(path="/updateHospital",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Hospital updateHospital(@RequestBody Hospital hospital, HttpServletRequest request) {
+        return hospitalBl.updateHospital(hospital);
+    }
+
 }

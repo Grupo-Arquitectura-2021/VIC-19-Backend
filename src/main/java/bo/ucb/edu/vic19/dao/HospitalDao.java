@@ -17,6 +17,8 @@ public interface HospitalDao {
 
     public void deleteHospital(Hospital hospital);
 
+    public void updateHospital(Hospital hospital);
+
     List<LocationResponse> getHospitalLocations();
 
     List<HospitalRequest> getHospitalAllInfo();

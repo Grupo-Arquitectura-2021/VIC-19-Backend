@@ -26,6 +26,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/drugstore/locations/city/1
+GET http://localhost:8080/drugstore/location/city/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
+DELETE http://localhost:8080/drugstore/deleteDrugstore?drugstoreId=2
 Accept: application/json
 Content-Type: application/json

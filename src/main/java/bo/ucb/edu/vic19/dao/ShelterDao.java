@@ -3,11 +3,12 @@ package bo.ucb.edu.vic19.dao;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.dto.ShelterRequest;
 import bo.ucb.edu.vic19.model.Shelter;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Mapper
 public interface ShelterDao {
     public List<LocationResponse> getShelterLocation(Integer shelterId);
     public List<LocationResponse> getShelterLocationsByCityId(Integer cityId);

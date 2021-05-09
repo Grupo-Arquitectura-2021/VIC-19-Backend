@@ -28,10 +28,11 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "idCity": 1,
-  "name": "Albergue del Bicentenario Bolivia Solidaria",
-  "lon": -68.08359266137292,
-  "lat": -16.567843495982423
+  "idCity": 3,
+  "name": "Albergue Bolivia",
+  "amount": 10,
+  "lon": -5.08359266137292,
+  "lat": -5.567843495982423
 }
 
 ###
@@ -42,4 +43,19 @@ Content-Type: application/json
 
 {
   "idHospital": 1
+}
+
+###
+##Actualiza los datos de un albergue
+PUT http://localhost:8080/shelter/updateShelter
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idShelter": 2,
+  "idCity": 2,
+  "name": "Albergue Coochabamba Solidaria",
+  "amount": 50,
+  "lon": -100.3699597,
+  "lat": 100.5776891
 }

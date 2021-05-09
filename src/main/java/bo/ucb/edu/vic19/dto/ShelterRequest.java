@@ -3,18 +3,18 @@ package bo.ucb.edu.vic19.dto;
 import bo.ucb.edu.vic19.model.Transaction;
 
 public class ShelterRequest {
-    private String cityName;
+    private String nameCity;
     private String name;
     private Integer amount;
     private float lon;
     private float lat;
 
-    public String getCityName() {
-        return cityName;
+    public String getNameCity() {
+        return nameCity;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setNameCity(String nameCity) {
+        this.nameCity = nameCity;
     }
 
     public String getName() {
@@ -52,7 +52,7 @@ public class ShelterRequest {
     @Override
     public String toString() {
         return "ShelterRequest{" +
-                "cityName='" + cityName + '\'' +
+                "cityName='" + nameCity + '\'' +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
                 ", lon=" + lon +

@@ -45,12 +45,13 @@
 
     <resultMap type="bo.ucb.edu.vic19.dto.ShelterRequest" id="shelterAllInfo">
         <result column="nameCity" property="nameCity"/>
-        <result column="hospitalName" property="name"/>
+        <result column="name" property="name"/>
+        <result column="amount" property="amount"/>
         <result column="longitude" property="lon"/>
         <result column="latitude" property="lat"/>
     </resultMap>
     <select  id="getShelterAllInfo" resultMap="shelterAllInfo">
-        SELECT city.city nameCity, shelter.name shelterName, shelter.lon longitude, shelter.lat latitude
+        SELECT city.city nameCity, shelter.name name, shelter.amount amount, shelter.lon longitude, shelter.lat latitude
         FROM shelter, city
         WHERE shelter.status=1
         AND city.status = 1
@@ -58,8 +59,7 @@
     </select>
 
     <insert id="insertShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
-        INSERT INTO shelter (`id_shelter`, `id_city`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
-            null,#{idCity}, #{name}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate}
+        INSERT INTO shelter (`id_shelter`, `id_city`, `name`, `amount`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null, #{idCity}, #{name}, #{amount}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate}
         )
     </insert>
 
@@ -71,7 +71,7 @@
 
     <update id="updateShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
         UPDATE shelter
-        SET name = #{name}, id_city = #{idCity}, lon = #{lon}, lat = #{lat}
+        SET name = #{name}, id_city = #{idCity}, amount=#{amount}, lon = #{lon}, lat = #{lat}
         WHERE id_shelter = #{idShelter}
         AND status = 1;
     </update>

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "/hospital")
+@RequestMapping(value = "/shelter")
 public class ShelterApi {
     private ShelterBl shelterBl;
 
     @Autowired
-    public ShelterBl(ShelterBl shelterBl){
+    public ShelterApi(ShelterBl shelterBl){
         this.shelterBl = shelterBl;
     }
 

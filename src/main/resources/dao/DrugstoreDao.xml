@@ -40,4 +40,13 @@
         WHERE drugstore.id_city = #{cityId}
           and drugstore.status = 1
     </select>
+    <update id="deleteDrugstore" parameterType="bo.ucb.edu.vic19.model.Drugstore">
+        UPDATE drugstore SET
+        status = #{status},
+        tx_id=#{transaction.txId},
+        tx_host=#{transaction.txHost},
+        tx_update=#{transaction.txUpdate}
+        WHERE id_drugstore = #{idDrugstore}
+        and status = 1
+    </update>
 </mapper>

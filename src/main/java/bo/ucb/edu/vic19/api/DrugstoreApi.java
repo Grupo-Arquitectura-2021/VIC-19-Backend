@@ -4,15 +4,17 @@ import bo.ucb.edu.vic19.bl.DrugstoreBl;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Drugstore;
+import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.util.TransactionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/drugstore")
@@ -31,8 +33,15 @@ public class DrugstoreApi {
         return drugstore;
     }
 
+    @RequestMapping(path ="/deleteDrugstore" ,method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteDrugstore(@RequestParam Integer drugstoreId, HttpServletRequest request){
+        TransactionUtil transactionUtil = new TransactionUtil();
+        Transaction transaction = transactionUtil.createTransaction(request);
+        drugstoreBl.deleteDrugstore(drugstoreId,transaction);
+    }
+
     @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getDrugstores(){
+    public List<LocationResponse> getDrugstores(){
         return drugstoreBl.getDrugstores();
     }
 
@@ -42,7 +51,9 @@ public class DrugstoreApi {
     }
 
     @GetMapping(path = "/location/city/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getDrugstoresByCity(@PathVariable Integer cityId){
+    public List<LocationResponse> getDrugstoresByCity(@PathVariable Integer cityId){
         return drugstoreBl.getDrugstoresByCity(cityId);
     }
+
+
 }

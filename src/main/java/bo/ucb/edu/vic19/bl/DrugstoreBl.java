@@ -42,5 +42,12 @@ public class DrugstoreBl {
         return drugstoreDao.getDrugstoresByCity(cityId);
     }
 
+    public void deleteDrugstore(Integer drugstoreId,Transaction transaction){
+        Drugstore drugstore = new Drugstore();
+        drugstore.setStatus(0);
+        drugstore.setIdDrugstore(drugstoreId);
+        drugstore.setTransaction(transaction);
+        drugstoreDao.deleteDrugstore(drugstore);
+    }
 
 }

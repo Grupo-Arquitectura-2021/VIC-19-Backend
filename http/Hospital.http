@@ -43,3 +43,17 @@ Content-Type: application/json
 {
   "idHospital": 1
 }
+
+###
+##Actualiza los datos de un hospital
+PUT http://localhost:8080/hospital/updateHospital
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idHospital": 2,
+  "idCity": 2,
+  "name": "Hospital del Niño",
+  "lon": -100.3699597,
+  "lat": 20.5776891
+}

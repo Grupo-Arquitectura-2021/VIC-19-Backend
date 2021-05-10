@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.vic19.dao.DrugstoreDao">
+    <insert id="createDrugstore" parameterType="bo.ucb.edu.vic19.model.Drugstore">
+        INSERT INTO drugstore VALUES
+        (null, #{idCity}, #{name}, #{lon}, #{lat}, 1, #{transaction.txId},
+         #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate})
+    </insert>
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="getDrugstoresMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select id="getDrugstores" resultMap="getDrugstoresMap">
+        SELECT id_drugstore idLocation, name locationName, lon longitude, lat latitude
+        FROM drugstore
+        WHERE drugstore.status = 1
+    </select>
+    <select id="getDrugstoreLocation" resultType="bo.ucb.edu.vic19.dto.LocationResponse">
+        SELECT id_drugstore as idLocation,
+               name as locationName,
+               lon as longitude,
+               lat as latitude
+        FROM drugstore
+        WHERE drugstore.id_drugstore = #{drugstoreId}
+          and drugstore.status = 1
+    </select>
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="getDrugstoresByCityMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select id="getDrugstoresByCity" resultMap="getDrugstoresByCityMap">
+        SELECT id_drugstore idLocation, name locationName, lon longitude, lat latitude
+        FROM drugstore
+        WHERE drugstore.id_city = #{cityId}
+          and drugstore.status = 1
+    </select>
+    <update id="deleteDrugstore" parameterType="bo.ucb.edu.vic19.model.Drugstore">
+        UPDATE drugstore SET
+        status = #{status},
+        tx_id=#{transaction.txId},
+        tx_host=#{transaction.txHost},
+        tx_update=#{transaction.txUpdate}
+        WHERE id_drugstore = #{idDrugstore}
+        and status = 1
+    </update>
+
+    <update id="updateDrugstore" parameterType="bo.ucb.edu.vic19.model.Drugstore">
+        UPDATE drugstore SET
+            id_city = #{idCity},
+            name = #{name},
+            lon = #{lon},
+            lat = #{lat},
+            status = 1,
+            tx_id=#{transaction.txId},
+            tx_host=#{transaction.txHost},
+            tx_update=#{transaction.txUpdate}
+        WHERE id_drugstore = #{idDrugstore}
+          and status = 1
+    </update>
+</mapper>

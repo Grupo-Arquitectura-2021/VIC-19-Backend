@@ -45,6 +45,11 @@ public class HospitalBl {
         return hospital;
     }
 
+    public Hospital updateHospital(Hospital hospital) {
+        hospitalDao.updateHospital(hospital);
+        return hospital;
+    }
+
     public List<LocationResponse> getHospitalLocations() {
         return hospitalDao.getHospitalLocations();
     }

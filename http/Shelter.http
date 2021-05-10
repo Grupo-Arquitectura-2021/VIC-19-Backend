@@ -1,0 +1,61 @@
+## Obtiene las locaciones de un albergue
+GET http://localhost:8080/shelter/location/1
+Accept: application/json
+Content-Type: application/json
+
+###
+## Obtiene las locaciones de todos los albergues
+GET http://localhost:8080/shelter/locations
+Accept: application/json
+Content-Type: application/json
+
+###
+## Obtiene la informacion de todos los albergues
+GET http://localhost:8080/shelter/allInfo
+Accept: application/json
+Content-Type: application/json
+
+###
+##Obtiene las locaciones de albergues de una ciudad
+GET http://localhost:8080/shelter/locationsByCity/1
+Accept: application/json
+Content-Type: application/json
+
+###
+##Agrega los datos de un albergue
+POST http://localhost:8080/shelter/addShelter
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idCity": 3,
+  "name": "Albergue Bolivia",
+  "amount": 10,
+  "lon": -5.08359266137292,
+  "lat": -5.567843495982423
+}
+
+###
+##Elimina los datos de un albergue
+PUT http://localhost:8080/shelter/deleteShelter
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idHospital": 1
+}
+
+###
+##Actualiza los datos de un albergue
+PUT http://localhost:8080/shelter/updateShelter
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idShelter": 2,
+  "idCity": 2,
+  "name": "Albergue Coochabamba Solidaria",
+  "amount": 50,
+  "lon": -100.3699597,
+  "lat": 100.5776891
+}

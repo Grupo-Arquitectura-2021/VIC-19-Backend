@@ -1,0 +1,53 @@
+
+POST http://localhost:8080/drugstore
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idCity": 1,
+  "name": "Farmacia Chavez",
+  "lon": -68.12027017331768,
+  "lat": -16.483746282554062
+
+}
+
+###
+
+GET http://localhost:8080/drugstore/locations
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:8080/drugstore/location/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/drugstore/location/city/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/drugstore/updateDrugstore
+Accept: application/json
+Content-Type: application/json
+
+{
+  "idDrugstore": 1,
+  "idCity": 1,
+  "name": "Farmacia Bolivia",
+  "lon": -68.13314189172475,
+  "lat": -16.50053689546242
+}
+
+###
+
+DELETE http://localhost:8080/drugstore/deleteDrugstore?drugstoreId=2
+Accept: application/json
+Content-Type: application/json
+
+

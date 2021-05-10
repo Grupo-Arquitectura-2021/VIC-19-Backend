@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.vic19.dao.ShelterDao">
+
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="shelterLocationMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="getShelterLocation" resultMap="shelterLocationMap">
+        SELECT id_shelter idLocation, name locationName, lon longitude, lat latitude
+        FROM shelter
+        WHERE shelter.status=1
+        and shelter.id_shelter=#{shelterId}
+    </select>
+
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="shelterLocationByCityMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="getShelterLocationsByCityId" resultMap="shelterLocationByCityMap">
+        SELECT id_shelter idLocation, name locationName, lon longitude, lat latitude
+        FROM shelter
+        WHERE shelter.status=1
+        and shelter.id_city=#{cityId}
+    </select>
+
+
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="shelterLocations">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="getShelterLocations" resultMap="shelterLocations">
+        SELECT id_shelter idLocation, name locationName, lon longitude, lat latitude
+        FROM shelter
+        WHERE shelter.status=1
+    </select>
+
+    <resultMap type="bo.ucb.edu.vic19.dto.ShelterRequest" id="shelterAllInfo">
+        <result column="nameCity" property="nameCity"/>
+        <result column="name" property="name"/>
+        <result column="amount" property="amount"/>
+        <result column="longitude" property="lon"/>
+        <result column="latitude" property="lat"/>
+    </resultMap>
+    <select  id="getShelterAllInfo" resultMap="shelterAllInfo">
+        SELECT city.city nameCity, shelter.name name, shelter.amount amount, shelter.lon longitude, shelter.lat latitude
+        FROM shelter, city
+        WHERE shelter.status=1
+        AND city.status = 1
+        AND city.id_city = shelter.id_city;
+    </select>
+
+    <insert id="insertShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
+        INSERT INTO shelter (`id_shelter`, `id_city`, `name`, `amount`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (null, #{idCity}, #{name}, #{amount}, #{lon}, #{lat}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost}, #{transaction.txUpdate}
+        )
+    </insert>
+
+    <update id="deleteShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
+        UPDATE shelter
+        SET status = 0
+        WHERE id_shelter = #{idShelter}
+    </update>
+
+    <update id="updateShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
+        UPDATE shelter
+        SET name = #{name}, id_city = #{idCity}, amount=#{amount}, lon = #{lon}, lat = #{lat}
+        WHERE id_shelter = #{idShelter}
+        AND status = 1;
+    </update>
+
+</mapper>

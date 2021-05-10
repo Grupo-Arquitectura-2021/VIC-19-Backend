@@ -18,8 +18,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/city/Beni/municipality/2021-04-06
+GET http://localhost:8080/city/name/Tarija/municipality/2021-05-17
 Accept: application/json
 Content-Type: application/json
 
 ###
+
+GET http://localhost:8080/city/1/municipality/2021-05-17
+Accept: application/json
+Content-Type: application/json

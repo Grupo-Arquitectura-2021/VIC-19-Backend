@@ -1,11 +1,23 @@
 ## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
-GET http://localhost:8080/country/allInfo/1/2021-04-02
+GET http://localhost:8080/country/allInfo/1/2021-5-11
 Accept: application/json
 Content-Type: application/json
 
 ### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/mediaAllInfo/1/2021-04-02
+GET http://localhost:8080/country/mediaAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar varianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/varianceAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar Intervalo de confianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/confidenceIntervalAllInfo/1/2021-05-19
 Accept: application/json
 Content-Type: application/json
 

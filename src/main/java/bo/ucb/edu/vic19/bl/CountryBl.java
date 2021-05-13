@@ -1,9 +1,10 @@
 package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.CountryDao;
-import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
-import bo.ucb.edu.vic19.dto.LocationResponse;
+import bo.ucb.edu.vic19.dto.*;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
+import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,39 +34,17 @@ public class CountryBl {
     }
 
     public CovidDataRequestMedia mediaCovidDataCountryAllInfo(int countryId, String dateCovid) {
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
-        int size=covidDataListCountryAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
-        float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
-        for(int i=0; i<size; i++){
-            if(covidDataListCountryAllInfo.get(i).getVaccinated() >= 0){
-                sumVac+=covidDataListCountryAllInfo.get(i).getVaccinated();
-            }
+        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
+        return mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
+    }
 
-            if(covidDataListCountryAllInfo.get(i).getRecuperated() >= 0){
-                sumRec+=covidDataListCountryAllInfo.get(i).getRecuperated();
-            }
+    public CovidDataRequestVariance varianceCovidDataCountryAllInfo(int countryId, String dateCovid) {
+        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
+        return varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
+    }
 
-            if(covidDataListCountryAllInfo.get(i).getConfirmedCases() >= 0){
-                sumConf+=covidDataListCountryAllInfo.get(i).getConfirmedCases();
-            }
-
-            if(covidDataListCountryAllInfo.get(i).getDeathCases() >= 0){
-                sumDeath+=covidDataListCountryAllInfo.get(i).getDeathCases();
-            }
-        }
-        mediaConf = (float) sumConf/size;
-        mediaDeath = (float) sumDeath/size;
-        mediaRec = (float) sumRec/size;
-        mediaVac= (float) sumVac/size;
-
-        CovidDataRequestMedia covidDataRequestMedia = new CovidDataRequestMedia();
-        covidDataRequestMedia.setConfirmedCases(mediaConf);
-        covidDataRequestMedia.setDeathCases(mediaDeath);
-        covidDataRequestMedia.setRecuperated(mediaRec);
-        covidDataRequestMedia.setVaccinated(mediaVac);
-        covidDataRequestMedia.setDateLocationCovid(dateCovid);
-        covidDataRequestMedia.setNameLocationCovid(countryDao.countryName(countryId));
-
-        return covidDataRequestMedia;
+    public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCountryAllInfo(int countryId, String dateCovid) {
+        ConfidenceIntervalCountry confidenceIntervalCountry = new ConfidenceIntervalCountry(countryDao);
+        return confidenceIntervalCountry.condifenceIntervalCountry(countryId, dateCovid);
     }
 }

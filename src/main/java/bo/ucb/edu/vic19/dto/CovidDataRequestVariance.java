@@ -1,6 +1,6 @@
 package bo.ucb.edu.vic19.dto;
 
-public class CovidDataRequestMedia {
+public class CovidDataRequestVariance {
     private String nameLocationCovid;
     private String dateLocationCovid;
     private float deathCases;
@@ -8,6 +8,13 @@ public class CovidDataRequestMedia {
     private float recuperated;
     private float vaccinated;
 
+    public float getRecuperated() {
+        return recuperated;
+    }
+
+    public void setRecuperated(float recuperated) {
+        this.recuperated = recuperated;
+    }
 
     public String getNameLocationCovid() {
         return nameLocationCovid;
@@ -49,26 +56,15 @@ public class CovidDataRequestMedia {
         this.vaccinated = vaccinated;
     }
 
-    public float getRecuperated() {
-        return recuperated;
-    }
-
-    public void setRecuperated(float recuperated) {
-        this.recuperated = recuperated;
-    }
-
-    public CovidDataRequestMedia() {
-    }
-
     @Override
     public String toString() {
-        return "CovidDataRequestMedia{" +
+        return "CovidDataRequestVariance{" +
                 "nameLocationCovid='" + nameLocationCovid + '\'' +
                 ", dateLocationCovid='" + dateLocationCovid + '\'' +
                 ", deathCases=" + deathCases +
                 ", confirmedCases=" + confirmedCases +
-                ", vaccinated=" + vaccinated +
                 ", recuperated=" + recuperated +
+                ", vaccinated=" + vaccinated +
                 '}';
     }
 }

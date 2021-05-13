@@ -1,9 +1,7 @@
 package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.CityBl;
-import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
-import bo.ucb.edu.vic19.dto.LocationResponse;
+import bo.ucb.edu.vic19.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -57,6 +55,16 @@ public class CityApi {
     @GetMapping(path = "/mediaAllInfo/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestMedia covidDataCountryMediaAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         return cityBl.mediaCovidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
+    }
+
+    @GetMapping(path = "/varianceAllInfo/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestVariance covidDataCityVarianceAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return cityBl.varianceCovidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
+    }
+
+    @GetMapping(path = "/confidenceIntervalAllInfo/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestConfidenceInterval covidDataCountryConfidenceIntervalAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return cityBl.confidenceIntervalCovidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
     }
 
 }

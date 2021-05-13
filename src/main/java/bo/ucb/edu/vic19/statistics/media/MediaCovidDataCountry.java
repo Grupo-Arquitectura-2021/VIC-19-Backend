@@ -12,7 +12,6 @@ import java.util.List;
 public class MediaCovidDataCountry {
     CountryDao countryDao;
 
-    @Autowired
     public MediaCovidDataCountry(CountryDao countryDao){
         this.countryDao = countryDao;
     }

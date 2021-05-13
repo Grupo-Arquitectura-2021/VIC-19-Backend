@@ -1,12 +1,14 @@
 package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dto.CovidDataRequest;
+import bo.ucb.edu.vic19.dto.*;
 
-import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
-import bo.ucb.edu.vic19.dto.LocationResponse;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCity;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCity;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +55,15 @@ public class CityBl {
     public CovidDataRequestMedia mediaCovidDataCityAllInfo(int cityId, String dateCovid) {
         MediaCovidDataCity mediaCovidDataCity = new MediaCovidDataCity(cityDao);
         return mediaCovidDataCity.mediaCovidDataCityAllInfo(cityId, dateCovid);
+    }
+
+    public CovidDataRequestVariance varianceCovidDataCityAllInfo(int cityId, String dateCovid) {
+        VarianceCovidDataCity varianceCovidDataCity = new VarianceCovidDataCity(cityDao);
+        return varianceCovidDataCity.varianceCovidDataCityAllInfo(cityId, dateCovid);
+    }
+
+    public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCityAllInfo(int cityId, String dateCovid) {
+        ConfidenceIntervalCity confidenceIntervalCity = new ConfidenceIntervalCity(cityDao);
+        return confidenceIntervalCity.condifenceIntervalCity(cityId, dateCovid);
     }
 }

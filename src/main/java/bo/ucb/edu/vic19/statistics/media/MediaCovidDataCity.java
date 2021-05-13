@@ -1,10 +1,8 @@
 package bo.ucb.edu.vic19.statistics.media;
 
 import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -12,7 +10,6 @@ public class MediaCovidDataCity {
 
     CityDao cityDao;
 
-    @Autowired
     public MediaCovidDataCity(CityDao cityDao){
         this.cityDao = cityDao;
     }

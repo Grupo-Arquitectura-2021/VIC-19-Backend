@@ -1,20 +1,16 @@
 package bo.ucb.edu.vic19.statistics.variance;
 
 import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
 import bo.ucb.edu.vic19.dto.CovidDataRequestVariance;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCity;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class VarianceCovidDataCity {
     CityDao cityDao;
 
-    @Autowired
     public VarianceCovidDataCity(CityDao cityDao){
         this.cityDao = cityDao;
     }

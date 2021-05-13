@@ -1,34 +1,36 @@
 package bo.ucb.edu.vic19.statistics.confidenceInterval;
 
 import bo.ucb.edu.vic19.dao.CountryDao;
+import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestConfidenceInterval;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
 import bo.ucb.edu.vic19.dto.CovidDataRequestVariance;
-import bo.ucb.edu.vic19.model.Country;
+import bo.ucb.edu.vic19.model.Municipality;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.media.MediaCovidDataMunicipality;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
-import org.springframework.beans.factory.annotation.Autowired;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataMunicipality;
 
 import java.util.List;
 
-public class ConfidenceIntervalCountry {
-    CountryDao countryDao;
+public class ConfidenceIntervalMunicipality {
+    MunicipalityDao municipalityDao;
 
-    public ConfidenceIntervalCountry(CountryDao countryDao){
-        this.countryDao = countryDao;
+    public ConfidenceIntervalMunicipality(MunicipalityDao municipalityDao){
+        this.municipalityDao = municipalityDao;
     }
 
-    public CovidDataRequestConfidenceInterval condifenceIntervalCountry(int countryId, String dateCovid){
-        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
-        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
-        CovidDataRequestVariance covidDataRequestVariance = new CovidDataRequestVariance();
-        covidDataRequestVariance = varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
-        CovidDataRequestMedia covidDataRequestMedia = new CovidDataRequestMedia();
-        covidDataRequestMedia = mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
+    public CovidDataRequestConfidenceInterval condifenceIntervalMunicipality(int munId, String dateCovid){
+        VarianceCovidDataMunicipality varianceCovidDataMun = new VarianceCovidDataMunicipality(municipalityDao);
+        MediaCovidDataMunicipality mediaCovidDataMunicipality= new MediaCovidDataMunicipality(municipalityDao);
+        CovidDataRequestVariance covidDataRequestVariance;
+        covidDataRequestVariance = varianceCovidDataMun.varianceCovidDataMunAllInfo(munId, dateCovid);
+        CovidDataRequestMedia covidDataRequestMedia;
+        covidDataRequestMedia = mediaCovidDataMunicipality.mediaCovidDataMunicipalityAllInfo(munId, dateCovid);
 
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
-        int size=covidDataListCountryAllInfo.size();
+        List<CovidDataRequest> covidDataListMunAllInfo=municipalityDao.covidDataListMunAllInfo(munId, dateCovid);
+        int size=covidDataListMunAllInfo.size();
         float standardErrorRec=0, standardErrorVac=0, standardErrorConf=0, standardDeath=0;
         float errorRangeRec=0, errorRangeVac=0, errorRangeConf=0, errorRangeDeath=0;
         float ciRecUp=0, ciRecLow=0, ciVacUp=0, ciVacLow=0, ciConfUp=0, ciConfLow=0, ciDeathUp=0, ciDeathLow=0;
@@ -64,10 +66,9 @@ public class ConfidenceIntervalCountry {
         covidDataRequestConfidenceInterval.setDeathCasesLowerLimit(ciDeathLow);
         covidDataRequestConfidenceInterval.setPercentage(96);
         covidDataRequestConfidenceInterval.setDateLocationCovid(dateCovid);
-        covidDataRequestConfidenceInterval.setNameLocationCovid(countryDao.countryName(countryId));
+        covidDataRequestConfidenceInterval.setNameLocationCovid(municipalityDao.municipalityName(munId));
 
         return covidDataRequestConfidenceInterval;
 
     }
 }
-

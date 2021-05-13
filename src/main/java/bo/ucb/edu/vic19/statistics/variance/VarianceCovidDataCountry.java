@@ -12,7 +12,6 @@ import java.util.List;
 public class VarianceCovidDataCountry {
     CountryDao countryDao;
 
-    @Autowired
     public VarianceCovidDataCountry(CountryDao countryDao){
         this.countryDao = countryDao;
     }

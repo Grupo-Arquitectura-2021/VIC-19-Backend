@@ -10,7 +10,6 @@ import java.util.List;
 public class MediaCovidDataMunicipality {
     MunicipalityDao municipalityDao;
 
-    @Autowired
      public MediaCovidDataMunicipality(MunicipalityDao municipalityDao){
         this.municipalityDao = municipalityDao;
     }

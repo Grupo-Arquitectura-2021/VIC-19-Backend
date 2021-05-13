@@ -10,4 +10,16 @@ GET http://localhost:8080/municipality/mediaAllInfo/8/2021-04-29
 Accept: application/json
 Content-Type: application/json
 
+### Mostrar varianza de datos de un municipio desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/municipality/varianceAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar Intervalo de confianza de datos de un municipio desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/municipality/confidenceIntervalAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
 ###

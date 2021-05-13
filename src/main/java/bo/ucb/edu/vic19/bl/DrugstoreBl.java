@@ -50,4 +50,9 @@ public class DrugstoreBl {
         drugstoreDao.deleteDrugstore(drugstore);
     }
 
+    public Drugstore updateDrugstore(Drugstore drugstore, Transaction transaction){
+        drugstore.setTransaction(transaction);
+        drugstoreDao.updateDrugstore(drugstore);
+        return drugstore;
+    }
 }

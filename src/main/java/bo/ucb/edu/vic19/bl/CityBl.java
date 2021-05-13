@@ -40,6 +40,11 @@ public class CityBl {
         return covidDataListCityMunicipality;
     }
 
+    public List<CovidDataRequest> covidDataListCityByIdMunicipality(Integer cityId,String dateCovid){
+        List<CovidDataRequest> covidDataListCityByIdMunicipality=cityDao.covidDataListCityByIdMunicipality(cityId, dateCovid);
+        return covidDataListCityByIdMunicipality;
+    }
+
     public List<CovidDataRequest> covidDataCityAllInfo(int cityId, String dateCovid) {
         List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
         return covidDataListCityAllInfo;

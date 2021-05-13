@@ -40,6 +40,13 @@ public class DrugstoreApi {
         drugstoreBl.deleteDrugstore(drugstoreId,transaction);
     }
 
+    @RequestMapping(path = "/updateDrugstore", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Drugstore updateDrugstore(@RequestBody Drugstore drugstore, HttpServletRequest request){
+        TransactionUtil transactionUtil = new TransactionUtil();
+        Transaction transaction = transactionUtil.createTransaction(request);
+        return drugstoreBl.updateDrugstore(drugstore,transaction);
+    }
+
     @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getDrugstores(){
         return drugstoreBl.getDrugstores();

@@ -12,5 +12,6 @@ public interface DrugstoreDao {
     public LocationResponse getDrugstoreLocation(Integer drugstoreId);
     List<LocationResponse> getDrugstores();
     List<LocationResponse> getDrugstoresByCity(Integer cityId);
+    public void updateDrugstore(Drugstore drugstore);
     public void deleteDrugstore(Drugstore drugstore);
 }

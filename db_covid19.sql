@@ -196,7 +196,7 @@ CREATE TABLE Page_url (
 CREATE TABLE News (
                       id_news int NOT NULL AUTO_INCREMENT,
                       news_title varchar(100) NOT NULL,
-                      description varchar(400) NOT NULL,
+                      description text NOT NULL,
                       news_date date NOT NULL,
                       news_images varchar(255) NOT NULL,
                       news_url varchar(300) NOT NULL,

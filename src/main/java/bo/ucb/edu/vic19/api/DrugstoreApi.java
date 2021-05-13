@@ -1,17 +1,13 @@
 package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.DrugstoreBl;
-import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Drugstore;
-import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.util.TransactionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

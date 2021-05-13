@@ -5,8 +5,8 @@ public class News {
     private String title;
     private String content;
     private Date dateNews;
-    private String urlImage;
-    private String source;
+    private String newsImages;
+    private String newsUrl;
     private Integer status;
     private Transaction transaction;
 
@@ -46,20 +46,20 @@ public class News {
         this.dateNews = dateNews;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getNewsImages() {
+        return newsImages;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setNewsImages(String newsImages) {
+        this.newsImages = newsImages;
     }
 
-    public String getSource() {
-        return source;
+    public String getNewsUrl() {
+        return newsUrl;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setNewsUrl(String newsUrl) {
+        this.newsUrl = newsUrl;
     }
 
     public Integer getStatus() {
@@ -81,13 +81,13 @@ public class News {
     @Override
     public String toString() {
         return "News{" +
-                "idNews=" + idNews +'\'' +
+                "idNews=" + idNews +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", dateTime='" + dateNews + '\'' +
-                ", urlImage='" + urlImage + '\'' +
-                ", source='" + source + '\'' +
-                ", status='" + status + '\'' +
+                ", dateNews=" + dateNews +
+                ", newsImages='" + newsImages + '\'' +
+                ", newsUrl='" + newsUrl + '\'' +
+                ", status=" + status +
                 ", transaction=" + transaction +
                 '}';
     }

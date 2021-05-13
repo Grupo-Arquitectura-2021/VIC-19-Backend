@@ -4,16 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bo.ucb.edu.vic19.dao.NewsDao">
     <insert id="addNews" parameterType="bo.ucb.edu.vic19.model.News">
-        INSERT INTO news
-        VALUES (
-            null,
-            #{title},#{content},
-            #{dateNews},#{urlImage},
-            #{source},#{status},
-            #{txDate},
-            #{txHost},
-            #{txUpdate}
-        )
+        INSERT INTO news VALUES
+        (null, #{title}, #{content}, #{dateNews}, #{newsImages}, #{newsUrl},
+         1,#{transaction.txId},#{transaction.txDate},#{transaction.txHost},
+         #{transaction.txUpdate})
     </insert>
 
     <update id="deleteNews">
@@ -41,4 +35,20 @@
         <result column="urlImage" property="urlImage"/>
         <result column="source" property="source"/>
     </resultMap>
+
+    <update id="updateNews" parameterType="bo.ucb.edu.vic19.model.News">
+        UPDATE news SET
+            news_title = #{title},
+            description = #{content},
+            news_date = #{dateNews},
+            news_images = #{newsImages},
+            news_url = #{newsUrl},
+            status = 1,
+            tx_id=#{transaction.txId},
+            tx_host=#{transaction.txHost},
+            tx_update=#{transaction.txUpdate}
+        WHERE id_news = #{idNews}
+          and status = 1
+    </update>
+
 </mapper>

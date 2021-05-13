@@ -1,16 +1,14 @@
 package bo.ucb.edu.vic19.api;
 
-import bo.ucb.edu.vic19.bl.CountryBl;
 import bo.ucb.edu.vic19.bl.NewsBl;
 import bo.ucb.edu.vic19.bl.TransactionBl;
-import bo.ucb.edu.vic19.dto.CovidDataRequest;
-import bo.ucb.edu.vic19.dto.LocationResponse;
+
 import bo.ucb.edu.vic19.dto.NewsResponse;
+
 import bo.ucb.edu.vic19.model.News;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.util.TransactionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +27,11 @@ public class NewsApi {
         this.newsBl= newsBl;
         this.transactionBl=transactionBl;
     }
-    @RequestMapping(value = "/addnews",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public News createNews(@RequestBody NewsResponse news, HttpServletRequest request){
+    @RequestMapping(value = "/addNews",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public News createNews(@RequestBody News news, HttpServletRequest request){
         Transaction transaction = TransactionUtil.createTransaction(request);
-        transactionBl.createTransaction(transaction);
-        //LOGGER.error(transaction.getTxId().toString());
-        News news2=newsBl.addnews(news,transaction);
-        return news2;
+        newsBl.addNews(news,transaction);
+        return news;
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,6 +45,13 @@ public class NewsApi {
 //        Transaction transaction = TransactionUtil.createTransaction(request);
 //        transactionBl.createTransaction(transaction);
         newsBl.newsDelete(idNews);
+    }
+
+    @RequestMapping(path = "/updateNews", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public News updateNews(@RequestBody News news, HttpServletRequest request){
+        TransactionUtil transactionUtil = new TransactionUtil();
+        Transaction transaction = transactionUtil.createTransaction(request);
+        return newsBl.updateNews(news,transaction);
     }
 
 }

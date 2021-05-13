@@ -197,7 +197,6 @@ public class CovidDataJsonUtil {
                     arr.add(-1);
                 }
                 else{
-
                     arr.add((Integer) vaccines.getTimeline().get(formatCalendar(c)));
                 }
                 vaccineData.add(arr);
@@ -205,7 +204,6 @@ public class CovidDataJsonUtil {
                 date = c.getTime();
             }
             return vaccineData;
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -255,7 +253,6 @@ public class CovidDataJsonUtil {
                         covidData.setVaccinated((Integer)vaccine.get(j).get(1)-(Integer)vaccine.get(j-1).get(1));
                         covidData.setCumulativeCases((Integer) general.get(j).get(1));
                         covidData.setRecuperated((Integer) general.get(j).get(3)-(Integer) general.get(j-1).get(3));
-
                     }
                     covidData.setDate((Date) general.get(j).get(0));
                     covidData.setTransaction(transaction);
@@ -270,8 +267,8 @@ public class CovidDataJsonUtil {
                         countryCovidData.setTransaction(transaction);
                         covidDataDao.insertCountryCovidData(countryCovidData);
                     }
+                }
             }
-        }
         }
         catch (Exception e){
             e.printStackTrace();

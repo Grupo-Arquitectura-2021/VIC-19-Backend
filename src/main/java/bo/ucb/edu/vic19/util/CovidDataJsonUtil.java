@@ -43,6 +43,7 @@ public class CovidDataJsonUtil {
         this.countryDao=countryDao;
 
     }
+
     @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/siip")
     public void siipCovidData() throws ParseException {
@@ -177,7 +178,7 @@ public class CovidDataJsonUtil {
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
             Integer lengthPlus1 = length+1;
-            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1.toString());
+            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
@@ -210,8 +211,10 @@ public class CovidDataJsonUtil {
             return null;
         }
     }
-    @Scheduled(fixedRate = 300000L)
-    @GetMapping(value = "/swagger")
+
+
+   @Scheduled(fixedRate = 30000L)
+   @GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {
             List<LocationResponse> countries=countryDao.countries();
@@ -258,14 +261,16 @@ public class CovidDataJsonUtil {
                     covidData.setTransaction(transaction);
                     dateString=dateSelect.format((Date) general.get(j).get(0));
                     selectData = covidDataDao.verifyCountryCovidData(dateString,countries.get(i).getIdLocation());
-                    if (selectData == 0){
-                        covidDataDao.insertCovidData(covidData);
-                        covidDataId = covidDataDao.getLastIdCovidData();
-                        countryCovidData = new CountryCovidData();
-                        countryCovidData.setIdCountry(countries.get(i).getIdLocation());
-                        countryCovidData.setIdCovidData(covidDataId);
-                        countryCovidData.setTransaction(transaction);
-                        covidDataDao.insertCountryCovidData(countryCovidData);
+                    if(j!=0) {
+                        if (selectData == 0) {
+                            covidDataDao.insertCovidData(covidData);
+                            covidDataId = covidDataDao.getLastIdCovidData();
+                            countryCovidData = new CountryCovidData();
+                            countryCovidData.setIdCountry(countries.get(i).getIdLocation());
+                            countryCovidData.setIdCovidData(covidDataId);
+                            countryCovidData.setTransaction(transaction);
+                            covidDataDao.insertCountryCovidData(countryCovidData);
+                        }
                     }
                 }
             }

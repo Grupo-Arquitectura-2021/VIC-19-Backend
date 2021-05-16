@@ -104,9 +104,10 @@
 			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
 
+
 		<!-- END SECURITY -->
 	</dependencies>
-
+	<!--
 	<build>
 		<plugins>
 			<plugin>
@@ -126,5 +127,13 @@
 			</resource>
 		</resources>
 	</build>
-
+	-->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

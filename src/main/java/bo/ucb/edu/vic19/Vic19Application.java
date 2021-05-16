@@ -31,6 +31,7 @@ public class Vic19Application{
 		SpringApplication.run(Vic19Application.class, args);
 	}
 }
+/*
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -43,6 +44,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
 	}
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
@@ -54,6 +56,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 }
+
+ */
 @Configuration
 class SchedulerConfig implements SchedulingConfigurer {
 

@@ -56,7 +56,16 @@
         AND city.status = 1
         AND city.id_city = hospital.id_city
         ORDER by city.city
+        LIMIT #{n} OFFSET #{i}
 
+    </select>
+
+    <select  id="getTotalHospital" resultType="Integer">
+        SELECT COUNT(*)
+        FROM hospital, city
+        WHERE hospital.status=1
+          AND city.status = 1
+          AND city.id_city = hospital.id_city
     </select>
 
     <insert id="insertHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">

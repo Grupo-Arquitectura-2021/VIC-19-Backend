@@ -21,5 +21,6 @@ public interface HospitalDao {
 
     List<LocationResponse> getHospitalLocations();
 
-    List<HospitalRequest> getHospitalAllInfo();
+    List<HospitalRequest> getHospitalAllInfo(Integer n,Integer i);
+    Integer getTotalHospital();
 }

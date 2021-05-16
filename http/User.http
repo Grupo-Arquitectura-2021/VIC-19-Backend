@@ -1,0 +1,9 @@
+## login
+POST http://192.168.0.4:8080/user/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "alvinpoma@gmail.com",
+  "password": "12312abc"
+}

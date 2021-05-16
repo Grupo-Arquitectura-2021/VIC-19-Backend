@@ -50,11 +50,13 @@
         <result column="latitude" property="lat"/>
     </resultMap>
     <select  id="getHospitalAllInfo" resultMap="hospitalAllInfo">
-        SELECT city.city nameCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
+        SELECT hospital.id_hospital idHospital, city.city nameCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
         FROM hospital, city
         WHERE hospital.status=1
         AND city.status = 1
-        AND city.id_city = hospital.id_city;
+        AND city.id_city = hospital.id_city
+        ORDER by city.city
+
     </select>
 
     <insert id="insertHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/hospital")
@@ -24,22 +25,22 @@ public class HospitalApi {
     }
 
     @RequestMapping(path = "/location/{hospitalId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getHospitalLocation(@PathVariable Integer hospitalId){
+    public List<LocationResponse> getHospitalLocation(@PathVariable Integer hospitalId){
         return hospitalBl.getHospitalLocation(hospitalId);
     }
 
     @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getHospitalLocation(){
+    public List<LocationResponse> getHospitalLocation(){
         return hospitalBl.getHospitalLocations();
     }
 
     @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<HospitalRequest> getHospitalAllInfo(){
+    public List<HospitalRequest> getHospitalAllInfo(){
         return hospitalBl.getHospitalAllInfo();
     }
 
     @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getHospitalLocationsByCity(@PathVariable Integer cityId){
+    public List<LocationResponse> getHospitalLocationsByCity(@PathVariable Integer cityId){
         return hospitalBl.getHospitalLocationsByCityId(cityId);
     }
 

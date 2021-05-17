@@ -1,28 +1,28 @@
 
-
+### Obtiene la localizaciones de todos los departametos de Bolivia
 GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json
 
-###
+### Obtiene la informacion de los datos del COVID-19 de una ciudad al recibir el Id y la fecha
 
 GET http://localhost:8080/city/1/2021-04-14
 Accept: application/json
 Content-Type: application/json
 
-###
+### Obtiene la informacion de los datos del COVID-19 de todos los departamentos al recibir la fecha
 
 GET http://localhost:8080/city/2021-04-04
 Accept: application/json
 Content-Type: application/json
 
-###
+### Obtiene la informacion de los datos del COVID-19 de todos los municipios de un departamentos al recibir el nombre de la ciudad y la fecha
 
 GET http://localhost:8080/city/name/Tarija/municipality/2021-05-17
 Accept: application/json
 Content-Type: application/json
 
-###
+### Obtiene la informacion de los datos del COVID-19 de todos los municipios de un departamentos al recibir el Id de la ciudad y la fecha
 
 GET http://localhost:8080/city/1/municipality/2021-05-17
 Accept: application/json

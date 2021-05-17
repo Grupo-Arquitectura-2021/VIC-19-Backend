@@ -1,10 +1,10 @@
-### getting the list of news
+### Obtiene la informacion de todas las noticias en la BD
 
 GET http://localhost:8080/news/list
 Accept: application/json
 Content-Type: application/json
 
-### adding a new news
+### Crea una noticia a la Bd
 
 POST http://localhost:8080/news/addNews
 Accept: application/json
@@ -18,11 +18,11 @@ Content-Type: application/json
   "newsUrl": "https://s.france24.com/media/display/bb75a678-973a-11eb-867f-005056bff430/w:980/p:16x9/vacunas%20bolivia.webp"
 }
 
-### delete news
+### Elimina la informacion de una noticia
 DELETE http://localhost:8080/news/delete/3
 Accept: application/json
 
-### delete news
+### Actualiza la informacion de una noticia
 PUT http://localhost:8080/news/updateNews
 Accept: application/json
 Content-Type: application/json

@@ -3,6 +3,10 @@
 
 use db_covid19;
 -- INSERTS COUNTRY
+
+
+
+
 START TRANSACTION;
 INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (1, 'Bolivia', -65.2696, -19.031, 1, 1, '2021-04-11 14:43:45', '192.168.31.150', '2021-04-11 14:43:45');
 INSERT INTO `country` (`id_country`, `name`, `lon`, `lat`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (2, 'Paraguay', -57.5775, -25.2644, 1, 1, '2021-04-11 14:43:45', '192.168.128.6', '2021-04-11 14:43:45');

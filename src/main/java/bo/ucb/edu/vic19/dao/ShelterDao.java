@@ -4,7 +4,6 @@ import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.dto.ShelterRequest;
 import bo.ucb.edu.vic19.model.Shelter;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -21,5 +20,7 @@ public interface ShelterDao {
 
     List<LocationResponse> getShelterLocations();
 
-    List<ShelterRequest> getShelterAllInfo();
+    List<ShelterRequest> getShelterAllInfo(Integer n, Integer i, String search);
+
+    Integer getTotalShelter();
 }

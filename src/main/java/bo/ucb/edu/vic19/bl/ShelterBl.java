@@ -3,9 +3,7 @@ package bo.ucb.edu.vic19.bl;
 import bo.ucb.edu.vic19.dao.HospitalDao;
 import bo.ucb.edu.vic19.dao.ShelterDao;
 import bo.ucb.edu.vic19.dao.TransactionDao;
-import bo.ucb.edu.vic19.dto.HospitalRequest;
-import bo.ucb.edu.vic19.dto.LocationResponse;
-import bo.ucb.edu.vic19.dto.ShelterRequest;
+import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Shelter;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -56,7 +54,10 @@ public class ShelterBl {
         return shelterDao.getShelterLocations();
     }
 
-    public List<ShelterRequest> getShelterAllInfo() {
-        return shelterDao.getShelterAllInfo();
+    public ShelterDataRequest getShelterAllInfo(Integer n, Integer i, String search) {
+        ShelterDataRequest shelterDataRequest =new ShelterDataRequest();
+        shelterDataRequest.setShelters(shelterDao.getShelterAllInfo(n,i,search));
+        shelterDataRequest.setTotal(shelterDao.getTotalShelter());
+        return shelterDataRequest;
     }
 }

@@ -1,0 +1,9 @@
+## login
+POST http://localhost:8080/oauth/token
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "covid19proyect",
+  "password": "covid19proyect12345"
+}

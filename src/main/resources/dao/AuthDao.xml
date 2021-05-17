@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bo.ucb.edu.vic19.dao.AuthDao">
+    <select id="findAdminByEmail" resultType="bo.ucb.edu.vic19.model.User">
+        SELECT id_user as idUser,
+            user_name as userName,
+            last_name as lastName,
+            email as email,
+            password as password
+        FROM user
+        WHERE
+            email = #{email}
+        and status = 1
+    </select>
+
+</mapper>

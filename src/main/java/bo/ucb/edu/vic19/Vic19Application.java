@@ -1,4 +1,6 @@
 package bo.ucb.edu.vic19;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,32 +17,29 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.*;
-
+import java.util.Arrays;
 
 
 @EnableScheduling
 @SpringBootApplication
-public class Vic19Application{
+public class Vic19Application  {
 
-	public static void main(String[] args) throws IOException {
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	public static void main(String[] args){
 		SpringApplication.run(Vic19Application.class, args);
 	}
-}
-@EnableWebSecurity
-@Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().anyRequest().permitAll();
-	}
+
 }
+
 @Configuration
 class SchedulerConfig implements SchedulingConfigurer {
 
@@ -52,3 +51,5 @@ class SchedulerConfig implements SchedulingConfigurer {
 		scheduledTaskRegistrar.setTaskScheduler(threadPoolTaskScheduler);
 	}
 }
+
+

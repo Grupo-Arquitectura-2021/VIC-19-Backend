@@ -3,6 +3,7 @@ package bo.ucb.edu.vic19.api;
 import bo.ucb.edu.vic19.bl.NewsBl;
 import bo.ucb.edu.vic19.bl.TransactionBl;
 import bo.ucb.edu.vic19.bl.UserBl;
+import bo.ucb.edu.vic19.dto.LogInRequest;
 import bo.ucb.edu.vic19.dto.NewsResponse;
 import bo.ucb.edu.vic19.dto.UserResponse;
 import bo.ucb.edu.vic19.model.News;
@@ -37,6 +38,13 @@ public class UserApi {
         User user2=userBl.addUser(user,transaction);
         return user2;
     }
+    @RequestMapping(value = "login",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+        public UserResponse logIn(@RequestBody LogInRequest user, HttpServletRequest request){
+        System.out.println(user);
+        return new UserResponse(1,"ALvin","Poma","pomaalvin@gmail.com","");
+    }
+
 
 //    @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<NewsResponse> getNews(){

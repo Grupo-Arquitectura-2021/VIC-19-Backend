@@ -1,5 +1,11 @@
 
+GET http://localhost:8080/city
+Accept: application/json
+Content-Type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjEsImV4cCI6MTYyMTI1NDU1MywidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiZDBiMzYyNGItNTc5My00YTNhLWJhYTQtODFhMzY1NGIyNTc1IiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.9t4g0qfW1OkKKH7k-XRyVqH-X6kFZ8qzu9IulCtgzC4
 
+
+###
 GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json

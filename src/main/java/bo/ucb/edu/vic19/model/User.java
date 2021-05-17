@@ -10,7 +10,6 @@ public class User {
     private Transaction transaction;
 
     public User() {
-        transaction = new Transaction();
     }
 
     public Integer getIdUser() {

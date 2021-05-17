@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.util;
+package bo.ucb.edu.vic19.util.data;
 
 import bo.ucb.edu.vic19.dao.*;
 import bo.ucb.edu.vic19.dto.LocationResponse;
@@ -81,7 +81,7 @@ public class CovidDataCSVUtil {
     //@Scheduled(fixedRate = 3000000L)
     //@GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException, ParseException {
-        List<LocationResponse> cities=cityDao.cities();
+        List<LocationResponse> cities=cityDao.citiesLocation();
         String url="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/confirmados.csv";
         String url2="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/decesos.csv";
 

@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.util;
+package bo.ucb.edu.vic19.util.data;
 import bo.ucb.edu.vic19.dao.*;
 import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.*;

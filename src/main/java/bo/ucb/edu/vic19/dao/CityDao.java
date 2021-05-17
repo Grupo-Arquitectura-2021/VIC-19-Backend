@@ -1,5 +1,6 @@
 package bo.ucb.edu.vic19.dao;
 
+import bo.ucb.edu.vic19.dto.CitySimpleResponse;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 
 import bo.ucb.edu.vic19.dto.LocationResponse;
@@ -10,7 +11,8 @@ import java.util.List;
 @Mapper
 public interface CityDao {
     public Integer getCityId(String cityName);
-    public List<LocationResponse> cities();
+    public List<LocationResponse> citiesLocation();
+    public List<CitySimpleResponse> cities();
     public CovidDataRequest covidDataCity(Integer cityId, String dateCovid);
     public String cityName(Integer cityId);
 

@@ -36,8 +36,8 @@ public class HospitalBl {
     public Hospital insertHospital(Hospital hospital, Transaction transaction) {
         hospital.setTransaction(transaction);
         hospitalDao.insertHospital(hospital);
-        Integer cityId = transactionDao.getLastInsertId();
-        hospital.setIdCity(cityId);
+        Integer hospitalId = transactionDao.getLastInsertId();
+        hospital.setIdHospital(hospitalId);
         return hospital;
     }
 
@@ -55,9 +55,9 @@ public class HospitalBl {
         return hospitalDao.getHospitalLocations();
     }
 
-    public HospitalDataRequest getHospitalAllInfo(Integer n, Integer i) {
+    public HospitalDataRequest getHospitalAllInfo(Integer n, Integer i,String search) {
         HospitalDataRequest hospitalDataRequest=new HospitalDataRequest();
-        hospitalDataRequest.setHospitals(hospitalDao.getHospitalAllInfo(n,i));
+        hospitalDataRequest.setHospitals(hospitalDao.getHospitalAllInfo(n,i,search));
         hospitalDataRequest.setTotal(hospitalDao.getTotalHospital());
         return hospitalDataRequest;
     }

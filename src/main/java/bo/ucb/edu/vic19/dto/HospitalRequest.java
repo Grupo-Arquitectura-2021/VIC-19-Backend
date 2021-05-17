@@ -2,17 +2,17 @@ package bo.ucb.edu.vic19.dto;
 
 public class HospitalRequest {
     private int idHospital;
-    private String nameCity;
+    private Integer idCity;
     private String name;
     private float lon;
     private float lat;
 
-    public String getNameCity() {
-        return nameCity;
+    public Integer getIdCity() {
+        return idCity;
     }
 
-    public void setNameCity(String nameCity) {
-        this.nameCity = nameCity;
+    public void setIdCity(Integer idCity) {
+        this.idCity = idCity;
     }
 
     public String getName() {
@@ -51,7 +51,7 @@ public class HospitalRequest {
     public String toString() {
         return "HospitalRequest{" +
                 "idHospital=" + idHospital +
-                ", nameCity='" + nameCity + '\'' +
+                ", idCity='" + idCity + '\'' +
                 ", name='" + name + '\'' +
                 ", lon=" + lon +
                 ", lat=" + lat +

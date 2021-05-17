@@ -50,12 +50,15 @@
         <result column="latitude" property="lat"/>
     </resultMap>
     <select  id="getHospitalAllInfo" resultMap="hospitalAllInfo">
-        SELECT hospital.id_hospital idHospital, city.city nameCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
-        FROM hospital, city
+        SELECT hospital.id_hospital idHospital, hospital.id_city idCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
+        FROM hospital
         WHERE hospital.status=1
-        AND city.status = 1
-        AND city.id_city = hospital.id_city
-        ORDER by city.city
+        AND hospital.status = 1
+        <if test="search!=null">
+            AND MATCH(name)
+            AGAINST(#{search} IN BOOLEAN MODE )
+        </if>
+        ORDER by idHospital DESC
         LIMIT #{n} OFFSET #{i}
 
     </select>

@@ -23,8 +23,12 @@ public class CityBl {
         this.cityDao = cityDao;
     }
 
-    public List<LocationResponse> getCities(){
+    public List<CitySimpleResponse> getCities(){
         return cityDao.cities();
+    }
+
+    public List<LocationResponse> getCitiesLocation(){
+        return cityDao.citiesLocation();
     }
 
     public CovidDataRequest covidDataCity(Integer cityId, String dateCovid){

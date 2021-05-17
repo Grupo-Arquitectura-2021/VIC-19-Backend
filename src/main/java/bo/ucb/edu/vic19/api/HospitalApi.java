@@ -36,8 +36,8 @@ public class HospitalApi {
     }
 
     @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HospitalDataRequest getHospitalAllInfo(@RequestParam Integer n, @RequestParam Integer i){
-        return hospitalBl.getHospitalAllInfo(n,i);
+    public HospitalDataRequest getHospitalAllInfo(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
+        return hospitalBl.getHospitalAllInfo(n,i,search);
     }
 
     @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

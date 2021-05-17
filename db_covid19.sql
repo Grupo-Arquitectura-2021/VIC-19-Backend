@@ -291,3 +291,6 @@ ALTER TABLE City_covid_data ADD CONSTRAINT Table_25_Covid_data FOREIGN KEY Table
 
 -- End of file.
 
+-- Anadir busqueda en hospitales
+ALTER TABLE hospital ADD FULLTEXT (name);
+

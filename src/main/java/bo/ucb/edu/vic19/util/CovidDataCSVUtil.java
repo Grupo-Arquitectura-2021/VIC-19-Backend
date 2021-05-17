@@ -78,8 +78,8 @@ public class CovidDataCSVUtil {
         }
     }*/
 
-    @Scheduled(fixedRate = 3000000L)
-    @GetMapping(value="/ReadCSv")
+    //@Scheduled(fixedRate = 3000000L)
+    //@GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException, ParseException {
         List<LocationResponse> cities=cityDao.cities();
         String url="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/confirmados.csv";
@@ -126,7 +126,7 @@ public class CovidDataCSVUtil {
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         Integer verifyCities=1;
         String varAux=inputStream.nextLine();
-        String varAux2=inputStream.nextLine();
+        String varAux2=inputStream2.nextLine(); //2?
        while (inputStream.hasNext()) {
             String data = varAux;
            String data2 = inputStream.nextLine();

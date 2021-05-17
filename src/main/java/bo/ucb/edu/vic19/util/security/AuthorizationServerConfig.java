@@ -46,8 +46,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
                 .secret(passwordEncoder.encode("covid19proyect12345"))
                 .scopes("read", "write")
                 .authorizedGrantTypes("password", "refresh_token")
-                .accessTokenValiditySeconds(36000)
-                .refreshTokenValiditySeconds(36000);
+                .accessTokenValiditySeconds(7200)
+                .refreshTokenValiditySeconds(86400);
     }
 
     @Override

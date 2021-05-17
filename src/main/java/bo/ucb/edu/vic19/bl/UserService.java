@@ -31,7 +31,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = authDao.findAdminByEmail(username);
         logger.error(username);
         if(user != null){

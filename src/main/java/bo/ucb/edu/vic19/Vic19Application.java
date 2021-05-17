@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 @EnableScheduling
 @SpringBootApplication
-public class Vic19Application  implements CommandLineRunner {
+public class Vic19Application  {
 
 
 	@Autowired
@@ -37,44 +37,8 @@ public class Vic19Application  implements CommandLineRunner {
 		SpringApplication.run(Vic19Application.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		String password = "abc12345";
-		/*
-		for(int i=0; i<4; i++){
-			String passwordBcrypt = passwordEncoder.encode(password);
-			System.out.println(passwordBcrypt);
-		}
-		System.out.println("Demo");
-		 */
-	}
-}
-/*
-@EnableWebSecurity
-@Configuration
-class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
-	}
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("https://example.com","*"));
-		configuration.addAllowedHeader("*");
-		configuration.addAllowedMethod("*");
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
 }
- */
 
 @Configuration
 class SchedulerConfig implements SchedulingConfigurer {

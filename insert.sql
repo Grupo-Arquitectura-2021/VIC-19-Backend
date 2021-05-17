@@ -616,4 +616,7 @@ INSERT INTO `drugstore` VALUES (null,3,'Farmacia Montaño', -65.8411153610034,-1
 INSERT INTO `drugstore` VALUES (null,3,'Farmacia Salazar', -65.39897265997324,-16.913325349992316,1,1,'2021-05-13 14:43:45','192.168.31.150','2021-05-13 14:44:45');
 COMMIT;
 
+## inserts de usuario
+INSERT INTO user (id_user, user_name, last_name, email, password, status, tx_id, tx_date, tx_host, tx_update) VALUES (2, 'Alvin Jamil', 'Poma Tarqui', 'pomaalvin@gmail.com', '$2a$10$e.cOxh8u2Psh27KcEbF/7.AkcaGIpDA/dBvUwLa5bLql2v5KsbG7W', 1, 1, '2021-05-16 21:31:09', '192.168.0.1', '2021-05-16 21:31:17');
+
 

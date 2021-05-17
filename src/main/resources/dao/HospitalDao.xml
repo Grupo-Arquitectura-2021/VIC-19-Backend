@@ -55,8 +55,7 @@
         WHERE hospital.status=1
         AND hospital.status = 1
         <if test="search!=null">
-            AND MATCH(name)
-            AGAINST(#{search} IN BOOLEAN MODE )
+            and hospital.name like CONCAT("%",#{search},"%")
         </if>
         ORDER by idHospital DESC
         LIMIT #{n} OFFSET #{i}

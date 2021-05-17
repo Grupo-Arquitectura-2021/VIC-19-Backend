@@ -1,9 +1,9 @@
 ## login
-POST http://192.168.0.4:8080/user/login
+POST http://localhost:8080/oauth/token
 Accept: application/json
 Content-Type: application/json
 
 {
-  "email": "alvinpoma@gmail.com",
-  "password": "12312abc"
+  "username": "covid19proyect",
+  "password": "covid19proyect12345"
 }

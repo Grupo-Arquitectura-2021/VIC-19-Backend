@@ -11,7 +11,8 @@ Content-Type: application/json
 
 ###
 ## Obtiene la informacion de todos los albergues
-GET http://localhost:8080/shelter/allInfo
+GET http://localhost:8080/shelter/allInfo?n=10&i=0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTI5NjE0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiMzcyYjk3MjMtMWMwNS00ZTc1LTk4OGEtOGJlMjU2MzU2OTNjIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.RyYm7RzK7AwEZ5A3ePCMjoFSKkCdxGIXbZKiMk4Yp_E
 Accept: application/json
 Content-Type: application/json
 

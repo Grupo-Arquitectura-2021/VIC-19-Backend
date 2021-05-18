@@ -4,6 +4,7 @@ import bo.ucb.edu.vic19.bl.HospitalBl;
 import bo.ucb.edu.vic19.bl.ShelterBl;
 import bo.ucb.edu.vic19.dto.HospitalRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
+import bo.ucb.edu.vic19.dto.ShelterDataRequest;
 import bo.ucb.edu.vic19.dto.ShelterRequest;
 import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.Shelter;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/shelter")
@@ -36,8 +38,8 @@ public class ShelterApi {
     }
 
     @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<ShelterRequest> getShelterAllInfo(){
-        return shelterBl.getShelterAllInfo();
+    public ShelterDataRequest getShelterAllInfo(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
+        return shelterBl.getShelterAllInfo(n,i,search);
     }
 
     @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

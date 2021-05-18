@@ -44,18 +44,31 @@
     </select>
 
     <resultMap type="bo.ucb.edu.vic19.dto.ShelterRequest" id="shelterAllInfo">
-        <result column="nameCity" property="nameCity"/>
+        <result column="idShelter" property="idShelter"/>
+        <result column="idCity" property="idCity"/>
         <result column="name" property="name"/>
         <result column="amount" property="amount"/>
         <result column="longitude" property="lon"/>
         <result column="latitude" property="lat"/>
     </resultMap>
     <select  id="getShelterAllInfo" resultMap="shelterAllInfo">
-        SELECT city.city nameCity, shelter.name name, shelter.amount amount, shelter.lon longitude, shelter.lat latitude
+        SELECT s.id_shelter idShelter, c.id_city idCity, s.name name, s.amount, s.lon longitude, s.lat latitude
+        FROM shelter s, city c
+        WHERE s.status=1
+        AND c.id_city = s.id_city
+        <if test="search!=null">
+            and s.name like CONCAT("%",#{search},"%")
+        </if>
+        ORDER by idShelter ASC
+        LIMIT #{n} OFFSET #{i}
+    </select>
+
+    <select  id="getTotalShelter" resultType="Integer">
+        SELECT COUNT(*)
         FROM shelter, city
         WHERE shelter.status=1
-        AND city.status = 1
-        AND city.id_city = shelter.id_city;
+          AND city.status = 1
+          AND city.id_city = shelter.id_city
     </select>
 
     <insert id="insertShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">

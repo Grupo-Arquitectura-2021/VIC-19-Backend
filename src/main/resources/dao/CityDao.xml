@@ -24,7 +24,12 @@
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
     </resultMap>
-    <select  id="cities" resultMap="citiesMap">
+    <select  id="cities" resultType="bo.ucb.edu.vic19.dto.CitySimpleResponse">
+        SELECT id_city idCity, city city
+        FROM city
+        WHERE city.status=1
+    </select>
+    <select  id="citiesLocation" resultMap="citiesMap">
         SELECT id_city idLocation, city locationName, lon longitude, lat latitude
         FROM city
         WHERE city.status=1

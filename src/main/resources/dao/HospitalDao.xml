@@ -50,11 +50,24 @@
         <result column="latitude" property="lat"/>
     </resultMap>
     <select  id="getHospitalAllInfo" resultMap="hospitalAllInfo">
-        SELECT city.city nameCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
+        SELECT hospital.id_hospital idHospital, hospital.id_city idCity, hospital.name hospitalName, hospital.lon longitude, hospital.lat latitude
+        FROM hospital
+        WHERE hospital.status=1
+        AND hospital.status = 1
+        <if test="search!=null">
+            and hospital.name like CONCAT("%",#{search},"%")
+        </if>
+        ORDER by idHospital DESC
+        LIMIT #{n} OFFSET #{i}
+
+    </select>
+
+    <select  id="getTotalHospital" resultType="Integer">
+        SELECT COUNT(*)
         FROM hospital, city
         WHERE hospital.status=1
-        AND city.status = 1
-        AND city.id_city = hospital.id_city;
+          AND city.status = 1
+          AND city.id_city = hospital.id_city
     </select>
 
     <insert id="insertHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">

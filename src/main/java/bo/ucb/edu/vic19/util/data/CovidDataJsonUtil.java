@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.util;
+package bo.ucb.edu.vic19.util.data;
 import bo.ucb.edu.vic19.dao.*;
 import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.*;
@@ -43,6 +43,15 @@ public class CovidDataJsonUtil {
         this.countryDao=countryDao;
 
     }
+
+    //NO
+    /*@Scheduled(fixedRate = 300000L)
+    @GetMapping(value = "/swagger")
+    public void swaggerCovidData() throws ParseException {
+        String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
+    }*/
+
+    /*
 
     @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/siip")
@@ -119,12 +128,6 @@ public class CovidDataJsonUtil {
             e.printStackTrace();
         }
     }
-/*
-    @Scheduled(fixedRate = 300000L)
-    @GetMapping(value = "/swagger")
-    public void swaggerCovidData() throws ParseException {
-        String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
-    }*/
 
     public static ArrayList<ArrayList> getJsonHistoricalData(String country,Integer length){
         ArrayList<ArrayList> caseData = new ArrayList();
@@ -283,6 +286,5 @@ public class CovidDataJsonUtil {
     public static String formatCalendar(Calendar c) {
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
-    }
-
+    }*/
 }

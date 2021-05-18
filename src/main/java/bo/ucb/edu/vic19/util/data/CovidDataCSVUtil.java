@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.util;
+package bo.ucb.edu.vic19.util.data;
 
 import bo.ucb.edu.vic19.dao.*;
 import bo.ucb.edu.vic19.dto.LocationResponse;
@@ -78,10 +78,10 @@ public class CovidDataCSVUtil {
         }
     }*/
 
-    @Scheduled(fixedRate = 3000000L)
-    @GetMapping(value="/ReadCSv")
+    //@Scheduled(fixedRate = 3000000L)
+    //@GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException, ParseException {
-        List<LocationResponse> cities=cityDao.cities();
+        List<LocationResponse> cities=cityDao.citiesLocation();
         String url="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/confirmados.csv";
         String url2="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/decesos.csv";
 
@@ -126,7 +126,7 @@ public class CovidDataCSVUtil {
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         Integer verifyCities=1;
         String varAux=inputStream.nextLine();
-        String varAux2=inputStream.nextLine();
+        String varAux2=inputStream2.nextLine(); //2?
        while (inputStream.hasNext()) {
             String data = varAux;
            String data2 = inputStream.nextLine();

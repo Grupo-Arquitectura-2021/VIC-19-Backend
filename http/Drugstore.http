@@ -18,6 +18,11 @@ GET http://localhost:8080/drugstore/locations
 Accept: application/json
 Content-Type: application/json
 
+### Obtiene la informacion de todas las farmacias
+GET http://localhost:8080/drugstore/allInfo?n=10&i=0
+Accept: application/json
+Content-Type: application/json
+
 
 ### Obtiene una farmacia en especifico al recibir el id de la farmacia
 

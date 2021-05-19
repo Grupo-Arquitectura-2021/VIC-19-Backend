@@ -37,7 +37,6 @@ public class VarianceCovidDataCountry {
 
             if(covidDataListCountryAllInfo.get(i).getConfirmedCases() >= 0){
                 float conf = covidDataListCountryAllInfo.get(i).getConfirmedCases();
-                System.out.println(conf);
                 sumConf+=Math.pow((conf-covidDataRequestMedia.getConfirmedCases()),2);
             }
 

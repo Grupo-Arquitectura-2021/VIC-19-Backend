@@ -65,17 +65,18 @@
     </update>
 
     <resultMap type="bo.ucb.edu.vic19.dto.DrugstoreRequest" id="getDrugstoreAllInfoMap">
-        <result column="nameCity" property="nameCity"/>
-        <result column="hospitalName" property="name"/>
+        <result column="idDrugstore" property="idDrugstore"/>
+        <result column="idCity" property="idCity"/>
+        <result column="drugstoreName" property="name"/>
         <result column="longitude" property="lon"/>
         <result column="latitude" property="lat"/>
     </resultMap>
     <select id="getDrugstoreAllInfo" resultMap="getDrugstoreAllInfoMap">
-        SELECT id_drugstore idDrugstore, id_city idCity, name drugstoreName, lon longitude, lat latitude
-        FROM drugstore
-        WHERE drugstore.status = 1
+        SELECT d.id_drugstore idDrugstore, d.id_city idCity, d.name drugstoreName, d.lon longitude, d.lat latitude
+        FROM drugstore d
+        WHERE d.status = 1
         <if test="search!=null">
-            and drugstore.name like CONCAT('%',#{search},'%')
+            and d.name like CONCAT('%',#{search},'%')
         </if>
         ORDER by idDrugstore DESC
         LIMIT #{n} OFFSET #{i}

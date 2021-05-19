@@ -25,6 +25,11 @@
                a.news_url   as source
         FROM news a
         WHERE a.status = 1
+        <if test="search!=null">
+            and hospital.name like CONCAT("%",#{search},"%")
+        </if>
+        ORDER by a.id_news DESC
+        LIMIT #{n} OFFSET #{i}
 
     </select>
     <resultMap id="newsMap" type="bo.ucb.edu.vic19.dto.NewsResponse">
@@ -35,6 +40,12 @@
         <result column="urlImage" property="urlImage"/>
         <result column="source" property="source"/>
     </resultMap>
+
+    <select  id="getTotalNews" resultType="Integer">
+        SELECT COUNT(*)
+        FROM news a
+        WHERE a.status = 1
+    </select>
 
     <update id="updateNews" parameterType="bo.ucb.edu.vic19.model.News">
         UPDATE news SET

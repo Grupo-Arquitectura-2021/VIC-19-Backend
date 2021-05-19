@@ -3,6 +3,7 @@ package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.NewsDao;
 import bo.ucb.edu.vic19.dao.TransactionDao;
+import bo.ucb.edu.vic19.dto.NewsDataRequest;
 import bo.ucb.edu.vic19.dto.NewsResponse;
 import bo.ucb.edu.vic19.model.News;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -30,8 +31,11 @@ public class NewsBl {
         return news;
     }
 
-    public List<NewsResponse> getNews(){
-        return newsDao.getNews();
+    public NewsDataRequest getNews(Integer n, Integer i, String search){
+        NewsDataRequest newsDataRequest = new NewsDataRequest();
+        newsDataRequest.setNews(newsDao.getNews(n,i,search));
+        newsDataRequest.setTotal(newsDao.getTotalNews());
+        return newsDataRequest;
     }
 
     public void newsDelete(Integer idNews){

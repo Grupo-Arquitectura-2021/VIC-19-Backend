@@ -10,9 +10,10 @@ import java.util.List;
 public interface NewsDao {
     public void addNews(News news);
 
-    public List<NewsResponse> getNews();
+    public List<NewsResponse> getNews(Integer n, Integer i, String search);
     public void updateNews(News news);
     public void deleteNews(Integer idNews);
 
 
+    public Integer getTotalNews();
 }

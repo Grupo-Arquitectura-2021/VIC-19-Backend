@@ -3,6 +3,7 @@ package bo.ucb.edu.vic19.api;
 import bo.ucb.edu.vic19.bl.NewsBl;
 import bo.ucb.edu.vic19.bl.TransactionBl;
 
+import bo.ucb.edu.vic19.dto.NewsDataRequest;
 import bo.ucb.edu.vic19.dto.NewsResponse;
 
 import bo.ucb.edu.vic19.model.News;
@@ -35,8 +36,8 @@ public class NewsApi {
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<NewsResponse> getNews(){
-        return newsBl.getNews();
+    public NewsDataRequest getNews(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
+        return newsBl.getNews(n,i,search);
     }
 
     @RequestMapping(value = "/delete/{idNews}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)

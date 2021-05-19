@@ -1,10 +1,11 @@
-### Obtiene la informacion de todas las noticias en la BD
+### getting the list of news
 
-GET http://localhost:8080/news/list
+GET http://localhost:8080/news/list?n=10&i=0
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJlcndpbkBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYWRtaW5JZCI6MSwiZXhwIjoxNjIxNDQ4NjI4LCJ1c2VyTmFtZSI6ImVyd2luIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiI3NmNmYmViMy1hMzUwLTRiOWYtYjQ3Yy03NTQ1NTFhNzIzOGQiLCJlbWFpbCI6ImVyd2luQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNvdmlkMTlwcm95ZWN0In0.mygMf-6fSFKh5LK3XC74RVGbK-4UyX2HuKO2YjUf9kE
 
-### Crea una noticia a la Bd
+### adding a new news
 
 POST http://localhost:8080/news/addNews
 Accept: application/json
@@ -18,11 +19,11 @@ Content-Type: application/json
   "newsUrl": "https://s.france24.com/media/display/bb75a678-973a-11eb-867f-005056bff430/w:980/p:16x9/vacunas%20bolivia.webp"
 }
 
-### Elimina la informacion de una noticia
+### delete news
 DELETE http://localhost:8080/news/delete/3
 Accept: application/json
 
-### Actualiza la informacion de una noticia
+### delete news
 PUT http://localhost:8080/news/updateNews
 Accept: application/json
 Content-Type: application/json

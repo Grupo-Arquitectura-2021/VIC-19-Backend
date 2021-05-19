@@ -33,7 +33,7 @@ public class NewsBl {
 
     public NewsDataRequest getNews(Integer n, Integer i, String search){
         NewsDataRequest newsDataRequest = new NewsDataRequest();
-        newsDataRequest.setNews(newsDao.getNews(n,i,search));
+        newsDataRequest.setNewsList(newsDao.getNews(n,i,search));
         newsDataRequest.setTotal(newsDao.getTotalNews());
         return newsDataRequest;
     }

@@ -3,18 +3,18 @@ package bo.ucb.edu.vic19.dto;
 import java.util.List;
 
 public class NewsDataRequest {
-    private List<NewsResponse> news;
+    private List<NewsResponse> newsList;
     private Integer total;
 
     public NewsDataRequest() {
     }
 
-    public List<NewsResponse> getNews() {
-        return news;
+    public List<NewsResponse> getNewsList() {
+        return newsList;
     }
 
-    public void setNews(List<NewsResponse> news) {
-        this.news = news;
+    public void setNewsList(List<NewsResponse> newsList) {
+        this.newsList = newsList;
     }
 
     public Integer getTotal() {
@@ -28,7 +28,7 @@ public class NewsDataRequest {
     @Override
     public String toString() {
         return "NewsDataRequest{" +
-                "news=" + news +
+                "newsList=" + newsList +
                 ", total=" + total +
                 '}';
     }

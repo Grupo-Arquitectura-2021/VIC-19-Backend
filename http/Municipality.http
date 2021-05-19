@@ -1,6 +1,6 @@
 
 ### Obtener todas las localizaciones de los municipios en una lista
-GET http://localhost:8080/municipality/location/1
+GET http://localhost:8080/municipality/location/8
 Accept: application/json
 Content-Type: application/json
 

@@ -1,3 +1,4 @@
+### Crea una nueva farmacia en la BD
 
 POST http://localhost:8080/drugstore
 Accept: application/json
@@ -11,26 +12,31 @@ Content-Type: application/json
 
 }
 
-###
+### Obtiene todas las localizaciones de las farmacias de todo Bolivia
 
 GET http://localhost:8080/drugstore/locations
 Accept: application/json
 Content-Type: application/json
 
+### Obtiene la informacion de todas las farmacias
+GET http://localhost:8080/drugstore/allInfo?n=10&i=0
+Accept: application/json
+Content-Type: application/json
 
-###
+
+### Obtiene una farmacia en especifico al recibir el id de la farmacia
 
 GET http://localhost:8080/drugstore/location/1
 Accept: application/json
 Content-Type: application/json
 
-###
+### Obtiene todas las farmacias de una ciudad al recibir el Id de la ciudad
 
 GET http://localhost:8080/drugstore/location/city/1
 Accept: application/json
 Content-Type: application/json
 
-###
+### Actualiza la informacion de una farmacia
 
 PUT http://localhost:8080/drugstore/updateDrugstore
 Accept: application/json
@@ -44,7 +50,7 @@ Content-Type: application/json
   "lat": -16.50053689546242
 }
 
-###
+### Elimina una farmacia de la BD
 
 DELETE http://localhost:8080/drugstore/deleteDrugstore?drugstoreId=2
 Accept: application/json

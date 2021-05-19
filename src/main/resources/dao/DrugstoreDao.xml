@@ -63,4 +63,29 @@
         WHERE id_drugstore = #{idDrugstore}
           and status = 1
     </update>
+
+    <resultMap type="bo.ucb.edu.vic19.dto.DrugstoreRequest" id="getDrugstoreAllInfoMap">
+        <result column="idDrugstore" property="idDrugstore"/>
+        <result column="idCity" property="idCity"/>
+        <result column="drugstoreName" property="name"/>
+        <result column="longitude" property="lon"/>
+        <result column="latitude" property="lat"/>
+    </resultMap>
+    <select id="getDrugstoreAllInfo" resultMap="getDrugstoreAllInfoMap">
+        SELECT d.id_drugstore idDrugstore, d.id_city idCity, d.name drugstoreName, d.lon longitude, d.lat latitude
+        FROM drugstore d
+        WHERE d.status = 1
+        <if test="search!=null">
+            and d.name like CONCAT('%',#{search},'%')
+        </if>
+        ORDER by idDrugstore DESC
+        LIMIT #{n} OFFSET #{i}
+    </select>
+    <select  id="getTotalDrugstore" resultType="Integer">
+        SELECT COUNT(*)
+        FROM drugstore, city
+        WHERE drugstore.status=1
+          AND city.status = 1
+          AND city.id_city = drugstore.id_city
+    </select>
 </mapper>

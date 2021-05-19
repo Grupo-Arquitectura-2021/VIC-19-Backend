@@ -2,6 +2,7 @@ package bo.ucb.edu.vic19.bl;
 
 import bo.ucb.edu.vic19.dao.DrugstoreDao;
 import bo.ucb.edu.vic19.dao.TransactionDao;
+import bo.ucb.edu.vic19.dto.DrugstoreDataRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.Drugstore;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -29,9 +30,17 @@ public class DrugstoreBl {
         return drugstore;
     }
 
+    public DrugstoreDataRequest getDrugstoreAllInfo(Integer n, Integer i, String search){
+        DrugstoreDataRequest drugstoreDataRequest = new DrugstoreDataRequest();
+        drugstoreDataRequest.setDrugstores(drugstoreDao.getDrugstoreAllInfo(n,i,search));
+        drugstoreDataRequest.setTotal(drugstoreDao.getTotalDrugstore());
+        return drugstoreDataRequest;
+    }
+
     public List<LocationResponse> getDrugstores(){
         return drugstoreDao.getDrugstores();
     }
+
 
     public LocationResponse getDrugstoreLocation(Integer drugstoreId){
         LocationResponse getDrugstoreLocation=drugstoreDao.getDrugstoreLocation(drugstoreId);

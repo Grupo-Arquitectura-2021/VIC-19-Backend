@@ -3,6 +3,7 @@ package bo.ucb.edu.vic19.bl;
 import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
+import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class CountryBl {
     public CountryBl(CountryDao countryDao){
         this.countryDao = countryDao;
     }
+
 
     public List<LocationResponse> getCountries(){
         return countryDao.countries();
@@ -46,5 +48,10 @@ public class CountryBl {
     public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCountryAllInfo(int countryId, String dateCovid) {
         ConfidenceIntervalCountry confidenceIntervalCountry = new ConfidenceIntervalCountry(countryDao);
         return confidenceIntervalCountry.condifenceIntervalCountry(countryId, dateCovid);
+    }
+
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate, String dateCovid){
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, forecastDate, this.getClass().getSimpleName(),countryId, dateCovid);
+        return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 }

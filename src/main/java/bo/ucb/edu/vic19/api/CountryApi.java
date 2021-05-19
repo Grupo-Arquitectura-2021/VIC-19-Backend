@@ -49,4 +49,9 @@ public class CountryApi {
     public CovidDataRequestConfidenceInterval covidDataCountryConfidenceIntervalAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         return countryBl.confidenceIntervalCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
     }
+
+    @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate, dateCovid);
+    }
 }

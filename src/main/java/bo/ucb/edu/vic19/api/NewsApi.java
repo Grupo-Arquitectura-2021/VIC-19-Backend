@@ -35,7 +35,7 @@ public class NewsApi {
         return news;
     }
 
-    @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public NewsDataRequest getNews(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
         return newsBl.getNews(n,i,search);
     }

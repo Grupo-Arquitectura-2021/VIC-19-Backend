@@ -17,7 +17,7 @@ Content-Type: application/json
 
 ### Obtiene la informacion de los datos del COVID-19 de todos los departamentos al recibir la fecha
 
-GET http://localhost:8080/city/2021-04-04
+GET http://localhost:8080/city?date=2021-04-04
 Accept: application/json
 Content-Type: application/json
 

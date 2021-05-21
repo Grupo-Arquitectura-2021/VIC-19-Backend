@@ -6,7 +6,7 @@ Content-Type: application/json
 
 ### Obtiene la informacion de los datos del COVID-19 de un pais al recibir el Id del pais y la fecha
 
-GET http://localhost:8080/country/1/2021-05-11
+GET http://localhost:8080/country/1?date=2021-05-11
 Accept: application/json
 Content-Type: application/json
 

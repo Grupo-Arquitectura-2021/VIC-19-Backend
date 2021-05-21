@@ -1,10 +1,8 @@
 ### getting the list of news
 
-GET http://localhost:8080/news/list?n=10&i=0
+GET http://localhost:8080/news?n=10&i=0
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJlcndpbkBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYWRtaW5JZCI6MSwiZXhwIjoxNjIxNDQ4NjI4LCJ1c2VyTmFtZSI6ImVyd2luIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiI3NmNmYmViMy1hMzUwLTRiOWYtYjQ3Yy03NTQ1NTFhNzIzOGQiLCJlbWFpbCI6ImVyd2luQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNvdmlkMTlwcm95ZWN0In0.mygMf-6fSFKh5LK3XC74RVGbK-4UyX2HuKO2YjUf9kE
-
 ### adding a new news
 
 POST http://localhost:8080/news/addNews

@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -22,7 +23,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //.antMatchers(HttpMethod.POST, "/client").permitAll()
+                .antMatchers(HttpMethod.GET, "/country/location").permitAll()
+                .antMatchers(HttpMethod.GET, "/country/{countryId}").permitAll()
+                .antMatchers(HttpMethod.GET, "/city/location").permitAll()
+                .antMatchers(HttpMethod.GET, "/city").permitAll()
+                .antMatchers(HttpMethod.GET, "/municipality/location/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/news").permitAll()
                 .anyRequest().authenticated()
                 //.and().cors().disable();
                 .and().cors().configurationSource(corsConfigurationSource());

@@ -5,6 +5,7 @@ import bo.ucb.edu.vic19.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +24,10 @@ public class CountryApi {
     public java.util.List<LocationResponse> getCountries(){
         return countryBl.getCountries();
     }
-    @GetMapping(path = "/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequest covidDataCountry(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+    @GetMapping(path = "/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequest covidDataCountry(@PathVariable String countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
 
-        CovidDataRequest covidDataCountry=countryBl.covidDataCountry(Integer.parseInt(countryId),dateCovid);
+        CovidDataRequest covidDataCountry=countryBl.covidDataCountry(Integer.parseInt(countryId),date);
         return covidDataCountry;
     }
 

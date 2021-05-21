@@ -6,6 +6,7 @@ import bo.ucb.edu.vic19.bl.TransactionBl;
 import bo.ucb.edu.vic19.dto.NewsDataRequest;
 import bo.ucb.edu.vic19.dto.NewsResponse;
 
+import bo.ucb.edu.vic19.model.Hospital;
 import bo.ucb.edu.vic19.model.News;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.util.TransactionUtil;
@@ -40,13 +41,11 @@ public class NewsApi {
         return newsBl.getNews(n,i,search);
     }
 
-    @RequestMapping(value = "/delete/{idNews}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void productDelete(@PathVariable("idNews") Integer idNews, HttpServletRequest request) {
-//        Transaction transaction = TransactionUtil.createTransaction(request);
-//        transactionBl.createTransaction(transaction);
-        newsBl.newsDelete(idNews);
+    @RequestMapping(path="/deleteNews",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void productDelete(@RequestBody News news, HttpServletRequest request) {
+        newsBl.newsDelete(news);
     }
+
 
     @RequestMapping(path = "/updateNews", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public News updateNews(@RequestBody News news, HttpServletRequest request){

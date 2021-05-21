@@ -10,10 +10,10 @@
          #{transaction.txUpdate})
     </insert>
 
-    <update id="deleteNews">
+    <update id="deleteNews" parameterType="bo.ucb.edu.vic19.model.News">
         UPDATE news
         SET status=0
-        WHERE (id_news = #{idNews})
+        WHERE id_news = #{idNews}
     </update>
 
     <select id="getNews" resultMap="newsMap">

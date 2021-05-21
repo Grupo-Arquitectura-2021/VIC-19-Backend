@@ -12,8 +12,6 @@ public interface NewsDao {
 
     public List<NewsResponse> getNews(Integer n, Integer i, String search);
     public void updateNews(News news);
-    public void deleteNews(Integer idNews);
-
-
+    public void deleteNews(News news);
     public Integer getTotalNews();
 }

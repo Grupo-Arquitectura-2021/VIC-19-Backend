@@ -38,8 +38,8 @@ public class NewsBl {
         return newsDataRequest;
     }
 
-    public void newsDelete(Integer idNews){
-        newsDao.deleteNews(idNews);
+    public void newsDelete(News news){
+        newsDao.deleteNews(news);
     }
 
     public News updateNews(News news, Transaction transaction){

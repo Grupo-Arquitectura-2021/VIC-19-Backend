@@ -3,6 +3,7 @@
 GET http://localhost:8080/news?n=10&i=0
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJlcndpbkBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYWRtaW5JZCI6MSwiZXhwIjoxNjIxNDY1NzY1LCJ1c2VyTmFtZSI6ImVyd2luIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiI3ODRlMjVlMi0xZmEzLTQ4OTYtOWYxZC0wNmQ2M2YyMzM3YjUiLCJlbWFpbCI6ImVyd2luQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNvdmlkMTlwcm95ZWN0In0.SRCTUmLDwPn4KQCnUGqkPbTdeKktwvIjj4U4_p0SOvI
 ### adding a new news
 
 POST http://localhost:8080/news/addNews
@@ -18,9 +19,14 @@ Content-Type: application/json
 }
 
 ### delete news
-DELETE http://localhost:8080/news/delete/3
+PUT http://localhost:8080/news/deleteNews
 Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJlcndpbkBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYWRtaW5JZCI6MSwiZXhwIjoxNjIxNDkxMDIxLCJ1c2VyTmFtZSI6ImVyd2luIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiI3NjAxYmFlOC1iZjIwLTQ3NmEtYjg1Yy00ZDBiZTFjMjEyNmQiLCJlbWFpbCI6ImVyd2luQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNvdmlkMTlwcm95ZWN0In0.ye1nH67YfA5B1PhL1de2WjkRgAEBFTvP7BKd-g4kPD4
 
+{
+  "idNews": 2
+}
 ### delete news
 PUT http://localhost:8080/news/updateNews
 Accept: application/json

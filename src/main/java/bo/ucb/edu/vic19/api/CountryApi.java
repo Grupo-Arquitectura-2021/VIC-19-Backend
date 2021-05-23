@@ -31,9 +31,9 @@ public class CountryApi {
         return covidDataCountry;
     }
 
-    @GetMapping(path = "/allInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
+    @GetMapping(path = "/allInfo/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
+        return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),date);
     }
 
     @GetMapping(path = "/mediaAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)

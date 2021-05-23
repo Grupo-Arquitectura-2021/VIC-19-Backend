@@ -1,8 +1,7 @@
 ## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
-GET http://localhost:8080/country/allInfo/1/2021-5-19
+GET http://localhost:8080/country/allInfo/1?date=2021-5-19
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTM4MTQyNSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNzMzNWVhOTktOWZhMy00NjMwLTk2MTUtMTg4MDI5OTYxMTM3IiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.kicWYx1Oho5qOWgnUBanq-OA4NPFIDDpXwqLTIOBT8Q
 
 ### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
 

@@ -23,8 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/country/location").permitAll()
-                .antMatchers(HttpMethod.GET, "/country/{countryId}").permitAll()
+                .antMatchers(HttpMethod.GET, "/country/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/city/location").permitAll()
                 .antMatchers(HttpMethod.GET, "/city").permitAll()
                 .antMatchers(HttpMethod.GET, "/municipality/location/**").permitAll()

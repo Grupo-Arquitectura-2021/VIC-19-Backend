@@ -82,4 +82,10 @@
           and mcd.id_municipality = #{municipalityId}
           and a.status = 1
     </select>
+    <update id="updateCovidData" parameterType="bo.ucb.edu.vic19.model.CovidData">
+        UPDATE covid_data
+        SET vaccinated = #{vaccinated}
+        WHERE id_covid_data = #{idCovidData}
+          AND status = 1
+    </update>
 </mapper>

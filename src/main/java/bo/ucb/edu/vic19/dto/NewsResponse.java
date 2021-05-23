@@ -7,20 +7,21 @@ public class NewsResponse {
     private String title;
     private String content;
     private Date dateNews;
-    private String urlImage;
-    private String source;
+    private String newsImages;
+    private String newsUrl;
 
-    public NewsResponse(Integer idNews, String title,String content, Date dateNews, String urlImage,String source) {
+    public NewsResponse(Integer idNews, String title,String content, Date dateNews, String newsImages,String newsUrl) {
         this.idNews = idNews;
         this.title = title;
         this.content = content;
         this.dateNews = dateNews;
-        this.urlImage = urlImage;
-        this.source = source;
+        this.newsImages = newsImages;
+        this.newsUrl = newsUrl;
     }
 
     public NewsResponse() {
     }
+
 
     public Integer getIdNews() {
         return idNews;
@@ -54,31 +55,31 @@ public class NewsResponse {
         this.dateNews = dateNews;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getNewsImages() {
+        return newsImages;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setNewsImages(String newsImages) {
+        this.newsImages = newsImages;
     }
 
-    public String getSource() {
-        return source;
+    public String getNewsUrl() {
+        return newsUrl;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setNewsUrl(String newsUrl) {
+        this.newsUrl = newsUrl;
     }
 
     @Override
     public String toString() {
         return "NewsResponse{" +
-                "idNews='" + idNews + '\'' +
-                ", title=" + title + '\'' +
-                ", content=" + content + '\'' +
-                ", dateNews=" + dateNews + '\'' +
-                ", urlImage=" + urlImage + '\'' +
-                ", source=" + source +
+                "idNews=" + idNews +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", dateNews=" + dateNews +
+                ", newsImages='" + newsImages + '\'' +
+                ", newsUrl='" + newsUrl + '\'' +
                 '}';
     }
 }

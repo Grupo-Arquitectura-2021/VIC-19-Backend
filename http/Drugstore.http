@@ -32,7 +32,7 @@ Content-Type: application/json
 
 ### Obtiene todas las farmacias de una ciudad al recibir el Id de la ciudad
 
-GET http://localhost:8080/drugstore/location/city/1
+GET http://localhost:8080/drugstore/locations?cityId=1
 Accept: application/json
 Content-Type: application/json
 

@@ -3,7 +3,6 @@
 GET http://localhost:8080/news?n=10&i=0
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJlcndpbkBnbWFpbC5jb20iLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYWRtaW5JZCI6MSwiZXhwIjoxNjIxNjcxNDA2LCJ1c2VyTmFtZSI6ImVyd2luIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJlYjMxOTVhZS02MTVmLTQ5NDctOTI3Mi1lNmQwY2ZhYzEwMjQiLCJlbWFpbCI6ImVyd2luQGdtYWlsLmNvbSIsImNsaWVudF9pZCI6ImNvdmlkMTlwcm95ZWN0In0.xDtZjwoKvk7_qbchNT0yCcsq5tdxk2GLZ6LCjslO3s0
 ### adding a new news
 
 POST http://localhost:8080/news/addNews

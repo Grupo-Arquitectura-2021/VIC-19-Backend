@@ -5,7 +5,6 @@ import bo.ucb.edu.vic19.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +12,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/city")
 public class CityApi {
-    private CityBl cityBl;
+    final private CityBl cityBl;
 
     @Autowired
     public CityApi(CityBl cityBl){
         this.cityBl = cityBl;
     }
-/*    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CitySimpleResponse> getCities(){
         return cityBl.getCities();
-    }*/
+    }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getCitiesLocation(){
@@ -34,10 +33,9 @@ public class CityApi {
         return cityBl.covidDataCity(Integer.parseInt(cityId),date);
     }
 
-    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/data", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CovidDataRequest> covidDataListCity(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
-        List<CovidDataRequest> covidDataListCity=cityBl.covidDataListCity(date);
-        return covidDataListCity;
+        return cityBl.covidDataListCity(date);
     }
 
 /*    @GetMapping(path = "/name/{nameCity}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)

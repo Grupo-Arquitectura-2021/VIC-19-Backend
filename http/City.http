@@ -4,5 +4,9 @@ GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json
 
+### Obtiene la localizaciones de todos los departametos de Bolivia
+GET http://localhost:8080/city
+Accept: application/json
+Content-Type: application/json
 
 

@@ -51,7 +51,7 @@ public class CountryBl {
     }
 
     public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate, String dateCovid){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, forecastDate, this.getClass().getSimpleName(),countryId, dateCovid);
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, null, null, forecastDate, this.getClass().getSimpleName(),countryId, dateCovid);
         return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 }

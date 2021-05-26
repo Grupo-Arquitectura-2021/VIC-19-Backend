@@ -4,6 +4,7 @@ import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalMunicipality;
+import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataMunicipality;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCity;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataMunicipality;
@@ -53,5 +54,10 @@ public class MunicipalityBl {
     public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataMunAllInfo(int munId, String dateCovid) {
         ConfidenceIntervalMunicipality confidenceIntervalMun = new ConfidenceIntervalMunicipality(municipalityDao);
         return confidenceIntervalMun.condifenceIntervalMunicipality(munId, dateCovid);
+    }
+
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int munId, String forecastDate, String dateCovid){
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, null, municipalityDao,forecastDate, this.getClass().getSimpleName(),munId, dateCovid);
+        return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 }

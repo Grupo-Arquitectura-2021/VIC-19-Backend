@@ -42,7 +42,7 @@
           and d.id_country = #{countryId}
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
-        ORDER BY b.date
+          GROUP BY (b.date) ASC
     </select>
 
     <select  id="countryId" resultType="Integer">

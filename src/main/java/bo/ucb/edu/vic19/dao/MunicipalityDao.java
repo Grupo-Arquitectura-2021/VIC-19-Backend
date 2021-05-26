@@ -17,5 +17,7 @@ public interface MunicipalityDao {
 
     List<CovidDataRequest> covidDataListMunAllInfo(int muniId, String dateCovid);
 
+    List<CovidDataRequest> covidDataListMunAllInfoDESC(int muniId, String dateCovid);
+
     String municipalityName(int municipalityId);
 }

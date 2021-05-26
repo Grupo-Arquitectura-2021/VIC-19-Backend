@@ -76,10 +76,10 @@
         )
     </insert>
 
-    <update id="deleteShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">
+    <update id="deleteShelter" parameterType="Integer">
         UPDATE shelter
         SET status = 0
-        WHERE id_shelter = #{idShelter}
+        WHERE id_shelter = #{shelterId}
     </update>
 
     <update id="updateShelter" parameterType="bo.ucb.edu.vic19.model.Shelter">

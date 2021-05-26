@@ -1,6 +1,6 @@
 
 ### Obtener todas las localizaciones de los municipios en una lista
-GET http://localhost:8080/municipality/location/8
+GET http://localhost:8080/municipality/locations?cityId=1
 Accept: application/json
 Content-Type: application/json
 
@@ -14,5 +14,9 @@ Content-Type: application/json
 GET http://localhost:8080/municipality/2021-04-14
 Accept: application/json
 Content-Type: application/json
-
 ###
+
+### Obtener la informacion de un municipio al recibir el municipio y la ultima fecha
+GET http://localhost:8080/municipality/allInfo/4?date=2021-04-1
+Accept: application/json
+Content-Type: application/json

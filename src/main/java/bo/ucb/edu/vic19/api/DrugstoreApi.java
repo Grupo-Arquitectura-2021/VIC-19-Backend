@@ -30,21 +30,21 @@ public class DrugstoreApi {
         return drugstore;
     }
 
-    @RequestMapping(path ="/deleteDrugstore" ,method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteDrugstore(@RequestParam Integer drugstoreId, HttpServletRequest request){
         TransactionUtil transactionUtil = new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);
         drugstoreBl.deleteDrugstore(drugstoreId,transaction);
     }
 
-    @RequestMapping(path = "/updateDrugstore", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Drugstore updateDrugstore(@RequestBody Drugstore drugstore, HttpServletRequest request){
         TransactionUtil transactionUtil = new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);
         return drugstoreBl.updateDrugstore(drugstore,transaction);
     }
 
-    @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public DrugstoreDataRequest getDrugstores(@RequestParam Integer n,
                                               @RequestParam Integer i,
                                               @RequestParam(required = false) String search){
@@ -56,10 +56,10 @@ public class DrugstoreApi {
         return drugstoreBl.getDrugstores();
     }*/
 
-    @GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public LocationResponse getDrugstoreLocation(@PathVariable Integer drugstoreId){
         return drugstoreBl.getDrugstoreLocation(drugstoreId);
-    }
+    }*/
 
     @GetMapping(path = "/locations", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getDrugstoresByCity(@RequestParam Integer cityId){

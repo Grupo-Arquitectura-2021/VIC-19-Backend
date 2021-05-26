@@ -19,7 +19,7 @@ public class CityApi {
     public CityApi(CityBl cityBl){
         this.cityBl = cityBl;
     }
-    /*@RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CitySimpleResponse> getCities(){
         return cityBl.getCities();
     }*/
@@ -30,8 +30,8 @@ public class CityApi {
     }
 
     @GetMapping(path = "/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequest covidDataCity(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid,@PathVariable String cityId){
-        return cityBl.covidDataCity(Integer.parseInt(cityId),dateCovid);
+    public CovidDataRequest covidDataCity(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date,@PathVariable String cityId){
+        return cityBl.covidDataCity(Integer.parseInt(cityId),date);
     }
 
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,21 +40,21 @@ public class CityApi {
         return covidDataListCity;
     }
 
-    @GetMapping(path = "/name/{nameCity}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @GetMapping(path = "/name/{nameCity}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CovidDataRequest> covidDataListCityMunicipality(@PathVariable String nameCity, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         List<CovidDataRequest> covidDataListCityMunicipality=cityBl.covidDataListCityMunicipality(nameCity,dateCovid);
         return covidDataListCityMunicipality;
-    }
+    }*/
 
-    @GetMapping(path = "/{cityId}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @GetMapping(path = "/{cityId}/municipality/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CovidDataRequest> covidDataListCityByIdMunicipality(@PathVariable Integer cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         List<CovidDataRequest> covidDataListCityByIdMunicipality=cityBl.covidDataListCityByIdMunicipality(cityId,dateCovid);
         return covidDataListCityByIdMunicipality;
-    }
+    }*/
 
-    @GetMapping(path = "/allInfo/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CovidDataRequest> covidDataCityAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return cityBl.covidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
+    @GetMapping(path = "/allInfo/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CovidDataRequest> covidDataCityAllInfo(@PathVariable Integer cityId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
+        return cityBl.covidDataCityAllInfo(cityId,date);
     }
 
     @GetMapping(path = "/mediaAllInfo/{cityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -25,7 +25,7 @@ public class ConfidenceIntervalCity {
         CovidDataRequestMedia covidDataRequestMedia;
         covidDataRequestMedia = mediaCovidDataCity.mediaCovidDataCityAllInfo(cityId, dateCovid);
 
-        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
+        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataAllInfo(cityId, dateCovid);
         int size=covidDataListCityAllInfo.size();
         float standardErrorRec=0, standardErrorVac=0, standardErrorConf=0, standardDeath=0;
         float errorRangeRec=0, errorRangeVac=0, errorRangeConf=0, errorRangeDeath=0;

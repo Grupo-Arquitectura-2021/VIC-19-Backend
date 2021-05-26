@@ -41,9 +41,8 @@ public class HospitalBl {
         return hospital;
     }
 
-    public Hospital deleteHospital(Hospital hospital) {
-        hospitalDao.deleteHospital(hospital);
-        return hospital;
+    public void deleteHospital(Integer hospitalId) {
+        hospitalDao.deleteHospital(hospitalId);
     }
 
     public Hospital updateHospital(Hospital hospital) {

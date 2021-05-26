@@ -1,33 +1,12 @@
+### Obtiene la informacion de los datos del COVID-19 de un pais al recibir el Id del pais y la fecha
+
+GET http://localhost:8080/country/1?date=2021-05-11
+Accept: application/json
+Content-Type: application/json
+
+###
 ## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
 GET http://localhost:8080/country/allInfo/1?date=2021-5-19
 Accept: application/json
 Content-Type: application/json
 
-### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/country/mediaAllInfo/1/2021-05-19
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTI4Mjc2MywidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiMGUxNTgwZTUtMWJiNi00ZTNhLThhOTctZTlkMjQwZTYxZWE4IiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.QoXjSaHZ3pT0RgXabdivqmzxJZ-pYLbZ-3dDK9kmpCs
-
-### Mostrar varianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/country/varianceAllInfo/1/2021-05-19
-Accept: application/json
-Content-Type: application/json
-
-### Mostrar Intervalo de confianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/country/confidenceIntervalAllInfo/1/2021-05-26
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTM5MDY0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiM2UzNzVhNTgtNDExNC00OTg4LWE2ZjAtY2MxNThjMDgwYjllIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.6ifdZcHwyE644-xeql7feboOoEqHyT9pWZRDdpEWWqA
-###
-
-### Mostrar proyecciones por metodo de minimos cuadrados de datos de un pais desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-05-30/2021-05-25
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTM5MDY0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiM2UzNzVhNTgtNDExNC00OTg4LWE2ZjAtY2MxNThjMDgwYjllIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.6ifdZcHwyE644-xeql7feboOoEqHyT9pWZRDdpEWWqA
-###

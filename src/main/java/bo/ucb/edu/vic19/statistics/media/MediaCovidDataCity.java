@@ -15,7 +15,7 @@ public class MediaCovidDataCity {
     }
 
     public CovidDataRequestMedia mediaCovidDataCityAllInfo(int cityId, String dateCovid) {
-        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
+        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataAllInfo(cityId, dateCovid);
         int size=covidDataListCityAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
         float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
         for(int i=0; i<size; i++){

@@ -35,7 +35,7 @@
         WHERE city.status=1
     </select>
 
-    <select id="covidDataListCityAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
+    <select id="covidDataAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.city as nameLocationCovid,
             b.date as dateLocationCovid,
@@ -54,6 +54,7 @@
           and d.id_city = #{cityId}
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
+        ORDER BY b.date
     </select>
 
 

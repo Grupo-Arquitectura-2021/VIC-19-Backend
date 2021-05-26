@@ -1,25 +1,17 @@
+### Obtiene la informacion de los datos del COVID-19 de una ciudad al recibir el Id y la fecha
 
-## Mostrar covid data de una ciudad desde el inicio de los datos hasta la fecha indicada
-GET http://localhost:8080/city/allInfo/1/2021-04-02
+GET http://localhost:8080/city/1?date=2021-04-14
 Accept: application/json
 Content-Type: application/json
 
-### Mostrar media de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
+### Obtiene la informacion de los datos del COVID-19 de todos los departamentos al recibir la fecha
 
-GET http://localhost:8080/city/mediaAllInfo/1/2021-04-02
+GET http://localhost:8080/city?date=2021-04-04
+Accept: application/json
+Content-Type: application/json
+### Obtiene la informacion de los datos del COVID-19 de una ciudad al recibir el Id y la fecha
+
+GET http://localhost:8080/city/allInfo/1?date=2021-05-23
 Accept: application/json
 Content-Type: application/json
 
-### Mostrar varianza de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/city/varianceAllInfo/1/2021-05-19
-Accept: application/json
-Content-Type: application/json
-
-### Mostrar Intervalo de confianza de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
-
-GET http://localhost:8080/city/confidenceIntervalAllInfo/1/2021-05-19
-Accept: application/json
-Content-Type: application/json
-
-###

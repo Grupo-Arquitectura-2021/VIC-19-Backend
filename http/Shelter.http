@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ###
 ##Agrega los datos de un albergue
-POST http://localhost:8080/shelter/addShelter
+POST http://localhost:8080/shelter
 Accept: application/json
 Content-Type: application/json
 
@@ -38,7 +38,7 @@ Content-Type: application/json
 
 ###
 ##Elimina los datos de un albergue
-PUT http://localhost:8080/shelter/deleteShelter
+DELETE http://localhost:8080/shelter?shelterId=1
 Accept: application/json
 Content-Type: application/json
 
@@ -48,7 +48,7 @@ Content-Type: application/json
 
 ###
 ##Actualiza los datos de un albergue
-PUT http://localhost:8080/shelter/updateShelter
+PUT http://localhost:8080/shelter
 Accept: application/json
 Content-Type: application/json
 

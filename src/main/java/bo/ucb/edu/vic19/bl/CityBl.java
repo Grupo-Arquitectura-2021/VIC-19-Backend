@@ -52,7 +52,7 @@ public class CityBl {
     }
 
     public List<CovidDataRequest> covidDataCityAllInfo(int cityId, String dateCovid) {
-        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataListCityAllInfo(cityId, dateCovid);
+        List<CovidDataRequest> covidDataListCityAllInfo=cityDao.covidDataAllInfo(cityId, dateCovid);
         return covidDataListCityAllInfo;
     }
 

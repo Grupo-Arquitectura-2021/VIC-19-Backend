@@ -72,4 +72,9 @@ public class CityApi {
         return cityBl.confidenceIntervalCovidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
     }
 
+    @GetMapping(path = "/leastSquaresAllInfo/{cityId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String cityId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
+        return cityBl.leastSquaresCovidDataCityAllInfo(Integer.parseInt(cityId),forecastDate, dateCovid);
+    }
+
 }

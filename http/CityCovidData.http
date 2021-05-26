@@ -21,5 +21,10 @@ Content-Type: application/json
 GET http://localhost:8080/city/confidenceIntervalAllInfo/1/2021-05-19
 Accept: application/json
 Content-Type: application/json
+;
+### Mostrar proyecciones por metodo de minimos cuadrados de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
 
+GET http://localhost:8080/city/leastSquaresAllInfo/6/2021-5-29/2021-05-30
+Accept: application/json
+Content-Type: application/json
 ###

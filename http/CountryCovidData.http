@@ -1,5 +1,5 @@
 ## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
-GET http://localhost:8080/country/allInfo/1/2021-5-19
+GET http://localhost:8080/country/allInfo/1?date=2021-5-19
 Accept: application/json
 Content-Type: application/json
 

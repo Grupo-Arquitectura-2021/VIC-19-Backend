@@ -11,8 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
@@ -43,16 +41,7 @@ public class CovidDataJsonUtil {
         this.countryDao=countryDao;
 
     }
-
-    //NO
-    /*@Scheduled(fixedRate = 300000L)
-    @GetMapping(value = "/swagger")
-    public void swaggerCovidData() throws ParseException {
-        String url = "https://disease.sh/v3/covid-19/vaccine/coverage/countries/Bolivia?lastdays";
-    }*/
-
-    /*
-
+/*
     @Scheduled(fixedRate = 300000L)
     @GetMapping(value = "/siip")
     public void siipCovidData() throws ParseException {
@@ -75,7 +64,7 @@ public class CovidDataJsonUtil {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
             ContagionData contagionData =  mapper.readValue(responseStream, ContagionData.class);
             DateFormat dataDate = new SimpleDateFormat("yyyy-MM-dd");
-            Date convertedDate = dataDate.parse("2021-04-04");
+            Date convertedDate = dataDate.parse("2021-05-15");
             String dateSelect = dataDate.format(convertedDate);
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());Date date;
@@ -180,8 +169,7 @@ public class CovidDataJsonUtil {
     public ArrayList<ArrayList> getJsonVaccine(String country,Integer length){
         ArrayList<ArrayList> vaccineData = new ArrayList();
         try{
-            Integer lengthPlus1 = length+1;
-            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+lengthPlus1);
+            URL url = new URL("https://disease.sh/v3/covid-19/vaccine/coverage/countries/"+country+"?lastdays="+length.toString());
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
@@ -194,7 +182,7 @@ public class CovidDataJsonUtil {
             c.add(Calendar.DAY_OF_YEAR, -length);
             date = c.getTime();
             ArrayList arr;
-            for(int i=0;i<vaccines.getTimeline().size()-1;i++){
+            for(int i=0;i<vaccines.getTimeline().size();i++){
                 arr=new ArrayList();
                 arr.add(date);
                 if((Integer) vaccines.getTimeline().get(formatCalendar(c))==null){
@@ -256,7 +244,7 @@ public class CovidDataJsonUtil {
                     else{
                         covidData.setDeathCases((Integer) general.get(j).get(2)-(Integer) general.get(j-1).get(2));
                         covidData.setConfirmedCases((Integer) general.get(j).get(1)-(Integer) general.get(j-1).get(1));
-                        covidData.setVaccinated((Integer)vaccine.get(j).get(1)-(Integer)vaccine.get(j-1).get(1));
+                        covidData.setVaccinated(-1);
                         covidData.setCumulativeCases((Integer) general.get(j).get(1));
                         covidData.setRecuperated((Integer) general.get(j).get(3)-(Integer) general.get(j-1).get(3));
                     }
@@ -264,7 +252,7 @@ public class CovidDataJsonUtil {
                     covidData.setTransaction(transaction);
                     dateString=dateSelect.format((Date) general.get(j).get(0));
                     selectData = covidDataDao.verifyCountryCovidData(dateString,countries.get(i).getIdLocation());
-                    if(j!=0) {
+                    if(j!=0 && j!=1) {
                         if (selectData == 0) {
                             covidDataDao.insertCovidData(covidData);
                             covidDataId = covidDataDao.getLastIdCovidData();
@@ -273,6 +261,18 @@ public class CovidDataJsonUtil {
                             countryCovidData.setIdCovidData(covidDataId);
                             countryCovidData.setTransaction(transaction);
                             covidDataDao.insertCountryCovidData(countryCovidData);
+                            for(int k=0;k < vaccine.size();k++){
+                                String dateVaccine = dateSelect.format(vaccine.get(k).get(0));
+                                String dateGeneral = dateSelect.format(general.get(j).get(0));
+                                if(dateVaccine.compareTo(dateGeneral) == 0){
+                                    covidData.setIdCovidData(covidDataId);
+                                    covidData.setVaccinated((Integer)vaccine.get(j).get(1)-(Integer)vaccine.get(j-1).get(1));
+                                    if(covidData.getVaccinated() >= 0){
+                                        covidDataDao.updateCovidData(covidData);
+                                    }
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -286,5 +286,6 @@ public class CovidDataJsonUtil {
     public static String formatCalendar(Calendar c) {
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
-    }*/
+    }
+    */
 }

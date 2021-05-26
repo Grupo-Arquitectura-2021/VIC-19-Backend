@@ -51,18 +51,18 @@ public class DrugstoreApi {
         return drugstoreBl.getDrugstoreAllInfo(n,i,search);
     }
 
-    @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getDrugstores(){
         return drugstoreBl.getDrugstores();
-    }
+    }*/
 
     @GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public LocationResponse getDrugstoreLocation(@PathVariable Integer drugstoreId){
         return drugstoreBl.getDrugstoreLocation(drugstoreId);
     }
 
-    @GetMapping(path = "/location/city/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LocationResponse> getDrugstoresByCity(@PathVariable Integer cityId){
+    @GetMapping(path = "/locations", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<LocationResponse> getDrugstoresByCity(@RequestParam Integer cityId){
         return drugstoreBl.getDrugstoresByCity(cityId);
     }
 

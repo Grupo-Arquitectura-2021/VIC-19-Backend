@@ -21,8 +21,8 @@
                a.news_title     as title,
                a.description   as content,
                a.news_date as dateNews,
-               a.news_images  as urlImage,
-               a.news_url   as source
+               a.news_images  as newsImages,
+               a.news_url   as newsUrl
         FROM news a
         WHERE a.status = 1
         <if test="search!=null">
@@ -37,8 +37,8 @@
         <result column="title" property="title"/>
         <result column="description" property="description"/>
         <result column="dateNews" property="dateNews"/>
-        <result column="urlImage" property="urlImage"/>
-        <result column="source" property="source"/>
+        <result column="newsImages" property="newsImages"/>
+        <result column="newsUrl" property="newsUrl"/>
     </resultMap>
 
     <select  id="getTotalNews" resultType="Integer">

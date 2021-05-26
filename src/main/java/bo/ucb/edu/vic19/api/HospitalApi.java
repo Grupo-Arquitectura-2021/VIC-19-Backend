@@ -30,18 +30,18 @@ public class HospitalApi {
         return hospitalBl.getHospitalLocation(hospitalId);
     }
 
-    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+ /*   @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getHospitalLocation(){
         return hospitalBl.getHospitalLocations();
-    }
+    }*/
 
     @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HospitalDataRequest getHospitalAllInfo(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
         return hospitalBl.getHospitalAllInfo(n,i,search);
     }
 
-    @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LocationResponse> getHospitalLocationsByCity(@PathVariable Integer cityId){
+    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<LocationResponse> getHospitalLocationsByCity(@RequestParam Integer cityId){
         return hospitalBl.getHospitalLocationsByCityId(cityId);
     }
 

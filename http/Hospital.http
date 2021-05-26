@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 ##Obtiene las locaciones de hospitales de una ciudad
-GET http://localhost:8080/hospital/locationsByCity/1
+GET http://localhost:8080/hospital/locations?cityId=1
 Accept: application/json
 Content-Type: application/json
 

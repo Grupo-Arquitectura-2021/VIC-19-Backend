@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CovidDataDao {
     public void insertCovidData(CovidData covidData);
-
+    public void updateCovidData(CovidData covidData);
     public void insertCountryCovidData(CountryCovidData covidData);
     public Integer verifyCountryCovidData(String date,Integer IdCountry);
 

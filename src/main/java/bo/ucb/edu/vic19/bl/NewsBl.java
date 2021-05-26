@@ -44,6 +44,12 @@ public class NewsBl {
 
     public News updateNews(News news, Transaction transaction){
         news.setTransaction(transaction);
+        System.out.println(news.getContent());
+        System.out.println(news.getDateNews());
+        System.out.println(news.getIdNews());
+        System.out.println(news.getNewsImages());
+        System.out.println(news.getNewsUrl());
+        System.out.println(news.getTitle());
         newsDao.updateNews(news);
         return news;
     }

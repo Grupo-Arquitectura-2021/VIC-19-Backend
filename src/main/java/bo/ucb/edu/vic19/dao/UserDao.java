@@ -10,10 +10,10 @@ import java.util.List;
 
 @Mapper
 public interface UserDao {
-    public Integer addUser(User user);
-
-    public UserResponse getUser(String email, String password);
-
-    public void deleteUser(Integer idUser);
+    public void addUser(User user);
+    public List<UserResponse> getUsers(Integer i,Integer n,String search);
+    public Integer getTotalUser(String search);
+    public void deleteUser(User user);
+    public void updateUser(User user);
 
 }

@@ -67,6 +67,9 @@
         FROM hospital, city
         WHERE hospital.status=1
           AND city.status = 1
+        <if test="search!=null">
+            and hospital.name like CONCAT("%",#{search},"%")
+        </if>
           AND city.id_city = hospital.id_city
     </select>
 

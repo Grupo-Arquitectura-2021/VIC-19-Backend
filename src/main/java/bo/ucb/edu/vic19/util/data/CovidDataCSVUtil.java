@@ -1,12 +1,14 @@
 package bo.ucb.edu.vic19.util.data;
 
 import bo.ucb.edu.vic19.dao.*;
+import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.LocationResponse;
 import bo.ucb.edu.vic19.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -22,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 
+import org.apache.commons.csv.*;
 
 @Component
 public class CovidDataCSVUtil {
@@ -31,6 +34,7 @@ public class CovidDataCSVUtil {
     private MunicipalityDao municipalityDao;
     private CountryDao countryDao;
 
+    public static String TYPE = "text/csv";
 
     @Autowired
     public void ScheduledTasks(CovidDataDao covidDataDao, CityDao cityDao, MunicipalityDao municipalityDao, CountryDao countryDao) {
@@ -213,6 +217,38 @@ public class CovidDataCSVUtil {
             }
         }*/
     }
+
+    public static boolean hasCSVFormat(MultipartFile file) {
+        System.out.println(file.getContentType());
+        if (TYPE.equals(file.getContentType())
+                || file.getContentType().equals("application/vnd.ms-excel")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static List<CovidDataRequest> csvToDataCountryCsvRequest(InputStream is) {
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+             CSVParser csvParser = new CSVParser(fileReader,
+                     CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
+            List<CovidDataRequest> dataCountryCsvRequestList = new ArrayList<>();
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            for (CSVRecord csvRecord : csvRecords) {
+                CovidDataRequest dataCountryCsvRequest = new CovidDataRequest();
+                //dataCountryCsvRequest.setIso(csvRecord.get("iso_code"));
+                //dataCountryCsvRequest.setDate(sdf.parse(csvRecord.get("date")));
+                //dataCountryCsvRequest.setCumulativeConfirmed(Integer.parseInt(csvRecord.get("total_cases")));
+                dataCountryCsvRequestList.add(dataCountryCsvRequest);
+            }
+            return dataCountryCsvRequestList;
+        } catch (IOException e) {
+            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+        }
+    }
+
+
 }
         /*while (inputStream.hasNext()) {
             String data = inputStream.nextLine();

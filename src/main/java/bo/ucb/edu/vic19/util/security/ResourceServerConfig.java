@@ -30,7 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/drugstore/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/shelter/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/news").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 //.and().cors().disable();
                 .and().cors().configurationSource(corsConfigurationSource());
                 /*.and()

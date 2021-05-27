@@ -37,7 +37,7 @@ public class DrugstoreApi {
         drugstoreBl.deleteDrugstore(drugstoreId,transaction);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Drugstore updateDrugstore(@RequestBody Drugstore drugstore, HttpServletRequest request){
         TransactionUtil transactionUtil = new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);
@@ -50,16 +50,6 @@ public class DrugstoreApi {
                                               @RequestParam(required = false) String search){
         return drugstoreBl.getDrugstoreAllInfo(n,i,search);
     }
-
-/*    @GetMapping(path = "/locations",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LocationResponse> getDrugstores(){
-        return drugstoreBl.getDrugstores();
-    }*/
-
-    /*@GetMapping(path = "/location/{drugstoreId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LocationResponse getDrugstoreLocation(@PathVariable Integer drugstoreId){
-        return drugstoreBl.getDrugstoreLocation(drugstoreId);
-    }*/
 
     @GetMapping(path = "/locations", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getDrugstoresByCity(@RequestParam Integer cityId){

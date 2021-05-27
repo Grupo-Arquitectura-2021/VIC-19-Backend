@@ -105,29 +105,7 @@
           and b.status = 1
     </select>
 
-
-    <select id="covidDataListMunicipality" resultMap="listMunicipalityMap">
-        SELECT
-            a.municipality as nameLocationCovid,
-            MAX(b.date) as dateLocationCovid,
-            MAX(b.death_cases) as deathCases,
-            MAX(b.confirmed_cases) as confirmedCases,
-            MAX(b.vaccinated) as vaccinated,
-            MAX(b.cumulative_cases) as cumulativeCases,
-            MAX(b.recuperated) as recuperated
-
-        FROM
-            municipality a, covid_data b, municipality_covid_data d
-
-        WHERE
-            b.date &lt;= #{dateCovid}
-          and a.id_municipality = d.id_municipality
-          and b.id_covid_data = d.id_covid_data
-          and b.status = 1
-          GROUP BY a.id_municipality
-    </select>
-
-    <resultMap id="listMunicipalityMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">
+    <resultMap id="listMunicipalityByCityIdMap" type="bo.ucb.edu.vic19.dto.CovidDataRequest">
         <result column="nameLocationCovid" property="nameLocationCovid"/>
         <result column="dateLocationCovid" property="dateLocationCovid"/>
         <result column="deathCases" property="deathCases"/>
@@ -137,4 +115,26 @@
         <result column="recuperated" property="recuperated"/>
     </resultMap>
 
+    <select id="covidDataListMunicipalityByCityId" resultMap="listMunicipalityByCityIdMap">
+        SELECT
+            e.municipality as nameLocationCovid,
+            MAX(b.date) as dateLocationCovid,
+            MAX(b.death_cases) as deathCases,
+            MAX(b.confirmed_cases) as confirmedCases,
+            MAX(b.vaccinated) as vaccinated,
+            MAX(b.cumulative_cases) as cumulativeCases,
+            MAX(b.recuperated) as recuperated
+
+        FROM
+            city a, covid_data b, city_covid_data d, municipality e, municipality_covid_data f
+
+        WHERE
+            a.id_city = #{cityId}
+          and b.date &lt;= #{dateCovid}
+          and a.id_city = e.id_city
+          and e.id_municipality = f.id_municipality
+          and b.id_covid_data = f.id_covid_data
+          and b.status = 1
+        GROUP BY e.id_municipality
+    </select>
 </mapper>

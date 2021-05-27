@@ -16,8 +16,6 @@ public interface CityDao {
     public CovidDataRequest covidDataCity(Integer cityId, String dateCovid);
     public String cityName(Integer cityId);
     public List<CovidDataRequest> covidDataListCity(String dateCovid);
-    public List<CovidDataRequest> covidDataListCityMunicipality(String nameCity, String dateCovid);
-    public List<CovidDataRequest> covidDataListCityByIdMunicipality(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataListCityAllInfo(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataListCityAllInfoDESC(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataAllInfo(Integer cityId, String dateCovid);

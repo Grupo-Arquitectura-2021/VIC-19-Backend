@@ -20,3 +20,9 @@ Content-Type: application/json
 GET http://localhost:8080/municipality/allInfo/4?date=2021-04-1
 Accept: application/json
 Content-Type: application/json
+
+### Obtiene la informacion de los datos del COVID-19 de todos los municipios de un departamentos al recibir el Id de la ciudad y la fecha
+
+GET http://localhost:8080/municipality?dateCovid=2021-05-21&cityId=7
+Accept: application/json
+Content-Type: application/json

@@ -27,20 +27,17 @@ public class CountryApi {
     }
 
 
-    @PostMapping(path = "/admin/{id}")
-    public HttpStatus uploadFile(@RequestParam("file") MultipartFile file,
-                                 @PathVariable Integer id, HttpServletRequest request) {
+    @PostMapping(path = "/csv")
+    public HttpStatus uploadFile(@RequestParam("file") MultipartFile file,boolean replace, HttpServletRequest request) {
 
         if (CovidDataCSVUtil.hasCSVFormat(file)) {
             try {
-
                 TransactionUtil transactionUtil = new TransactionUtil();
                 Transaction transaction = transactionUtil.createTransaction(request);
-                countryBl.saveData(file,id, transaction);
-
-
+                countryBl.saveDataCSV(file,transaction,replace);
                 return HttpStatus.OK;
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 return HttpStatus.EXPECTATION_FAILED;
             }
         }

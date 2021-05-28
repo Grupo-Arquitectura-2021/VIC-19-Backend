@@ -10,7 +10,53 @@
         )
     </insert>
 
+    <update id="updateCovidData" parameterType="bo.ucb.edu.vic19.model.CovidData">
+        UPDATE covid_data
+            set id_page_url=#{idPageUrl},
+                death_cases=#{deathCases},
+                confirmed_cases=#{confirmedCases},
+                vaccinated=#{vaccinated},
+                cumulative_cases=#{cumulativeCases},
+                recuperated=#{recuperated},
+                tx_id=#{transaction.txId},
+                tx_host=#{transaction.txHost},
+                tx_update=#{transaction.txUpdate}
+        WHERE id_covid_data=#{idCovidData}
+        and status=1;
+    </update>
 
+    <insert id="insertMultiCovidData" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="idCovidData">
+        INSERT INTO covid_data (
+                                id_covid_data,
+                                `id_page_url`,
+                                `death_cases`,
+                                `confirmed_cases`,
+                                `vaccinated`,
+                                `cumulative_cases`,
+                                `recuperated`,
+                                `date`,
+                                `status`,
+                                `tx_id`,
+                                `tx_date`,
+                                `tx_host`,
+                                `tx_update`)
+        VALUES
+        <foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+        null,
+            #{element.idPageUrl},
+            #{element.deathCases},
+            #{element.confirmedCases},
+            #{element.vaccinated},
+            #{element.cumulativeCases},
+            #{element.recuperated},
+            #{element.date},
+            1,
+            #{element.transaction.txId},
+            #{element.transaction.txDate},
+            #{element.transaction.txHost},
+            #{element.transaction.txUpdate}
+        </foreach>
+    </insert>
     <insert id="insertCountryCovidData" parameterType="bo.ucb.edu.vic19.model.CountryCovidData">
         INSERT INTO country_covid_data (`id_country_covid_data`, `id_country`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idCountry}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
@@ -22,10 +68,19 @@
         INNER JOIN covid_data cd
         on cd.id_covid_data=mcd.id_covid_data
         WHERE
-            mcd.id_country = #{IdCountry}
+            mcd.id_country = #{idCountry}
             and cd.date=#{date}
     </select>
-
+    <select id="getCovidDataCountryIdDate" resultType="Integer">
+        SELECT cd.id_covid_data
+        FROM country_covid_data mcd
+                 INNER JOIN covid_data cd
+                            on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_country = #{idCountry}
+          and cd.date=#{date}
+        LIMIT 1
+    </select>
     <insert id="insertCityCovidData" parameterType="bo.ucb.edu.vic19.model.CityCovidData">
         INSERT INTO city_covid_data (`id_city_covid_data`, `id_city`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idCity}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}
@@ -82,10 +137,4 @@
           and mcd.id_municipality = #{municipalityId}
           and a.status = 1
     </select>
-    <update id="updateCovidData" parameterType="bo.ucb.edu.vic19.model.CovidData">
-        UPDATE covid_data
-        SET vaccinated = #{vaccinated}
-        WHERE id_covid_data = #{idCovidData}
-          AND status = 1
-    </update>
 </mapper>

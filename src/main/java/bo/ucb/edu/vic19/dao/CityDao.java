@@ -4,6 +4,8 @@ import bo.ucb.edu.vic19.dto.CitySimpleResponse;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 
 import bo.ucb.edu.vic19.dto.LocationResponse;
+import bo.ucb.edu.vic19.model.CityCovidData;
+import bo.ucb.edu.vic19.model.CountryCovidData;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,8 +17,20 @@ public interface CityDao {
     public List<CitySimpleResponse> cities();
     public CovidDataRequest covidDataCity(Integer cityId, String dateCovid);
     public String cityName(Integer cityId);
+
     public List<CovidDataRequest> covidDataListCity(String dateCovid);
+
+    public List<CovidDataRequest> covidDataListCityMunicipality(String nameCity, String dateCovid);
+    public List<CovidDataRequest> covidDataListCityByIdMunicipality(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataListCityAllInfo(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataListCityAllInfoDESC(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataAllInfo(Integer cityId, String dateCovid);
+
+
+    public List<LocationResponse> countries();
+    public void insertMultiCity(List<CityCovidData> list);
+
+    List<CovidDataRequest> covidDataListCityAllInfoNoDate(int cityId);
+
+    List<CovidDataRequest> covidDataListCityAllInfoNoDateDESC(int cityId);
 }

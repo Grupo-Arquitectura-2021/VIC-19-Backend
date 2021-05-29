@@ -137,4 +137,16 @@
           and mcd.id_municipality = #{municipalityId}
           and a.status = 1
     </select>
+
+    <select id="getCovidDataMunicipalityIdDate" resultType="Integer">
+        SELECT cd.id_covid_data
+        FROM municipality_covid_data mcd
+                 INNER JOIN covid_data cd
+                            on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_municipality = #{idMunicipality}
+          and cd.date=#{date}
+            LIMIT 1
+    </select>
+
 </mapper>

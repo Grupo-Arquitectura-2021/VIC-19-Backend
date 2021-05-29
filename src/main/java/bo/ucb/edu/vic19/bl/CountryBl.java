@@ -6,6 +6,7 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
@@ -28,7 +29,7 @@ public class CountryBl {
     private CovidDataDao covidDataDao;
 
     @Autowired
-    public CountryBl(CountryDao countryDao, CovidDataDao covidDataDao){
+    public CountryBl(CountryDao countryDao){
         this.countryDao = countryDao;
         this.covidDataDao=covidDataDao;
     }
@@ -139,5 +140,8 @@ public class CountryBl {
         return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 
-
+    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
+        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(countryDao, null, null, this.getClass().getSimpleName(),countryId, forecastDate);
+        return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+    }
 }

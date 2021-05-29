@@ -1,12 +1,41 @@
-### Obtiene la informacion de los datos del COVID-19 de un pais al recibir el Id del pais y la fecha
-
-GET http://localhost:8080/country/1?date=2021-05-11
-Accept: application/json
-Content-Type: application/json
-
-###
 ## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
 GET http://localhost:8080/country/allInfo/1?date=2021-5-19
 Accept: application/json
 Content-Type: application/json
 
+### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/mediaAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar varianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/varianceAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar Intervalo de confianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/confidenceIntervalAllInfo/1/2021-05-26
+Accept: application/json
+Content-Type: application/json
+###
+
+### Mostrar proyecciones por metodo de minimos cuadrados de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-06-02/2021-05-30
+Accept: application/json
+Content-Type: application/json
+###
+
+### Mostrar proyecciones por metodo de incremento absoluto de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/absoluteIncreaseAllInfo/1/2021-05-30
+###
+
+## Mostrar covid data de un pais desde el inicio de los datos hasta la fecha indicada
+GET http://localhost:8080/country/allInfo/1?date=2021-5-19
+Accept: application/json
+Content-Type: application/json
+###

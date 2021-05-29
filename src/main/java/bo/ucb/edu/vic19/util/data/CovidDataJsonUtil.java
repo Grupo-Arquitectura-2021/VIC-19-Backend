@@ -41,9 +41,9 @@ public class CovidDataJsonUtil {
         this.countryDao=countryDao;
 
     }
-/*
-    @Scheduled(fixedRate = 300000L)
-    @GetMapping(value = "/siip")
+
+    //@Scheduled(fixedRate = 300000L)
+    //@GetMapping(value = "/siip")
     public void siipCovidData() throws ParseException {
         String url = "https://siip.produccion.gob.bo/repSIIP2/JsonAjaxCovid.php?flag=contagiados";
         readDataJsonSiip(url);
@@ -204,8 +204,8 @@ public class CovidDataJsonUtil {
     }
 
 
-   @Scheduled(fixedRate = 30000L)
-   @GetMapping(value = "/swagger")
+   //@Scheduled(fixedRate = 30000L)
+   //@GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {
             List<LocationResponse> countries=countryDao.countries();
@@ -287,5 +287,5 @@ public class CovidDataJsonUtil {
         DateFormat dateFormat1 = new SimpleDateFormat("M/d/yy");
         return dateFormat1.format(c.getTime());
     }
-    */
+
 }

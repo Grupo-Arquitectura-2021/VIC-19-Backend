@@ -11,6 +11,14 @@ public class MunicipalityCovidData {
         transaction = new Transaction();
     }
 
+    public MunicipalityCovidData(Integer idMunicipalityCovidData, Integer idMunicipality, Integer idCovidData, Integer status, Transaction transaction) {
+        this.idMunicipalityCovidData = idMunicipalityCovidData;
+        this.idMunicipality = idMunicipality;
+        this.idCovidData = idCovidData;
+        this.status = status;
+        this.transaction = transaction;
+    }
+
     public Integer getIdMunicipalityCovidData() {
         return idMunicipalityCovidData;
     }

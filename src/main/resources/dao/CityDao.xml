@@ -35,6 +35,77 @@
         WHERE city.status=1
     </select>
 
+    <select id="covidDataListCityAllInfoNoDate" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
+        SELECT
+            a.city as nameLocationCovid,
+            b.date as dateLocationCovid,
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
+
+        FROM
+            city a, covid_data b, city_covid_data d
+
+        WHERE
+             a.id_city = d.id_city
+          and d.id_city = #{cityId}
+          and b.id_covid_data = d.id_covid_data
+          and b.status = 1
+          GROUP BY (date) ASC
+    </select>
+
+    <select id="covidDataListCityAllInfoNoDateDESC" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
+        SELECT
+            a.city as nameLocationCovid,
+            b.date as dateLocationCovid,
+            b.death_cases as deathCases,
+            b.confirmed_cases as confirmedCases,
+            b.vaccinated as vaccinated,
+            b.cumulative_cases as cumulativeCases,
+            b.recuperated as recuperated
+
+        FROM
+            city a, covid_data b, city_covid_data d
+
+        WHERE
+            a.id_city = d.id_city
+          and d.id_city = #{cityId}
+          and b.id_covid_data = d.id_covid_data
+          and b.status = 1
+          GROUP BY (date) DESC
+    </select>
+
+    <insert id="insertMultiCountry" parameterType="java.util.List">
+        INSERT INTO country_covid_data (
+        id_city, id_covid_data, status, tx_id, tx_date, tx_host, tx_update
+        )
+        VALUES
+        <foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
+            #{element.idcity},
+            #{element.idCovidData},
+            1,
+            #{element.transaction.txId},
+            #{element.transaction.txDate},
+            #{element.transaction.txHost},
+            #{element.transaction.txUpdate}
+        </foreach>
+    </insert>
+
+
+    <resultMap type="bo.ucb.edu.vic19.dto.LocationResponse" id="countriesMap">
+        <result column="idLocation" property="idLocation"/>
+        <result column="locationName" property="locationName"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+    </resultMap>
+    <select  id="countries" resultMap="countriesMap">
+        SELECT id_city idLocation, city locationName, lon longitude, lat latitude
+        FROM city
+        WHERE city.status=1
+    </select>
+
     <select id="covidDataAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.city as nameLocationCovid,
@@ -54,7 +125,7 @@
           and d.id_city = #{cityId}
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
-        ORDER BY b.date
+          GROUP BY (date) ASC
     </select>
 
     <select id="covidDataListCityAllInfoDESC" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
@@ -77,7 +148,6 @@
           and b.id_covid_data = d.id_covid_data
           and b.status = 1
           GROUP BY (date) DESC
-        ORDER BY b.date
     </select>
 
 

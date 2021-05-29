@@ -81,7 +81,7 @@ public class CountryApi {
     }
 
     @GetMapping(path = "/absoluteIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestAbsoluteIncrease covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+    public CovidDataRequestAbsoluteIncrease covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.absoluteIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
 }

@@ -26,7 +26,7 @@ public class AbsoluteIncreaseMethod {
     public ArrayList<PeriodQuantity> periodQuantitiesVac = new ArrayList<PeriodQuantity>(),periodQuantitiesConf = new ArrayList<PeriodQuantity>(),periodQuantitiesDeath = new ArrayList<PeriodQuantity>(),periodQuantitiesRec = new ArrayList<PeriodQuantity>();
     public float n,dif,dayAux;
     public boolean flagFirst = true;
-    public CovidDataRequestAbsoluteIncrease covidDataRequestLeastSquares = new CovidDataRequestAbsoluteIncrease();
+    public CovidDataRequestAbsoluteIncrease covidDataRequestAbsoluteIncrease = new CovidDataRequestAbsoluteIncrease();
 
 
     public AbsoluteIncreaseMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String daoName, int locationId, String forecastDate) {
@@ -47,24 +47,24 @@ public class AbsoluteIncreaseMethod {
             case "CountryBl":
                 covidDataList=countryDao.covidDataListCountryAllInfoNoDate(locationId);
                 covidDataListDESC=countryDao.covidDataListCountryAllInfoNoDateDESC(locationId);
-                covidDataRequestLeastSquares.setNameLocationCovid(countryDao.countryName(locationId));
+                covidDataRequestAbsoluteIncrease.setNameLocationCovid(countryDao.countryName(locationId));
                 determinePeriod(covidDataList);
                 break;
             case "CityBl":
                 covidDataList=cityDao.covidDataListCityAllInfoNoDate(locationId);
                 covidDataListDESC=cityDao.covidDataListCityAllInfoNoDateDESC(locationId);
-                covidDataRequestLeastSquares.setNameLocationCovid(cityDao.cityName(locationId));
+                covidDataRequestAbsoluteIncrease.setNameLocationCovid(cityDao.cityName(locationId));
                 determinePeriod(covidDataList);
                 break;
             case "MunicipalityBl":
                 covidDataList=municipalityDao.covidDataListMunAllInfoNoDate(locationId);
                 covidDataListDESC=municipalityDao.covidDataListMunAllInfoNoDateDESC(locationId);
-                covidDataRequestLeastSquares.setNameLocationCovid(municipalityDao.municipalityName(locationId));
+                covidDataRequestAbsoluteIncrease.setNameLocationCovid(municipalityDao.municipalityName(locationId));
                 determinePeriod(covidDataList);
                 break;
         }
 
-        return covidDataRequestLeastSquares;
+        return covidDataRequestAbsoluteIncrease;
     }
 
     private void getVariables(List<CovidDataRequest> covidDataList) {
@@ -113,11 +113,7 @@ public class AbsoluteIncreaseMethod {
     }
 
     private void determinePeriod(List<CovidDataRequest> covidDataList) {
-        int dayForecast = 0, lastDay =0;
-
-        /*for(int i=0; i<covidDataListDESC.size(); i++){
-            System.out.println("date location "+covidDataListDESC.get(i).getDateLocationCovid());
-        }*/
+        covidDataRequestAbsoluteIncrease.setDateLocationCovid(forecastDate);
 
         Date datePeriod, forecastPeriod;
         datePeriod = parseFecha(covidDataListDESC.get(0).getDateLocationCovid());
@@ -132,7 +128,6 @@ public class AbsoluteIncreaseMethod {
         Date date = cal.getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         forecastDate = dateFormat.format(date);
-        covidDataRequestLeastSquares.setDateLocationCovid(forecastDate);
 
         long startTime =  cal.getTimeInMillis();
         long endTime = calf.getTimeInMillis();
@@ -204,13 +199,13 @@ public class AbsoluteIncreaseMethod {
 
 
         //Guardando datos del metodo de minimos cuadrados en una variable
-        covidDataRequestLeastSquares.setVacForecast(forecastx);
+        covidDataRequestAbsoluteIncrease.setVacForecast(forecastx);
 
-        covidDataRequestLeastSquares.setConfForecast(forecastxc);
+        covidDataRequestAbsoluteIncrease.setConfForecast(forecastxc);
 
-        covidDataRequestLeastSquares.setDeathForecast(forecastxd);
+        covidDataRequestAbsoluteIncrease.setDeathForecast(forecastxd);
 
-        covidDataRequestLeastSquares.setRecForecast(forecastxr);
+        covidDataRequestAbsoluteIncrease.setRecForecast(forecastxr);
 
 
     }

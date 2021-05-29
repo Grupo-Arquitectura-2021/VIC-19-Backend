@@ -6,6 +6,7 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;

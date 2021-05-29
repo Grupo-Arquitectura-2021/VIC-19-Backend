@@ -8,10 +8,10 @@ import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.MunicipalityCovidData;
 import bo.ucb.edu.vic19.model.Transaction;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
+import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalMunicipality;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataMunicipality;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCity;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataMunicipality;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,5 +142,10 @@ public class MunicipalityBl {
     public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int munId, String forecastDate, String dateCovid){
         LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, null, municipalityDao,forecastDate, this.getClass().getSimpleName(),munId, dateCovid);
         return leastSquaresMethod.assignCovidDataAccordingToBlName();
+    }
+
+    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
+        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(null, null, municipalityDao, this.getClass().getSimpleName(),munId, forecastDate);
+        return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
     }
 }

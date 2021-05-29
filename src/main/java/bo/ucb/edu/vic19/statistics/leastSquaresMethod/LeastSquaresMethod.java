@@ -25,7 +25,7 @@ public class LeastSquaresMethod {
     public List<CovidDataRequest> covidDataListDESC;
     public ArrayList<PeriodQuantity> periodQuantitiesVac = new ArrayList<PeriodQuantity>(),periodQuantitiesConf = new ArrayList<PeriodQuantity>(),periodQuantitiesDeath = new ArrayList<PeriodQuantity>(),periodQuantitiesRec = new ArrayList<PeriodQuantity>();
     public float n,dif,dayAux;
-    public boolean flagFirstVac = true, flagFirstConf =true, flagFirstDeath=true, flagFirstRec=true;
+    public boolean flagFirst=true;
     public CovidDataRequestLeastSquares covidDataRequestLeastSquares = new CovidDataRequestLeastSquares();
 
 
@@ -71,7 +71,7 @@ public class LeastSquaresMethod {
     private void getVariables(List<CovidDataRequest> covidDataList) {
         n = covidDataList.size();
         for(int i=0; i<n; i++){
-            if(flagFirstVac) {
+            if(flagFirst) {
                 if (covidDataList.get(i).getVaccinated() >= 0) {
                     Date datePeriod;
                     datePeriod = parseFecha(covidDataList.get(i).getDateLocationCovid());
@@ -82,7 +82,7 @@ public class LeastSquaresMethod {
                     periodQuantitiesConf.add(new PeriodQuantity(1, covidDataList.get(i).getConfirmedCases()));
                     periodQuantitiesRec.add(new PeriodQuantity(1, covidDataList.get(i).getRecuperated()));
                     periodQuantitiesDeath.add(new PeriodQuantity(1, covidDataList.get(i).getDeathCases()));
-                    flagFirstVac = false;
+                    flagFirst = false;
                 }
             }else{
                 if (covidDataList.get(i).getVaccinated() >= 0) {

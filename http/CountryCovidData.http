@@ -24,7 +24,14 @@ Content-Type: application/json
 
 ### Mostrar proyecciones por metodo de minimos cuadrados de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-5-29/2021-05-30
+GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-06-02/2021-05-30
+Accept: application/json
+Content-Type: application/json
+###
+
+### Mostrar proyecciones por metodo de incremento absoluto de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/absoluteIncreaseAllInfo/1/2021-05-30
 Accept: application/json
 Content-Type: application/json
 ###

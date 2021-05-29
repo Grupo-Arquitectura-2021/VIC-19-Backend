@@ -28,3 +28,10 @@ GET http://localhost:8080/municipality/leastSquaresAllInfo/1/2021-5-29/2021-05-3
 Accept: application/json
 Content-Type: application/json
 ###
+
+### Mostrar proyecciones por metodo de incremento absoluto de datos de un municipio desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/municipality/absoluteIncreaseAllInfo/1
+Accept: application/json
+Content-Type: application/json
+###

@@ -28,7 +28,7 @@ public class CountryApi {
 
 
     @PostMapping(path = "/csv")
-    public HttpStatus uploadFile(@RequestParam("file") MultipartFile file,boolean replace, HttpServletRequest request) {
+    public HttpStatus uploadDataCSV(@RequestParam("file") MultipartFile file,boolean replace, HttpServletRequest request) {
 
         if (CovidDataCSVUtil.hasCSVFormat(file)) {
             try {

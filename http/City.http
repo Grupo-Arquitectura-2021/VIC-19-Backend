@@ -1,33 +1,12 @@
 
-GET http://localhost:8080/city
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTI5NjE0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiMzcyYjk3MjMtMWMwNS00ZTc1LTk4OGEtOGJlMjU2MzU2OTNjIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.RyYm7RzK7AwEZ5A3ePCMjoFSKkCdxGIXbZKiMk4Yp_E
 ### Obtiene la localizaciones de todos los departametos de Bolivia
 GET http://localhost:8080/city/location
 Accept: application/json
 Content-Type: application/json
 
-### Obtiene la informacion de los datos del COVID-19 de una ciudad al recibir el Id y la fecha
-
-GET http://localhost:8080/city/1/2021-04-14
+### Obtiene la localizaciones de todos los departametos de Bolivia
+GET http://localhost:8080/city
 Accept: application/json
 Content-Type: application/json
 
-### Obtiene la informacion de los datos del COVID-19 de todos los departamentos al recibir la fecha
 
-GET http://localhost:8080/city?date=2021-04-04
-Accept: application/json
-Content-Type: application/json
-
-### Obtiene la informacion de los datos del COVID-19 de todos los municipios de un departamentos al recibir el nombre de la ciudad y la fecha
-
-GET http://localhost:8080/city/name/Tarija/municipality/2021-05-17
-Accept: application/json
-Content-Type: application/json
-
-### Obtiene la informacion de los datos del COVID-19 de todos los municipios de un departamentos al recibir el Id de la ciudad y la fecha
-
-GET http://localhost:8080/city/1/municipality/2021-05-17
-Accept: application/json
-Content-Type: application/json

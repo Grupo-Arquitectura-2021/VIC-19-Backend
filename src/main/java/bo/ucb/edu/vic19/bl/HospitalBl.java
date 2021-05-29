@@ -41,9 +41,8 @@ public class HospitalBl {
         return hospital;
     }
 
-    public Hospital deleteHospital(Hospital hospital) {
-        hospitalDao.deleteHospital(hospital);
-        return hospital;
+    public void deleteHospital(Integer hospitalId) {
+        hospitalDao.deleteHospital(hospitalId);
     }
 
     public Hospital updateHospital(Hospital hospital) {
@@ -58,7 +57,7 @@ public class HospitalBl {
     public HospitalDataRequest getHospitalAllInfo(Integer n, Integer i,String search) {
         HospitalDataRequest hospitalDataRequest=new HospitalDataRequest();
         hospitalDataRequest.setHospitals(hospitalDao.getHospitalAllInfo(n,i,search));
-        hospitalDataRequest.setTotal(hospitalDao.getTotalHospital());
+        hospitalDataRequest.setTotal(hospitalDao.getTotalHospital(search));
         return hospitalDataRequest;
     }
 }

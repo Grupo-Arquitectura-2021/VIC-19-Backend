@@ -13,7 +13,7 @@ public interface MunicipalityDao {
     public Integer getMunicipalityIdWithName(String municipalityDataName,Integer IdCity);
     public List<LocationResponse> municipalities(Integer cityId);
     public CovidDataRequest covidDataMunicipality(Integer municipalityId, String dateCovid);
-    public List<CovidDataRequest> covidDataListMunicipality(String dateCovid);
+    public List<CovidDataRequest> covidDataListMunicipalityByCityId(String dateCovid,Integer cityId);
 
     List<CovidDataRequest> covidDataListMunAllInfo(int muniId, String dateCovid);
 

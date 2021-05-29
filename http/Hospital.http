@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ###
 ##Agrega los datos de un hospital
-POST http://localhost:8080/hospital/addHospital
+POST http://localhost:8080/hospital
 Accept: application/json
 Content-Type: application/json
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 ###
 ##Elimina los datos de un hospital
-PUT http://localhost:8080/hospital/deleteHospital
+DELETE http://localhost:8080/hospital?hospitalId=1
 Accept: application/json
 Content-Type: application/json
 
@@ -47,7 +47,7 @@ Content-Type: application/json
 
 ###
 ##Actualiza los datos de un hospital
-PUT http://localhost:8080/hospital/updateHospital
+PUT http://localhost:8080/hospital
 Accept: application/json
 Content-Type: application/json
 

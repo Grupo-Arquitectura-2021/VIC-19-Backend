@@ -15,12 +15,12 @@ public interface HospitalDao {
 
     public void insertHospital(Hospital hospital);
 
-    public void deleteHospital(Hospital hospital);
+    public void deleteHospital(Integer hospitalId);
 
     public void updateHospital(Hospital hospital);
 
     List<LocationResponse> getHospitalLocations();
 
     List<HospitalRequest> getHospitalAllInfo(Integer n,Integer i,String search);
-    Integer getTotalHospital();
+    Integer getTotalHospital(String search);
 }

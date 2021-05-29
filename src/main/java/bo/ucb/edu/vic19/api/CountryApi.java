@@ -2,12 +2,18 @@ package bo.ucb.edu.vic19.api;
 
 import bo.ucb.edu.vic19.bl.CountryBl;
 import bo.ucb.edu.vic19.dto.*;
+import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.util.TransactionUtil;
+import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -18,6 +24,24 @@ public class CountryApi {
     @Autowired
     public CountryApi(CountryBl countryBl){
         this.countryBl = countryBl;
+    }
+
+
+    @PostMapping(path = "/csv")
+    public HttpStatus uploadDataCSV(@RequestParam("file") MultipartFile file,boolean replace, HttpServletRequest request) {
+
+        if (CovidDataCSVUtil.hasCSVFormat(file)) {
+            try {
+                TransactionUtil transactionUtil = new TransactionUtil();
+                Transaction transaction = transactionUtil.createTransaction(request);
+                countryBl.saveDataCSV(file,transaction,replace);
+                return HttpStatus.OK;
+            }
+            catch (Exception e) {
+                return HttpStatus.EXPECTATION_FAILED;
+            }
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 
     @RequestMapping(path = "/location", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,0 +1,20 @@
+
+### Mostrar media de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/city/mediaAllInfo/1/2021-04-02
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar varianza de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/city/varianceAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+### Mostrar Intervalo de confianza de datos de una ciudad desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/city/confidenceIntervalAllInfo/1/2021-05-19
+Accept: application/json
+Content-Type: application/json
+
+###

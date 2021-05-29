@@ -67,6 +67,9 @@
         FROM hospital, city
         WHERE hospital.status=1
           AND city.status = 1
+        <if test="search!=null">
+            and hospital.name like CONCAT("%",#{search},"%")
+        </if>
           AND city.id_city = hospital.id_city
     </select>
 
@@ -76,10 +79,10 @@
         )
     </insert>
 
-    <update id="deleteHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">
+    <update id="deleteHospital" parameterType="Integer">
         UPDATE hospital
         SET status = 0
-        WHERE id_hospital = #{idHospital}
+        WHERE id_hospital = #{hospitalId}
     </update>
 
     <update id="updateHospital" parameterType="bo.ucb.edu.vic19.model.Hospital">

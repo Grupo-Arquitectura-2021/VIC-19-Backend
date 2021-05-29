@@ -14,7 +14,7 @@ public interface ShelterDao {
 
     public void insertShelter(Shelter shelter);
 
-    public void deleteShelter(Shelter shelter);
+    public void deleteShelter(Integer shelterId);
 
     public void updateShelter(Shelter shelter);
 

@@ -18,6 +18,19 @@ public class CovidData {
         transaction = new Transaction();
     }
 
+    public CovidData(Integer idCovidData, Integer idPageUrl, Integer deathCases, Integer confirmedCases, Integer vaccinated, Integer cumulativeCases, Integer recuperated, Date date, Integer status, Transaction transaction) {
+        this.idCovidData = idCovidData;
+        this.idPageUrl = idPageUrl;
+        this.deathCases = deathCases;
+        this.confirmedCases = confirmedCases;
+        this.vaccinated = vaccinated;
+        this.cumulativeCases = cumulativeCases;
+        this.recuperated = recuperated;
+        this.date = date;
+        this.status = status;
+        this.transaction = transaction;
+    }
+
     public Integer getIdCovidData() {
         return idCovidData;
     }

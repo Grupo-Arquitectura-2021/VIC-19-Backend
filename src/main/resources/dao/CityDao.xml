@@ -77,7 +77,7 @@
           GROUP BY (date) DESC
     </select>
 
-    <select id="covidDataListCityAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
+    <select id="covidDataAllInfo" resultType="bo.ucb.edu.vic19.dto.CovidDataRequest">
         SELECT
             a.city as nameLocationCovid,
             b.date as dateLocationCovid,

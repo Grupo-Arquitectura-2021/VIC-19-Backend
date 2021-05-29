@@ -40,9 +40,8 @@ public class ShelterBl {
         return shelter;
     }
 
-    public Shelter deleteShelter(Shelter shelter) {
-        shelterDao.deleteShelter(shelter);
-        return shelter;
+    public void  deleteShelter(Integer shelterId) {
+        shelterDao.deleteShelter(shelterId);
     }
 
     public Shelter updateShelter(Shelter shelter) {

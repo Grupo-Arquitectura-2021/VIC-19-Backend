@@ -30,9 +30,9 @@ public class MunicipalityBl {
         return municipalityDao.covidDataMunicipality(municipalityId, dateCovid);
     }
 
-    public List<CovidDataRequest> covidDataListMunicipality(String dateCovid){
-        List<CovidDataRequest> covidDataListMunicipality=municipalityDao.covidDataListMunicipality(dateCovid);
-        return covidDataListMunicipality;
+    public List<CovidDataRequest> covidDataListMunicipalityByCityId(String dateCovid,Integer cityId){
+        List<CovidDataRequest> covidDataListMunicipalityByCityId=municipalityDao.covidDataListMunicipalityByCityId(dateCovid,cityId);
+        return covidDataListMunicipalityByCityId;
     }
 
     public List<CovidDataRequest> covidDataMunAllInfo(int muniId, String dateCovid) {

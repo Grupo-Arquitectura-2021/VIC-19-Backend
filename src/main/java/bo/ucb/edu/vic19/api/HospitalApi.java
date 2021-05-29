@@ -24,11 +24,11 @@ public class HospitalApi {
     public HospitalApi(HospitalBl hospitalBl){
         this.hospitalBl = hospitalBl;
     }
-
-    @RequestMapping(path = "/location/{hospitalId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LocationResponse> getHospitalLocation(@PathVariable Integer hospitalId){
-        return hospitalBl.getHospitalLocation(hospitalId);
-    }
+/*
+    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<LocationResponse> getHospitalLocation(@RequestParam Integer cityId){
+        return hospitalBl.getHospitalLocation(cityId);
+    }*/
 
  /*   @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LocationResponse> getHospitalLocation(){
@@ -46,7 +46,7 @@ public class HospitalApi {
     }
 
     //Metodo que agrega un hospital a traves del requestMethod POST
-    @RequestMapping(path="/addHospital", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Hospital insertHospital(@RequestBody Hospital hospital, HttpServletRequest request) {
         TransactionUtil transactionUtil= new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);
@@ -55,13 +55,13 @@ public class HospitalApi {
     }
 
     //Metodo que elimina un hospital a traves del requestMethod PUT es decir cambia el status a 0
-    @RequestMapping(path="/deleteHospital",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Hospital deleteHospital(@RequestBody Hospital hospital, HttpServletRequest request) {
-        return hospitalBl.deleteHospital(hospital);
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteHospital(@RequestParam Integer hospitalId) {
+        hospitalBl.deleteHospital(hospitalId);
     }
 
     //Metodo que actualiza un hospital a traves del requestMethod PUT
-    @RequestMapping(path="/updateHospital",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Hospital updateHospital(@RequestBody Hospital hospital, HttpServletRequest request) {
         return hospitalBl.updateHospital(hospital);
     }

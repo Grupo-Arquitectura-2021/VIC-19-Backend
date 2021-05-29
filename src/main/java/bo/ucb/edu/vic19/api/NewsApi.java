@@ -29,7 +29,7 @@ public class NewsApi {
         this.newsBl= newsBl;
         this.transactionBl=transactionBl;
     }
-    @RequestMapping(value = "/addNews",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public News createNews(@RequestBody News news, HttpServletRequest request){
         Transaction transaction = TransactionUtil.createTransaction(request);
         newsBl.addNews(news,transaction);
@@ -41,13 +41,13 @@ public class NewsApi {
         return newsBl.getNews(n,i,search);
     }
 
-    @RequestMapping(path="/deleteNews",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void productDelete(@RequestBody News news, HttpServletRequest request) {
-        newsBl.newsDelete(news);
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteNews(@RequestParam Integer newsId) {
+        newsBl.newsDelete(newsId);
     }
 
 
-    @RequestMapping(path = "/updateNews", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public News updateNews(@RequestBody News news, HttpServletRequest request){
         TransactionUtil transactionUtil = new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);

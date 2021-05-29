@@ -37,16 +37,6 @@ public class DrugstoreBl {
         return drugstoreDataRequest;
     }
 
-    public List<LocationResponse> getDrugstores(){
-        return drugstoreDao.getDrugstores();
-    }
-
-
-    public LocationResponse getDrugstoreLocation(Integer drugstoreId){
-        LocationResponse getDrugstoreLocation=drugstoreDao.getDrugstoreLocation(drugstoreId);
-        return getDrugstoreLocation;
-    }
-
     public List<LocationResponse> getDrugstoresByCity(Integer cityId){
         return drugstoreDao.getDrugstoresByCity(cityId);
     }

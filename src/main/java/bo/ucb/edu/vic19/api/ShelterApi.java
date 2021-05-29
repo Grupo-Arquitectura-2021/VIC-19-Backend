@@ -57,13 +57,13 @@ public class ShelterApi {
     }
 
     //Metodo que elimina un albergue a traves del requestMethod PUT es decir cambia el status a 0
-    @RequestMapping(path="/deleteShelter",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Shelter deleteHospital(@RequestBody Shelter shelter, HttpServletRequest request) {
-        return shelterBl.deleteShelter(shelter);
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  void deleteHospital(@RequestParam Integer shelterId, HttpServletRequest request) {
+        shelterBl.deleteShelter(shelterId);
     }
 
     //Metodo que actualiza un albergue a traves del requestMethod PUT
-    @RequestMapping(path="/updateShelter",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public Shelter updateHospital(@RequestBody Shelter shelter, HttpServletRequest request) {
         return shelterBl.updateShelter(shelter);
     }

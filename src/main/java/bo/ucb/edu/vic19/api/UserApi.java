@@ -5,6 +5,7 @@ import bo.ucb.edu.vic19.bl.TransactionBl;
 import bo.ucb.edu.vic19.bl.UserBl;
 import bo.ucb.edu.vic19.dto.LogInRequest;
 import bo.ucb.edu.vic19.dto.NewsResponse;
+import bo.ucb.edu.vic19.dto.UserDataRequest;
 import bo.ucb.edu.vic19.dto.UserResponse;
 import bo.ucb.edu.vic19.model.News;
 import bo.ucb.edu.vic19.model.Transaction;
@@ -29,21 +30,33 @@ public class UserApi {
         this.userBl= userBl;
         this.transactionBl=transactionBl;
     }
-    @RequestMapping(value = "/adduser",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User createUser(@RequestBody UserResponse user, HttpServletRequest request){
+    public UserResponse addUser(@RequestBody UserResponse user, HttpServletRequest request){
         Transaction transaction = TransactionUtil.createTransaction(request);
         transactionBl.createTransaction(transaction);
-        //LOGGER.error(transaction.getTxId().toString());
-        User user2=userBl.addUser(user,transaction);
-        return user2;
+        UserResponse userRes=userBl.addUser(user,transaction);
+        return userRes;
     }
-    @RequestMapping(value = "login",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-        public UserResponse logIn(@RequestBody LogInRequest user, HttpServletRequest request){
-        System.out.println(user);
-        return new UserResponse(1,"ALvin","Poma","pomaalvin@gmail.com","");
+    public UserResponse updateUser(@RequestBody UserResponse user, HttpServletRequest request){
+        Transaction transaction = TransactionUtil.createTransaction(request);
+        transactionBl.createTransaction(transaction);
+        UserResponse userRes=userBl.updateUser(user,transaction);
+        return userRes;
     }
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteUser(@RequestParam Integer userId, HttpServletRequest request){
+        Transaction transaction = TransactionUtil.createTransaction(request);
+        transactionBl.createTransaction(transaction);
+        userBl.userDelete(userId,transaction);
+    }
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDataRequest getUsers(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
+        return userBl.getUsers(i,n,search);
+    }
+
 
 
 //    @RequestMapping(path = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

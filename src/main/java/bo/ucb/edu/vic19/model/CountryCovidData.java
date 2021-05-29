@@ -6,7 +6,9 @@ public class CountryCovidData {
     private Integer idCovidData;
     private Integer status;
     private Transaction transaction;
-    public CountryCovidData(){}
+
+    public CountryCovidData() {
+    }
 
     public CountryCovidData(Integer idCountryCovidData, Integer idCountry, Integer idCovidData, Integer status, Transaction transaction) {
         this.idCountryCovidData = idCountryCovidData;

@@ -7,6 +7,9 @@ public class CityCovidData {
     private Integer status;
     private Transaction transaction;
 
+    public CityCovidData() {
+    }
+
     public Integer getIdCityCovidData() {
         return idCityCovidData;
     }

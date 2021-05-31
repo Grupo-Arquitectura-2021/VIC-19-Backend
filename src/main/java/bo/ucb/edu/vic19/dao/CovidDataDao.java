@@ -21,6 +21,7 @@ public interface CovidDataDao {
     public Integer verifyCountryCovidData(String date,Integer idCountry);
     public Integer verifyMunicipalityCovidData(String date,Integer idMunicipality);
     public Integer getCovidDataCountryIdDate(String date, Integer idCountry);
+    public Integer getCovidDataCityIdDate(String date, Integer idCity);
 
     public Integer getCovidDataMunicipalityIdDate(String date, Integer idMunicipality);
     public Integer getLastIdCovidData();

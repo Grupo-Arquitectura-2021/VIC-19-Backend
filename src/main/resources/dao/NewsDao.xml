@@ -26,7 +26,7 @@
         FROM news a
         WHERE a.status = 1
         <if test="search!=null">
-            and hospital.name like CONCAT("%",#{search},"%")
+            and a.news_title like CONCAT("%",#{search},"%")
         </if>
         ORDER by a.id_news DESC
         LIMIT #{n} OFFSET #{i}

@@ -99,13 +99,13 @@
           GROUP BY (date) DESC
     </select>
 
-    <insert id="insertMultiCountry" parameterType="java.util.List">
-        INSERT INTO country_covid_data (
+    <insert id="insertMultiCity" parameterType="java.util.List">
+        INSERT INTO city_covid_data (
         id_city, id_covid_data, status, tx_id, tx_date, tx_host, tx_update
         )
         VALUES
         <foreach collection="list" item="element" index="index" open="(" separator="),(" close=")">
-            #{element.idcity},
+            #{element.idCity},
             #{element.idCovidData},
             1,
             #{element.transaction.txId},

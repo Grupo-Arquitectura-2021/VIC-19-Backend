@@ -43,13 +43,19 @@
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
     </resultMap>
+    <select  id="municipalitiesWithCities" resultType="bo.ucb.edu.vic19.dto.MunicipalitySimpleResponse">
+        SELECT m.id_municipality idMunicipality, m.municipality municipality, c.city city
+        FROM municipality as m
+        INNER JOIN city c
+        on c.id_city=m.id_city
+        WHERE m.status=1
+    </select>
     <select  id="municipalities" resultMap="municipalitiesMap">
         SELECT id_municipality idLocation, municipality locationName, lon longitude, lat latitude
         FROM municipality
         WHERE municipality.status=1
-        and municipality.id_city=#{cityId}
+          and municipality.id_city=#{cityId}
     </select>
-
     <select  id="municipalityName" resultType="String">
         SELECT municipality
         FROM municipality

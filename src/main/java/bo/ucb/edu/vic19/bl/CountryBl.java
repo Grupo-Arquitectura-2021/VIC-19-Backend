@@ -29,7 +29,7 @@ public class CountryBl {
     private CovidDataDao covidDataDao;
 
     @Autowired
-    public CountryBl(CountryDao countryDao){
+    public CountryBl(CountryDao countryDao,CovidDataDao covidDataDao){
         this.countryDao = countryDao;
         this.covidDataDao=covidDataDao;
     }
@@ -47,19 +47,22 @@ public class CountryBl {
     }
     public void saveDataCSV(MultipartFile file, Transaction transaction,boolean replace) {
         try {
-            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream());
+            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream(),false);
+            System.out.println(csvToList.toString());
             List<CovidData> covidDataList= new ArrayList();
             List<CountryCovidData> countryCovidDataList=new ArrayList<>();
             List<LocationResponse> countries=countryDao.countries();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             SimpleDateFormat sdfDB = new SimpleDateFormat("yyyy-MM-dd");
             Integer covidDataId;
+            System.out.println(csvToList.toString());
             for(CovidDataRequest cdr:csvToList)
             {
                 Integer countryId=getCountryIdWithName(countries,cdr.getNameLocationCovid());
                 if(countryId!=null){
                     covidDataId = covidDataDao.getCovidDataCountryIdDate(sdfDB.format(sdf.parse(cdr.getDateLocationCovid())),countryId);
 
+                    System.out.println(covidDataId);
                    if(covidDataId==null){
                        covidDataList.add(
                                new CovidData(
@@ -89,10 +92,13 @@ public class CountryBl {
                                            null,
                                            1,
                                            transaction));
+
+                           System.out.println("update");
                        }
                    }
                 }
             }
+            System.out.println(covidDataList);
             if(covidDataList.size()!=0)covidDataDao.insertMultiCovidData(covidDataList);
             for(int i=0;i<covidDataList.size();i++)
             {
@@ -100,7 +106,9 @@ public class CountryBl {
             }
             if(countryCovidDataList.size()!=0)countryDao.insertMultiCountry(countryCovidDataList);
         }
-        catch (IOException | ParseException e){
+        catch (Exception e){
+
+            System.out.println(e.getCause());
             throw new RuntimeException("Fail to store csv data: " + e.getMessage());
         }
     }
@@ -119,7 +127,56 @@ public class CountryBl {
         List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(cityId, dateCovid);
         return covidDataListCountryAllInfo;
     }
+    public GompertzFunction predictDataGompertz(){
+        return null;
+    }
+    public PredictFunction predictData(Integer countryId,String dateCovid,Integer type){
+        switch (type){
+            case 1:
+                return null;
+                break;
+        }
+    }
+    public CovidDataStatistics statisticsCountry(Integer countryId,String dateCovid){
+        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
+        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
+        CovidDataRequestVariance covidDataRequestVariance;
+        covidDataRequestVariance = varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
+        CovidDataRequestMedia covidDataRequestMedia;
+        covidDataRequestMedia = mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
 
+        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
+        int size=covidDataListCountryAllInfo.size();
+        float standardErrorRec, standardErrorVac, standardErrorConf, standardDeath;
+        float errorRangeRec, errorRangeVac, errorRangeConf, errorRangeDeath;
+        float ciRecUp, ciRecLow, ciVacUp, ciVacLow, ciConfUp, ciConfLow, ciDeathUp, ciDeathLow;
+        float z = 2.05f;
+
+        standardErrorConf = (float) (covidDataRequestVariance.getConfirmedCases()/(Math.sqrt(size)));
+        standardErrorRec = (float) (covidDataRequestVariance.getRecuperated()/(Math.sqrt(size)));
+        standardErrorVac = (float) (covidDataRequestVariance.getVaccinated()/(Math.sqrt(size)));
+        standardDeath = (float) (covidDataRequestVariance.getDeathCases()/(Math.sqrt(size)));
+
+        errorRangeConf = z * standardErrorConf;
+        errorRangeRec = z * standardErrorRec;
+        errorRangeVac = z * standardErrorVac;
+        errorRangeDeath = z * standardDeath;
+
+        ciConfUp = covidDataRequestMedia.getConfirmedCases()+errorRangeConf;
+        ciConfLow = covidDataRequestMedia.getConfirmedCases()-errorRangeConf;
+        ciRecUp = covidDataRequestMedia.getRecuperated()+errorRangeRec;
+        ciRecLow = covidDataRequestMedia.getRecuperated()-errorRangeRec;
+        ciVacUp = covidDataRequestMedia.getVaccinated()+errorRangeVac;
+        ciVacLow = covidDataRequestMedia.getVaccinated()-errorRangeVac;
+        ciDeathUp = covidDataRequestMedia.getDeathCases()+errorRangeDeath;
+        ciDeathLow = covidDataRequestMedia.getDeathCases()-errorRangeDeath;
+        CovidDataStatistics covidDataStatistics=new CovidDataStatistics();
+        covidDataStatistics.setConfirmedStatistics(new Statistics(covidDataRequestMedia.getConfirmedCases(),covidDataRequestVariance.getConfirmedCases(), new double[]{ciConfLow,ciConfUp}));
+        covidDataStatistics.setRecuperatedStatistics(new Statistics(covidDataRequestMedia.getRecuperated(),covidDataRequestVariance.getRecuperated(), new double[]{ciRecLow,ciRecUp}));
+        covidDataStatistics.setDeathStatistics(new Statistics(covidDataRequestMedia.getDeathCases(),covidDataRequestVariance.getDeathCases(), new double[]{ciDeathLow,ciDeathUp}));
+        covidDataStatistics.setVaccinatedStatistics(new Statistics(covidDataRequestMedia.getVaccinated(),covidDataRequestVariance.getVaccinated(), new double[]{ciVacLow,ciVacUp}));
+        return covidDataStatistics;
+    }
     public CovidDataRequestMedia mediaCovidDataCountryAllInfo(int countryId, String dateCovid) {
         MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
         return mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);

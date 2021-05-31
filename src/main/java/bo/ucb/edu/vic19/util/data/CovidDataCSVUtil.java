@@ -169,13 +169,13 @@ public class CovidDataCSVUtil {
     public static boolean hasCSVFormat(MultipartFile file) {
         System.out.println(file.getContentType());
         if (TYPE.equals(file.getContentType())
-                || file.getContentType().equals("text/csv")) {
+                || file.getContentType().equals("text/csv")||file.getContentType().equals("application/vnd.ms-excel")) {
             return true;
         }
         return false;
     }
 
-    public static List<CovidDataRequest> csvToDataCsvRequest(InputStream is) {
+    public static List<CovidDataRequest> csvToDataCsvRequest(InputStream is, boolean municipio) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader,
                      CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
@@ -184,12 +184,12 @@ public class CovidDataCSVUtil {
             for (CSVRecord csvRecord : csvRecords) {
                 CovidDataRequest dataCountryCsvRequest = new CovidDataRequest();
                 dataCountryCsvRequest.setDateLocationCovid(csvRecord.get(0));
-                dataCountryCsvRequest.setNameLocationCovid(csvRecord.get(1));
-                dataCountryCsvRequest.setDeathCases(Integer.valueOf(csvRecord.get(2)));
-                dataCountryCsvRequest.setConfirmedCases(Integer.valueOf(csvRecord.get(3)));
-                dataCountryCsvRequest.setRecuperated(Integer.valueOf(csvRecord.get(4)));
-                dataCountryCsvRequest.setVaccinated(Integer.valueOf(csvRecord.get(5)));
-                dataCountryCsvRequest.setCumulativeCases(Integer.valueOf(csvRecord.get(6)));
+                dataCountryCsvRequest.setNameLocationCovid(municipio?csvRecord.get(1)+"-"+csvRecord.get(2):csvRecord.get(1));
+                dataCountryCsvRequest.setDeathCases(Integer.valueOf(csvRecord.get(municipio?3:2)));
+                dataCountryCsvRequest.setConfirmedCases(Integer.valueOf(csvRecord.get(municipio?4:3)));
+                dataCountryCsvRequest.setRecuperated(Integer.valueOf(csvRecord.get(municipio?5:4)));
+                dataCountryCsvRequest.setVaccinated(Integer.valueOf(csvRecord.get(municipio?6:5)));
+                dataCountryCsvRequest.setCumulativeCases(Integer.valueOf(csvRecord.get(municipio?7:6)));
                 dataCountryCsvRequestList.add(dataCountryCsvRequest);
             }
             return dataCountryCsvRequestList;

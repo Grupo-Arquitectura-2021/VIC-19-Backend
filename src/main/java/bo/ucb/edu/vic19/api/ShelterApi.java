@@ -32,18 +32,18 @@ public class ShelterApi {
         return shelterBl.getShelterLocation(shelterId);
     }
 
-    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  /*  @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public java.util.List<LocationResponse> getHospitalLocation(){
         return shelterBl.getShelterLocations();
     }
-
+*/
     @RequestMapping(path = "/allInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ShelterDataRequest getShelterAllInfo(@RequestParam Integer n, @RequestParam Integer i, @RequestParam(required = false) String search){
         return shelterBl.getShelterAllInfo(n,i,search);
     }
 
-    @RequestMapping(path = "/locationsByCity/{cityId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public java.util.List<LocationResponse> getShelterLocationsByCity(@PathVariable Integer cityId){
+    @RequestMapping(path = "/locations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public java.util.List<LocationResponse> getShelterLocationsByCity(@RequestParam Integer cityId){
         return shelterBl.getShelterLocationsByCityId(cityId);
     }
 

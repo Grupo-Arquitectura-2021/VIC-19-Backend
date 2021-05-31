@@ -47,8 +47,8 @@ public class CovidDataCSVUtil {
 
 
 
-    //@Scheduled(fixedRate = 3000000L)
-    //@GetMapping(value="/ReadCSv")
+    @Scheduled(fixedRate = 3000000L)
+    @GetMapping(value="/ReadCSv")
     public void readCSV() throws IOException, ParseException {
         List<LocationResponse> cities=cityDao.citiesLocation();
         String url="https://raw.githubusercontent.com/mauforonda/covid19-bolivia/opsoms/confirmados.csv";
@@ -160,7 +160,7 @@ public class CovidDataCSVUtil {
                }
            }
             i++;
-            if(i>100){
+            if(i>300){
                 break;
             }
         }

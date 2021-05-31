@@ -72,10 +72,7 @@ public class CountryApi {
     public CovidDataStatistics covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable Integer countryId,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
         return countryBl.statisticsCountry(countryId,date);
     }
-    @GetMapping(path = "/predict", produces = MediaType.APPLICATION_JSON_VALUE)
-    public PredictFunction predictFunctionCountry(@RequestParam Integer countryId,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date,Integer type){
-        return countryBl.predictData(countryId,date,type);
-    }
+
 
     @GetMapping(path = "/percentageIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){

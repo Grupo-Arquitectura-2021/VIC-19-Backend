@@ -157,8 +157,10 @@ public class CityBl {
     }
 
     public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int cityId, String forecastDate){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, cityDao, null,forecastDate, this.getClass().getSimpleName(),cityId);
-        return leastSquaresMethod.assignCovidDataAccordingToBlName();
+        List<CovidDataRequest> covidDataRequests = cityDao.covidDataListCityAllInfoNoDate(cityId);
+        List<CovidDataRequest> covidDataRequests1 = cityDao.covidDataListCityAllInfoNoDateDESC(cityId);
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(covidDataRequests, covidDataRequests1,forecastDate,cityDao.cityName(cityId));
+        return leastSquaresMethod.getCovidDataRequestLeastSquares();
     }
 
     public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){

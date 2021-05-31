@@ -60,7 +60,7 @@ public class CountryApi {
         return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),date);
     }
     @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid) {
+    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate) {
         return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId), forecastDate);
     }
 

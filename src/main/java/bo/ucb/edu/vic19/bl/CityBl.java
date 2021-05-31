@@ -7,12 +7,12 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CityCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceInterval;
 import bo.ucb.edu.vic19.statistics.increaseMethods.AbsoluteIncreaseMethod;
-import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCity;
 import bo.ucb.edu.vic19.statistics.increaseMethods.PercentageIncreaseMethod;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCity;
+import bo.ucb.edu.vic19.statistics.media.MediaCovidData;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidData;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -134,19 +134,26 @@ public class CityBl {
         return covidDataListCityAllInfo;
     }
 
-    public CovidDataRequestMedia mediaCovidDataCityAllInfo(int cityId, String dateCovid) {
-        MediaCovidDataCity mediaCovidDataCity = new MediaCovidDataCity(cityDao);
-        return mediaCovidDataCity.mediaCovidDataCityAllInfo(cityId, dateCovid);
-    }
+    public CovidDataStatistics statisticsCity(Integer cityId,String dateCovid){
+        List<CovidDataRequest> covidDataRequests=cityDao.covidDataListCityAllInfo(cityId,dateCovid);
+        MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);
+        VarianceCovidData varianceCovidData = new VarianceCovidData(covidDataRequests);
+        CovidDataRequestMedia covidDataRequestMedia;
+        covidDataRequestMedia = mediaCovidData.mediaCovidDataCountryAllInfo(cityId, dateCovid, cityDao.cityName(cityId));
+        CovidDataRequestVariance covidDataRequestVariance;
+        covidDataRequestVariance = varianceCovidData.varianceCovidDataCountryAllInfo(covidDataRequestMedia);
+        ConfidenceInterval confidenceIntervalCountry=new ConfidenceInterval(covidDataRequests);
+        CovidDataRequestConfidenceInterval confidenceInterval;
+        confidenceInterval = confidenceIntervalCountry.condifenceIntervalCountry(covidDataRequestMedia, covidDataRequestVariance);
 
-    public CovidDataRequestVariance varianceCovidDataCityAllInfo(int cityId, String dateCovid) {
-        VarianceCovidDataCity varianceCovidDataCity = new VarianceCovidDataCity(cityDao);
-        return varianceCovidDataCity.varianceCovidDataCityAllInfo(cityId, dateCovid);
-    }
-
-    public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCityAllInfo(int cityId, String dateCovid) {
-        ConfidenceIntervalCity confidenceIntervalCity = new ConfidenceIntervalCity(cityDao);
-        return confidenceIntervalCity.condifenceIntervalCity(cityId, dateCovid);
+        CovidDataStatistics covidDataStatistics = new CovidDataStatistics();
+        covidDataStatistics.setLocationName(cityDao.cityName(cityId));
+        covidDataStatistics.setDate(dateCovid);
+        covidDataStatistics.setConfirmedStatistics(new Statistics(covidDataRequestMedia.getConfirmedCases(), covidDataRequestVariance.getConfirmedCases(), new double[]{confidenceInterval.getConfirmedCasesLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setRecuperatedStatistics(new Statistics(covidDataRequestMedia.getRecuperated(), covidDataRequestVariance.getRecuperated(), new double[]{confidenceInterval.getRecuperatedLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setDeathStatistics(new Statistics(covidDataRequestMedia.getDeathCases(), covidDataRequestVariance.getDeathCases(), new double[]{confidenceInterval.getDeathCasesLowerLimit(), confidenceInterval.getDeathCasesUpperLimit()}));
+        covidDataStatistics.setVaccinatedStatistics(new Statistics(covidDataRequestMedia.getVaccinated(), covidDataRequestVariance.getVaccinated(), new double[]{confidenceInterval.getVaccinatedLowerLimit(), confidenceInterval.getVaccinatedUpperLimit()}));
+        return covidDataStatistics;
     }
 
     public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int cityId, String forecastDate){

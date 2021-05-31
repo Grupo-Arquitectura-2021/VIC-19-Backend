@@ -59,28 +59,9 @@ public class CountryApi {
     public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
         return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),date);
     }
-    @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate, dateCovid);
-
-    @GetMapping(path = "/mediaAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestMedia covidDataCountryMediaAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.mediaCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
-    @GetMapping(path = "/varianceAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestVariance covidDataCountryVarianceAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.varianceCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
-    @GetMapping(path = "/confidenceIntervalAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestConfidenceInterval covidDataCountryConfidenceIntervalAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.confidenceIntervalCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
     @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
-        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
+    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid) {
+        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId), forecastDate);
     }
 
     @GetMapping(path = "/absoluteIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)

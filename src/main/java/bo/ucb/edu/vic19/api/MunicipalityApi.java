@@ -64,19 +64,9 @@ public class MunicipalityApi {
         return municipalityBl.covidDataMunAllInfo(municipalityId,date);
     }
 
-    @GetMapping(path = "/mediaAllInfo/{municipalityId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestMedia covidDataMunMediaAllInfo(@PathVariable String municipalityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return municipalityBl.mediaCovidDataMunicipalityAllInfo(Integer.parseInt(municipalityId),dateCovid);
-    }
-
-    @GetMapping(path = "/varianceAllInfo/{munId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestVariance covidDataMunVarianceAllInfo(@PathVariable String munId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return municipalityBl.varianceCovidDataMunAllInfo(Integer.parseInt(munId),dateCovid);
-    }
-
-    @GetMapping(path = "/confidenceIntervalAllInfo/{munId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestConfidenceInterval covidDataMunConfidenceIntervalAllInfo(@PathVariable String munId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return municipalityBl.confidenceIntervalCovidDataMunAllInfo(Integer.parseInt(munId),dateCovid);
+    @GetMapping(path = "/statistics/{munId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataStatistics covidDataMunStatisticsAllInfo(@PathVariable Integer munId,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
+        return municipalityBl.statisticsMunicipality(munId,date);
     }
 
     @GetMapping(path = "/leastSquaresAllInfo/{munId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)

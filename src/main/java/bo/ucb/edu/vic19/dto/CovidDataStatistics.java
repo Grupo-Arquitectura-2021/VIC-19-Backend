@@ -1,6 +1,8 @@
 package bo.ucb.edu.vic19.dto;
 
 public class CovidDataStatistics {
+    private String locationName;
+    private String date;
     private Statistics deathStatistics;
     private Statistics confirmedStatistics;
     private Statistics vaccinatedStatistics;
@@ -8,6 +10,22 @@ public class CovidDataStatistics {
 
     public Statistics getDeathStatistics() {
         return deathStatistics;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setDeathStatistics(Statistics deathStatistics) {
@@ -41,7 +59,9 @@ public class CovidDataStatistics {
     @Override
     public String toString() {
         return "CovidDataStatistics{" +
-                "deathStatistics=" + deathStatistics +
+                "locationName='" + locationName + '\'' +
+                ", date='" + date + '\'' +
+                ", deathStatistics=" + deathStatistics +
                 ", confirmedStatistics=" + confirmedStatistics +
                 ", vaccinatedStatistics=" + vaccinatedStatistics +
                 ", recuperatedStatistics=" + recuperatedStatistics +

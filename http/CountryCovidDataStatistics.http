@@ -39,3 +39,11 @@ GET http://localhost:8080/country/percentageIncreaseAllInfo/1/2021-05-30
 Accept: application/json
 Content-Type: application/json
 ###
+
+### Mostrar proyecciones por metodo del incremento porcentual de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/statistics/1?date=2021-05-30
+Accept: application/json
+Content-Type: application/json
+###
+

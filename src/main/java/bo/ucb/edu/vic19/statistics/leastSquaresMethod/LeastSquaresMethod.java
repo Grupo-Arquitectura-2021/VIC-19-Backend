@@ -126,7 +126,7 @@ public class LeastSquaresMethod {
         }
     }
 
-    private CovidDataRequestLeastSquares leastSquaresMethod() {
+    private void leastSquaresMethod() {
         float x = 0,y = 0,x2 = 0,y2 = 0,xy = 0,b=0,a=0,growthPercentage=0, forecast =0;
         float xc = 0,yc = 0,x2c = 0,y2c = 0,xyc = 0,bc=0,ac=0,growthPercentagec=0, forecastc =0;
         float xd = 0,yd = 0,x2d = 0,y2d = 0,xyd = 0,bd=0,ad=0,growthPercentaged=0, forecastd =0;
@@ -195,7 +195,6 @@ public class LeastSquaresMethod {
         covidDataRequestLeastSquares.setRecForecast(forecastr);
         covidDataRequestLeastSquares.setRecPercentage(growthPercentager);
 
-        return covidDataRequestLeastSquares;
     }
 
     private Date parseFecha(String dateLocationCovid) {

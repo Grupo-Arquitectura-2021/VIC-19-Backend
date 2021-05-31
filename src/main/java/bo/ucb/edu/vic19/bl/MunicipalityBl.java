@@ -154,12 +154,16 @@ public class MunicipalityBl {
     }
 
     public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
-        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(null, null, municipalityDao, this.getClass().getSimpleName(),munId, forecastDate);
-        return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+        List<CovidDataRequest> covidDataRequests = municipalityDao.covidDataListMunAllInfoNoDate(munId);
+        List<CovidDataRequest> covidDataRequests1 = municipalityDao.covidDataListMunAllInfoNoDateDESC(munId);
+        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(covidDataRequests,covidDataRequests1,forecastDate, municipalityDao.municipalityName(munId));
+        return absoluteIncreaseMethod.getCovidDataRequestAbsoluteIncrease();
     }
 
     public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
-        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(null, null, municipalityDao, this.getClass().getSimpleName(),munId, forecastDate);
-        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
+        List<CovidDataRequest> covidDataRequests = municipalityDao.covidDataListMunAllInfoNoDate(munId);
+        List<CovidDataRequest> covidDataRequests1 = municipalityDao.covidDataListMunAllInfoNoDateDESC(munId);
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(covidDataRequests,covidDataRequests1,forecastDate, municipalityDao.municipalityName(munId));
+        return percentageIncreaseMethod.getCovidDataRequestPercentageIncrease();
     }
 }

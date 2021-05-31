@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ### Mostrar proyecciones por metodo de incremento absoluto de datos de un municipio desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/municipality/absoluteIncreaseAllInfo/1
+GET http://localhost:8080/municipality/absoluteIncreaseAllInfo/1/2021-05-30
 Accept: application/json
 Content-Type: application/json
 ###

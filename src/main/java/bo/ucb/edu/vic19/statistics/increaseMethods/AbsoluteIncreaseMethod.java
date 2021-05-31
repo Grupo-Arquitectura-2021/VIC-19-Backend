@@ -1,10 +1,8 @@
 package bo.ucb.edu.vic19.statistics.increaseMethods;
 
-import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dao.CountryDao;
-import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestIncreaseMethod;
+import bo.ucb.edu.vic19.dto.CovidDataRequestLeastSquares;
 import bo.ucb.edu.vic19.model.PeriodQuantity;
 
 import java.text.DateFormat;
@@ -14,11 +12,8 @@ import java.util.*;
 
 public class AbsoluteIncreaseMethod {
     public String blName;
-    public CountryDao countryDao;
-    public CityDao cityDao;
-    public MunicipalityDao municipalityDao;
     public String dateCovid;
-    public Integer locationId;
+    public String locationName;
     public Integer period;
     public String forecastDate;
     public List<CovidDataRequest> covidDataList;
@@ -29,45 +24,19 @@ public class AbsoluteIncreaseMethod {
     public CovidDataRequestIncreaseMethod covidDataRequestIncreaseMethod = new CovidDataRequestIncreaseMethod();
 
 
-    public AbsoluteIncreaseMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String daoName, int locationId, String forecastDate) {
-        this.countryDao = countryDao;
-        this.municipalityDao = municipalityDao;
-        this.cityDao = cityDao;
-        this.blName = daoName;
-        this.locationId = locationId;
+    public AbsoluteIncreaseMethod(List<CovidDataRequest> covidDataList, List<CovidDataRequest> covidDataListDESC, String forecastDate, String locationName) {
+        this.covidDataList=covidDataList;
+        this.covidDataListDESC=covidDataListDESC;
+        this.locationName=locationName;
         this.forecastDate = forecastDate;
     }
 
-    public String getBlName(){
-        return blName;
-    }
-
-    public CovidDataRequestIncreaseMethod assignCovidDataAccordingToBlName(){
-        switch (blName){
-            case "CountryBl":
-                covidDataList=countryDao.covidDataListCountryAllInfoNoDate(locationId);
-                covidDataListDESC=countryDao.covidDataListCountryAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(countryDao.countryName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "CityBl":
-                covidDataList=cityDao.covidDataListCityAllInfoNoDate(locationId);
-                covidDataListDESC=cityDao.covidDataListCityAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(cityDao.cityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "MunicipalityBl":
-                covidDataList=municipalityDao.covidDataListMunAllInfoNoDate(locationId);
-                covidDataListDESC=municipalityDao.covidDataListMunAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(municipalityDao.municipalityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-        }
-
+    public CovidDataRequestIncreaseMethod getCovidDataRequestAbsoluteIncrease() {
+        determinePeriod();
         return covidDataRequestIncreaseMethod;
     }
 
-    private void getVariables(List<CovidDataRequest> covidDataList) {
+    private void getVariables() {
         n = covidDataList.size();
         System.out.println("get variables size "+covidDataList.size());
         for(int i=0; i<n; i++){
@@ -112,7 +81,7 @@ public class AbsoluteIncreaseMethod {
 
     }
 
-    private void determinePeriod(List<CovidDataRequest> covidDataList) {
+    private void determinePeriod() {
         covidDataRequestIncreaseMethod.setDateLocationCovid(forecastDate);
 
         Date datePeriod, forecastPeriod;
@@ -136,7 +105,7 @@ public class AbsoluteIncreaseMethod {
 
         System.out.println("periodo difftime : "+period);
 
-        getVariables(covidDataList);
+        getVariables();
     }
 
     private void absoluteIncreaseMethod() {
@@ -188,17 +157,8 @@ public class AbsoluteIncreaseMethod {
                 System.out.println("forecast vac "+forecastx);
             }
 
+        covidDataRequestIncreaseMethod.setNameLocationCovid(locationName);
 
-        /*for(int  m=0; m<periodQuantitiesVac.size();m++){
-            System.out.println("period "+periodQuantitiesVac.get(m).getPeriod());
-            System.out.println("quantity "+periodQuantitiesVac.get(m).getQuantity());
-        }*/
-
-
-        //totalPeriod = periodQuantitiesVac.get(periodQuantitiesVac.size()-1).getPeriod() + period;
-
-
-        //Guardando datos del metodo de minimos cuadrados en una variable
         covidDataRequestIncreaseMethod.setVacForecast(forecastx);
 
         covidDataRequestIncreaseMethod.setConfForecast(forecastxc);

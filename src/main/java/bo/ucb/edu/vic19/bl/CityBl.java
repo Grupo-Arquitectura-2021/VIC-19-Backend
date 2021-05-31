@@ -164,13 +164,17 @@ public class CityBl {
     }
 
     public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){
-        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(null, cityDao, null, this.getClass().getSimpleName(),cityId, forecastDate);
-        return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+        List<CovidDataRequest> covidDataRequests = cityDao.covidDataListCityAllInfoNoDate(cityId);
+        List<CovidDataRequest> covidDataRequests1 = cityDao.covidDataListCityAllInfoNoDateDESC(cityId);
+        AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(covidDataRequests,covidDataRequests1,forecastDate, cityDao.cityName(cityId));
+        return absoluteIncreaseMethod.getCovidDataRequestAbsoluteIncrease();
     }
 
     public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){
-        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(null, cityDao, null, this.getClass().getSimpleName(),cityId, forecastDate);
-        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
+        List<CovidDataRequest> covidDataRequests = cityDao.covidDataListCityAllInfoNoDate(cityId);
+        List<CovidDataRequest> covidDataRequests1 = cityDao.covidDataListCityAllInfoNoDateDESC(cityId);
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(covidDataRequests,covidDataRequests1,forecastDate,cityDao.cityName(cityId));
+        return percentageIncreaseMethod.getCovidDataRequestPercentageIncrease();
     }
 
 

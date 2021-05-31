@@ -5,6 +5,7 @@ import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestIncreaseMethod;
+import bo.ucb.edu.vic19.dto.CovidDataRequestLeastSquares;
 import bo.ucb.edu.vic19.model.PeriodQuantity;
 
 import java.text.DateFormat;
@@ -18,7 +19,7 @@ public class PercentageIncreaseMethod {
     public CityDao cityDao;
     public MunicipalityDao municipalityDao;
     public String dateCovid;
-    public Integer locationId;
+    public String locationName;
     public Integer period;
     public String forecastDate;
     public List<CovidDataRequest> covidDataList;
@@ -29,41 +30,15 @@ public class PercentageIncreaseMethod {
     public CovidDataRequestIncreaseMethod covidDataRequestIncreaseMethod = new CovidDataRequestIncreaseMethod();
 
 
-    public PercentageIncreaseMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String daoName, int locationId, String forecastDate) {
-        this.countryDao = countryDao;
-        this.municipalityDao = municipalityDao;
-        this.cityDao = cityDao;
-        this.blName = daoName;
-        this.locationId = locationId;
+    public PercentageIncreaseMethod(List<CovidDataRequest> covidDataList, List<CovidDataRequest> covidDataListDESC, String forecastDate, String locationName) {
+        this.covidDataList=covidDataList;
+        this.covidDataListDESC=covidDataListDESC;
+        this.locationName = locationName;
         this.forecastDate = forecastDate;
     }
 
-    public String getBlName(){
-        return blName;
-    }
-
-    public CovidDataRequestIncreaseMethod assignCovidDataAccordingToBlName(){
-        switch (blName){
-            case "CountryBl":
-                covidDataList=countryDao.covidDataListCountryAllInfoNoDate(locationId);
-                covidDataListDESC=countryDao.covidDataListCountryAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(countryDao.countryName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "CityBl":
-                covidDataList=cityDao.covidDataListCityAllInfoNoDate(locationId);
-                covidDataListDESC=cityDao.covidDataListCityAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(cityDao.cityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "MunicipalityBl":
-                covidDataList=municipalityDao.covidDataListMunAllInfoNoDate(locationId);
-                covidDataListDESC=municipalityDao.covidDataListMunAllInfoNoDateDESC(locationId);
-                covidDataRequestIncreaseMethod.setNameLocationCovid(municipalityDao.municipalityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-        }
-
+    public CovidDataRequestIncreaseMethod getCovidDataRequestPercentageIncrease() {
+        determinePeriod();
         return covidDataRequestIncreaseMethod;
     }
 
@@ -112,7 +87,7 @@ public class PercentageIncreaseMethod {
 
     }
 
-    private void determinePeriod(List<CovidDataRequest> covidDataList) {
+    private void determinePeriod() {
         covidDataRequestIncreaseMethod.setDateLocationCovid(forecastDate);
 
         Date datePeriod, forecastPeriod;
@@ -190,6 +165,8 @@ public class PercentageIncreaseMethod {
             }
         }
 
+        covidDataRequestIncreaseMethod.setNameLocationCovid(locationName);
+
         covidDataRequestIncreaseMethod.setVacForecast(forecastx);
 
         covidDataRequestIncreaseMethod.setConfForecast(forecastxc);
@@ -197,7 +174,6 @@ public class PercentageIncreaseMethod {
         covidDataRequestIncreaseMethod.setDeathForecast(forecastxd);
 
         covidDataRequestIncreaseMethod.setRecForecast(forecastxr);
-
 
     }
 

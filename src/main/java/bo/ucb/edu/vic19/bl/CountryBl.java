@@ -6,12 +6,11 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
-import bo.ucb.edu.vic19.statistics.increaseMethods.AbsoluteIncreaseMethod;
-import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceInterval;
+import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidData;
-import bo.ucb.edu.vic19.statistics.increaseMethods.PercentageIncreaseMethod;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidData;
+import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,17 +124,6 @@ public class CountryBl {
         List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(cityId, dateCovid);
         return covidDataListCountryAllInfo;
     }
-    public GompertzFunction predictDataGompertz(){
-        return null;
-    }
-    public PredictFunction predictData(Integer countryId,String dateCovid,Integer type){
-        switch (type){
-            case 1:
-                return null;
-        }
-        return null;
-    }
-
     public CovidDataStatistics statisticsCountry(Integer countryId,String dateCovid){
         List<CovidDataRequest> covidDataRequests=countryDao.covidDataListCountryAllInfo(countryId,dateCovid);
         MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);

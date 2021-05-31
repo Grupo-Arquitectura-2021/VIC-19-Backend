@@ -81,4 +81,5 @@ public class CountryApi {
     public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.percentageIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
+
 }

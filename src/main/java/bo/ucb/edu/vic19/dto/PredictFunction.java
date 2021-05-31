@@ -10,4 +10,11 @@ abstract public class PredictFunction {
     public void setFunction(String function) {
         this.function = function;
     }
+
+    @Override
+    public String toString() {
+        return "PredictFunction{" +
+                "function='" + function + '\'' +
+                '}';
+    }
 }

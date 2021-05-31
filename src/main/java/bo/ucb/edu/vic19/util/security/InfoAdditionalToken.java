@@ -19,7 +19,7 @@ public class InfoAdditionalToken implements TokenEnhancer{
     @Autowired
     private AuthDao authDao;
 
-
+    // Se genera los datos del AuthDao.
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
         Map<String, Object> info = new HashMap<>();

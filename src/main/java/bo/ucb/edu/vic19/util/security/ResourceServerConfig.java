@@ -20,6 +20,7 @@ import java.util.Arrays;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+    //Se visualiza las autorizaciones de seguridad
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -40,6 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .loginPage("/**//*auth");*/
     }
 
+    //Se muestra la autenticacion del servidor
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

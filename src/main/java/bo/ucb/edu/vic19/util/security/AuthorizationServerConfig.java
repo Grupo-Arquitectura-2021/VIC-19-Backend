@@ -21,7 +21,7 @@ import java.util.Arrays;
 @EnableAuthorizationServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAdapter{
-
+    //El pasword secreto.
     private final String LLAVE_SECRETA = "covid19proyect123456789";
 
     @Autowired

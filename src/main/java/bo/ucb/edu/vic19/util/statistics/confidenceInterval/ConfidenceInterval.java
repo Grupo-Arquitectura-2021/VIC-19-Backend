@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.statistics.confidenceInterval;
+package bo.ucb.edu.vic19.util.statistics.confidenceInterval;
 
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestConfidenceInterval;

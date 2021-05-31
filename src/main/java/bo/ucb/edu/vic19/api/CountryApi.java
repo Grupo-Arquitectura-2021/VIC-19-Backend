@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,13 +74,18 @@ public class CountryApi {
         return countryBl.confidenceIntervalCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
     }
 
-    @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate, dateCovid);
+    @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
 
     @GetMapping(path = "/absoluteIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestAbsoluteIncrease covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+    public CovidDataRequestIncreaseMethod covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.absoluteIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
+    }
+
+    @GetMapping(path = "/percentageIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return countryBl.percentageIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
 }

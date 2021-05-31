@@ -82,14 +82,19 @@ public class CityApi {
         return cityBl.confidenceIntervalCovidDataCityAllInfo(Integer.parseInt(cityId),dateCovid);
     }
 
-    @GetMapping(path = "/leastSquaresAllInfo/{cityId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestLeastSquares covidDataCityLeastSquaresAllInfo(@PathVariable String cityId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return cityBl.leastSquaresCovidDataCityAllInfo(Integer.parseInt(cityId),forecastDate, dateCovid);
+    @GetMapping(path = "/leastSquaresAllInfo/{cityId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestLeastSquares covidDataCityLeastSquaresAllInfo(@PathVariable String cityId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return cityBl.leastSquaresCovidDataCityAllInfo(Integer.parseInt(cityId),forecastDate);
     }
 
     @GetMapping(path = "/absoluteIncreaseAllInfo/{cityId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestAbsoluteIncrease covidDataCityAbsoluteIncreaseAllInfo(@PathVariable String cityId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+    public CovidDataRequestIncreaseMethod covidDataCityAbsoluteIncreaseAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return cityBl.absoluteIncreaseCovidDataCityAllInfo(Integer.parseInt(cityId), forecastDate);
+    }
+
+    @GetMapping(path = "/percentageIncreaseAllInfo/{cityId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestIncreaseMethod covidDataCityPercentageIncreaseAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return cityBl.percentageIncreaseCovidDataCityAllInfo(Integer.parseInt(cityId), forecastDate);
     }
 
 }

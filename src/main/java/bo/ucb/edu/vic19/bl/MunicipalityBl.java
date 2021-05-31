@@ -3,15 +3,14 @@ package bo.ucb.edu.vic19.bl;
 import bo.ucb.edu.vic19.dao.CovidDataDao;
 import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.*;
-import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.MunicipalityCovidData;
 import bo.ucb.edu.vic19.model.Transaction;
-import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
-import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
+import bo.ucb.edu.vic19.statistics.increaseMethods.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalMunicipality;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataMunicipality;
+import bo.ucb.edu.vic19.statistics.increaseMethods.PercentageIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataMunicipality;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,13 +138,18 @@ public class MunicipalityBl {
         return confidenceIntervalMun.condifenceIntervalMunicipality(munId, dateCovid);
     }
 
-    public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int munId, String forecastDate, String dateCovid){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, null, municipalityDao,forecastDate, this.getClass().getSimpleName(),munId, dateCovid);
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int munId, String forecastDate){
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, null, municipalityDao,forecastDate, this.getClass().getSimpleName(),munId);
         return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 
-    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
+    public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
         AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(null, null, municipalityDao, this.getClass().getSimpleName(),munId, forecastDate);
         return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+    }
+
+    public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataMunAllInfo(int munId, String forecastDate){
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(null, null, municipalityDao, this.getClass().getSimpleName(),munId, forecastDate);
+        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
     }
 }

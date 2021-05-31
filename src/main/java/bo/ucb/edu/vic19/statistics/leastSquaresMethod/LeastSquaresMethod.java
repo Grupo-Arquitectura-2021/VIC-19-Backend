@@ -29,12 +29,11 @@ public class LeastSquaresMethod {
     public CovidDataRequestLeastSquares covidDataRequestLeastSquares = new CovidDataRequestLeastSquares();
 
 
-    public LeastSquaresMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String forecastDate, String daoName, int locationId, String dateCovid) {
+    public LeastSquaresMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String forecastDate, String daoName, int locationId) {
         this.countryDao = countryDao;
         this.municipalityDao = municipalityDao;
         this.cityDao = cityDao;
         this.blName = daoName;
-        this.dateCovid = dateCovid;
         this.locationId = locationId;
         this.forecastDate = forecastDate;
     }
@@ -46,20 +45,20 @@ public class LeastSquaresMethod {
     public CovidDataRequestLeastSquares assignCovidDataAccordingToBlName(){
         switch (blName){
             case "CountryBl":
-                covidDataList=countryDao.covidDataListCountryAllInfo(locationId, dateCovid);
-                covidDataListDESC=countryDao.covidDataListCountryAllInfoDESC(locationId, dateCovid);
+                covidDataList=countryDao.covidDataListCountryAllInfoNoDate(locationId);
+                covidDataListDESC=countryDao.covidDataListCountryAllInfoNoDateDESC(locationId);
                 covidDataRequestLeastSquares.setNameLocationCovid(countryDao.countryName(locationId));
                 determinePeriod(covidDataList);
                 break;
             case "CityBl":
-                covidDataList=cityDao.covidDataListCityAllInfo(locationId, dateCovid);
-                covidDataListDESC=cityDao.covidDataListCityAllInfoDESC(locationId, dateCovid);
+                covidDataList=cityDao.covidDataListCityAllInfoNoDate(locationId);
+                covidDataListDESC=cityDao.covidDataListCityAllInfoNoDateDESC(locationId);
                 covidDataRequestLeastSquares.setNameLocationCovid(cityDao.cityName(locationId));
                 determinePeriod(covidDataList);
                 break;
             case "MunicipalityBl":
-                covidDataList=municipalityDao.covidDataListMunAllInfo(locationId, dateCovid);
-                covidDataListDESC=municipalityDao.covidDataListMunAllInfoDESC(locationId, dateCovid);
+                covidDataList=municipalityDao.covidDataListMunAllInfoNoDate(locationId);
+                covidDataListDESC=municipalityDao.covidDataListMunAllInfoNoDateDESC(locationId);
                 covidDataRequestLeastSquares.setNameLocationCovid(municipalityDao.municipalityName(locationId));
                 determinePeriod(covidDataList);
                 break;

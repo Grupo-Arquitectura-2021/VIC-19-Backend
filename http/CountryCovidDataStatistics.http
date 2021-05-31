@@ -1,19 +1,18 @@
 ### Mostrar media de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/mediaAllInfo/1/2021-05-19
+GET http://localhost:8080/country/mediaAllInfo/1/2021-05-23
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTI4Mjc2MywidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiMGUxNTgwZTUtMWJiNi00ZTNhLThhOTctZTlkMjQwZTYxZWE4IiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.QoXjSaHZ3pT0RgXabdivqmzxJZ-pYLbZ-3dDK9kmpCs
 
 ### Mostrar varianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/varianceAllInfo/1/2021-05-19
+GET http://localhost:8080/country/varianceAllInfo/1/2021-05-23
 Accept: application/json
 Content-Type: application/json
 
 ### Mostrar Intervalo de confianza de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/confidenceIntervalAllInfo/1/2021-05-26
+GET http://localhost:8080/country/confidenceIntervalAllInfo/1/2021-05-23
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTM5MDY0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiM2UzNzVhNTgtNDExNC00OTg4LWE2ZjAtY2MxNThjMDgwYjllIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.6ifdZcHwyE644-xeql7feboOoEqHyT9pWZRDdpEWWqA
@@ -21,8 +20,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb
 
 ### Mostrar proyecciones por metodo de minimos cuadrados de datos de un pais desde el inicio de los datos hasta la fecha indicada
 
-GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-05-30/2021-05-25
+GET http://localhost:8080/country/leastSquaresAllInfo/1/2021-05-30
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJwb21hYWx2aW5AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImFkbWluSWQiOjIsImV4cCI6MTYyMTM5MDY0NSwidXNlck5hbWUiOiJBbHZpbiBKYW1pbCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiM2UzNzVhNTgtNDExNC00OTg4LWE2ZjAtY2MxNThjMDgwYjllIiwiZW1haWwiOiJwb21hYWx2aW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiY292aWQxOXByb3llY3QifQ.6ifdZcHwyE644-xeql7feboOoEqHyT9pWZRDdpEWWqA
+###
+
+
+### Mostrar proyecciones por metodo de incremento absoluto de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/absoluteIncreaseAllInfo/1/2021-05-30
+Accept: application/json
+Content-Type: application/json
+###
+
+### Mostrar proyecciones por metodo del incremento porcentual de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/percentageIncreaseAllInfo/1/2021-05-30
+Accept: application/json
+Content-Type: application/json
 ###

@@ -6,10 +6,11 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
-import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
+import bo.ucb.edu.vic19.statistics.increaseMethods.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
 import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.increaseMethods.PercentageIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -135,13 +135,18 @@ public class CountryBl {
         return confidenceIntervalCountry.condifenceIntervalCountry(countryId, dateCovid);
     }
 
-    public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate, String dateCovid){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, null, null, forecastDate, this.getClass().getSimpleName(),countryId, dateCovid);
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate){
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, null, null, forecastDate, this.getClass().getSimpleName(),countryId);
         return leastSquaresMethod.assignCovidDataAccordingToBlName();
     }
 
-    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
+    public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
         AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(countryDao, null, null, this.getClass().getSimpleName(),countryId, forecastDate);
         return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+    }
+
+    public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(countryDao, null, null, this.getClass().getSimpleName(),countryId, forecastDate);
+        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
     }
 }

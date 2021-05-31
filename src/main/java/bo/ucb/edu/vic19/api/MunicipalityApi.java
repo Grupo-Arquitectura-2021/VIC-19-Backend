@@ -79,14 +79,20 @@ public class MunicipalityApi {
         return municipalityBl.confidenceIntervalCovidDataMunAllInfo(Integer.parseInt(munId),dateCovid);
     }
 
-    @GetMapping(path = "/leastSquaresAllInfo/{munId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/leastSquaresAllInfo/{munId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestLeastSquares covidDataMunLeastSquaresAllInfo(@PathVariable String munId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return municipalityBl.leastSquaresCovidDataCityAllInfo(Integer.parseInt(munId),forecastDate, dateCovid);
+        return municipalityBl.leastSquaresCovidDataCityAllInfo(Integer.parseInt(munId),forecastDate);
     }
 
     @GetMapping(path = "/absoluteIncreaseAllInfo/{munId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestAbsoluteIncrease covidDataMunLeastSquaresAllInfo(@PathVariable String munId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+    public CovidDataRequestIncreaseMethod covidDataMunLeastSquaresAllInfo(@PathVariable String munId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return municipalityBl.absoluteIncreaseCovidDataMunAllInfo(Integer.parseInt(munId),forecastDate);
     }
+
+    @GetMapping(path = "/percentageIncreaseAllInfo/{munId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestIncreaseMethod covidDataMunPercentageIncreaseAllInfo(@PathVariable String munId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return municipalityBl.percentageIncreaseCovidDataMunAllInfo(Integer.parseInt(munId), forecastDate);
+    }
+
 
 }

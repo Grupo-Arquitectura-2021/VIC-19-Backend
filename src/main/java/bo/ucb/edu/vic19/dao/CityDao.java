@@ -25,9 +25,6 @@ public interface CityDao {
     List<CovidDataRequest> covidDataListCityAllInfo(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataListCityAllInfoDESC(Integer cityId, String dateCovid);
     List<CovidDataRequest> covidDataAllInfo(Integer cityId, String dateCovid);
-
-
-    public List<LocationResponse> countries();
     public void insertMultiCity(List<CityCovidData> list);
 
     List<CovidDataRequest> covidDataListCityAllInfoNoDate(int cityId);

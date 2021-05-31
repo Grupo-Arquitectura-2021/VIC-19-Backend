@@ -38,11 +38,11 @@ public class CityBl {
         this.cityDao = cityDao;
         this.covidDataDao = covidDataDao;
     }
-    public Integer getCityIdWithName(List<LocationResponse> countries,String name){
+    public Integer getCityIdWithName(List<CitySimpleResponse> countries,String name){
         Integer cityId=null;
-        for(LocationResponse c:countries){
-            if(c.getLocationName().equalsIgnoreCase(name)){
-                cityId=c.getIdLocation();
+        for(CitySimpleResponse c:countries){
+            if(c.getCity().equalsIgnoreCase(name)){
+                cityId=c.getIdCity();
                 break;
             }
         }
@@ -50,18 +50,18 @@ public class CityBl {
     }
     public void saveDataCSV(MultipartFile file, Transaction transaction,boolean replace) {
         try {
-            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream());
+            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream(),false);
             List<CovidData> covidDataList= new ArrayList();
             List<CityCovidData> cityCovidDataList=new ArrayList<>();
-            List<LocationResponse> countries=cityDao.countries();
+            List<CitySimpleResponse> cities=cityDao.cities();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             SimpleDateFormat sdfDB = new SimpleDateFormat("yyyy-MM-dd");
             Integer covidDataId;
             for(CovidDataRequest cdr:csvToList)
             {
-                Integer cityId=getCityIdWithName(countries,cdr.getNameLocationCovid());
+                Integer cityId=getCityIdWithName(cities,cdr.getNameLocationCovid());
                 if(cityId!=null){
-                    covidDataId = covidDataDao.getCovidDataCountryIdDate(sdfDB.format(sdf.parse(cdr.getDateLocationCovid())),cityId);
+                    covidDataId = covidDataDao.getCovidDataCityIdDate(sdfDB.format(sdf.parse(cdr.getDateLocationCovid())),cityId);
 
                     if(covidDataId==null){
                         covidDataList.add(

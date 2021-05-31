@@ -81,6 +81,16 @@
           and cd.date=#{date}
         LIMIT 1
     </select>
+    <select id="getCovidDataCityIdDate" resultType="Integer">
+        SELECT cd.id_covid_data
+        FROM city_covid_data mcd
+                 INNER JOIN covid_data cd
+                            on cd.id_covid_data=mcd.id_covid_data
+        WHERE
+            mcd.id_city = #{idCity}
+          and cd.date=#{date}
+        LIMIT 1
+    </select>
     <insert id="insertCityCovidData" parameterType="bo.ucb.edu.vic19.model.CityCovidData">
         INSERT INTO city_covid_data (`id_city_covid_data`, `id_city`, `id_covid_data`, `status`, `tx_id`, `tx_date`, `tx_host`, `tx_update`) VALUES (
             null, #{idCity}, #{idCovidData}, 1, #{transaction.txId}, #{transaction.txDate}, #{transaction.txHost},#{transaction.txUpdate}

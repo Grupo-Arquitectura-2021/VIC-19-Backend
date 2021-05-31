@@ -35,11 +35,12 @@ public class MunicipalityBl {
         this.covidDataDao = covidDataDao;
     }
 
-    public Integer getMunicipalityIdWithName(List<LocationResponse> municipalities,String name){
+    public Integer getMunicipalityIdWithName(List<MunicipalitySimpleResponse> municipalities,String name){
         Integer municipalityId=null;
-        for(LocationResponse c:municipalities){
-            if(c.getLocationName().equalsIgnoreCase(name)){
-                municipalityId=c.getIdLocation();
+        for(MunicipalitySimpleResponse c:municipalities){
+            String []names=name.split("-");
+            if(c.getMunicipality().equalsIgnoreCase(names[1])&&c.getCity().equalsIgnoreCase(names[0])){
+                municipalityId=c.getIdMunicipality();
                 break;
             }
         }
@@ -47,10 +48,10 @@ public class MunicipalityBl {
     }
     public void saveDataCSV(MultipartFile file, Transaction transaction, boolean replace) {
         try {
-            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream());
+            List<CovidDataRequest> csvToList = CovidDataCSVUtil.csvToDataCsvRequest(file.getInputStream(),true);
             List<CovidData> covidDataList= new ArrayList();
             List<MunicipalityCovidData> municipalityCovidDataList=new ArrayList<>();
-            List<LocationResponse> municipalities=municipalityDao.municipalities();
+            List<MunicipalitySimpleResponse> municipalities=municipalityDao.municipalitiesWithCities();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             SimpleDateFormat sdfDB = new SimpleDateFormat("yyyy-MM-dd");
             Integer covidDataId;
@@ -99,7 +100,9 @@ public class MunicipalityBl {
             }
             if(municipalityCovidDataList.size()!=0)municipalityDao.insertMultiMunicipality(municipalityCovidDataList);
         }
-        catch (IOException | ParseException e){
+        catch (Exception e){
+
+            System.out.println(e);
             throw new RuntimeException("Fail to store csv data: " + e.getMessage());
         }
     }

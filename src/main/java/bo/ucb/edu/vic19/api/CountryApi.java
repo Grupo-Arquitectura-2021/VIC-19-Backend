@@ -59,22 +59,6 @@ public class CountryApi {
     public List<CovidDataRequest> covidDataCountryAllInfo(@PathVariable String countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
         return countryBl.covidDataCountryAllInfo(Integer.parseInt(countryId),date);
     }
-
-    @GetMapping(path = "/mediaAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestMedia covidDataCountryMediaAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.mediaCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
-    @GetMapping(path = "/varianceAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestVariance covidDataCountryVarianceAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.varianceCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
-    @GetMapping(path = "/confidenceIntervalAllInfo/{countryId}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CovidDataRequestConfidenceInterval covidDataCountryConfidenceIntervalAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
-        return countryBl.confidenceIntervalCovidDataCountryAllInfo(Integer.parseInt(countryId),dateCovid);
-    }
-
     @GetMapping(path = "/leastSquaresAllInfo/{countryId}/{forecastDate}/{dateCovid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestLeastSquares covidDataCountryLeastSquaresAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String dateCovid){
         return countryBl.leastSquaresCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate, dateCovid);
@@ -83,5 +67,13 @@ public class CountryApi {
     @GetMapping(path = "/absoluteIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestAbsoluteIncrease covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable String countryId,  @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.absoluteIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
+    }
+    @GetMapping(path = "/statistics/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataStatistics covidDataCountryAbsoluteIncreaseAllInfo(@PathVariable Integer countryId,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date){
+        return countryBl.statisticsCountry(countryId,date);
+    }
+    @GetMapping(path = "/predict", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PredictFunction predictFunctionCountry(@RequestParam Integer countryId,  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date,Integer type){
+        return countryBl.predictData(countryId,date,type);
     }
 }

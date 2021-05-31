@@ -48,7 +48,7 @@ public class ShelterApi {
     }
 
     //Metodo que agrega un albergue a traves del requestMethod POST
-    @RequestMapping(path="/addShelter", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Shelter insertShelter(@RequestBody Shelter shelter, HttpServletRequest request) {
         TransactionUtil transactionUtil= new TransactionUtil();
         Transaction transaction = transactionUtil.createTransaction(request);

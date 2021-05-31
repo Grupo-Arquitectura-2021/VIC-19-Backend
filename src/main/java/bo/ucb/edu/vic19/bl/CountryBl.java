@@ -14,14 +14,10 @@ import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -129,67 +125,41 @@ public class CountryBl {
         return covidDataListCountryAllInfo;
     }
     public CovidDataStatistics statisticsCountry(Integer countryId,String dateCovid){
-        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
-        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
-        CovidDataRequestVariance covidDataRequestVariance;
-        covidDataRequestVariance = varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
+        List<CovidDataRequest> covidDataRequests=countryDao.covidDataListCountryAllInfo(countryId,dateCovid);
+        MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);
+        VarianceCovidData varianceCovidData = new VarianceCovidData(covidDataRequests);
         CovidDataRequestMedia covidDataRequestMedia;
-        covidDataRequestMedia = mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
+        covidDataRequestMedia = mediaCovidData.mediaCovidDataCountryAllInfo(countryId, dateCovid, countryDao.countryName(countryId));
+        CovidDataRequestVariance covidDataRequestVariance;
+        covidDataRequestVariance = varianceCovidData.varianceCovidDataCountryAllInfo(covidDataRequestMedia);
+        ConfidenceInterval confidenceIntervalCountry=new ConfidenceInterval(covidDataRequests);
+        CovidDataRequestConfidenceInterval confidenceInterval;
+        confidenceInterval = confidenceIntervalCountry.condifenceIntervalCountry(covidDataRequestMedia, covidDataRequestVariance);
 
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
-        int size=covidDataListCountryAllInfo.size();
-        float standardErrorRec, standardErrorVac, standardErrorConf, standardDeath;
-        float errorRangeRec, errorRangeVac, errorRangeConf, errorRangeDeath;
-        float ciRecUp, ciRecLow, ciVacUp, ciVacLow, ciConfUp, ciConfLow, ciDeathUp, ciDeathLow;
-        float z = 2.05f;
-
-        standardErrorConf = (float) (covidDataRequestVariance.getConfirmedCases()/(Math.sqrt(size)));
-        standardErrorRec = (float) (covidDataRequestVariance.getRecuperated()/(Math.sqrt(size)));
-        standardErrorVac = (float) (covidDataRequestVariance.getVaccinated()/(Math.sqrt(size)));
-        standardDeath = (float) (covidDataRequestVariance.getDeathCases()/(Math.sqrt(size)));
-
-        errorRangeConf = z * standardErrorConf;
-        errorRangeRec = z * standardErrorRec;
-        errorRangeVac = z * standardErrorVac;
-        errorRangeDeath = z * standardDeath;
-
-        ciConfUp = covidDataRequestMedia.getConfirmedCases()+errorRangeConf;
-        ciConfLow = covidDataRequestMedia.getConfirmedCases()-errorRangeConf;
-        ciRecUp = covidDataRequestMedia.getRecuperated()+errorRangeRec;
-        ciRecLow = covidDataRequestMedia.getRecuperated()-errorRangeRec;
-        ciVacUp = covidDataRequestMedia.getVaccinated()+errorRangeVac;
-        ciVacLow = covidDataRequestMedia.getVaccinated()-errorRangeVac;
-        ciDeathUp = covidDataRequestMedia.getDeathCases()+errorRangeDeath;
-        ciDeathLow = covidDataRequestMedia.getDeathCases()-errorRangeDeath;
-        CovidDataStatistics covidDataStatistics=new CovidDataStatistics();
-        covidDataStatistics.setConfirmedStatistics(new Statistics(covidDataRequestMedia.getConfirmedCases(),covidDataRequestVariance.getConfirmedCases(), new double[]{ciConfLow,ciConfUp}));
-        covidDataStatistics.setRecuperatedStatistics(new Statistics(covidDataRequestMedia.getRecuperated(),covidDataRequestVariance.getRecuperated(), new double[]{ciRecLow,ciRecUp}));
-        covidDataStatistics.setDeathStatistics(new Statistics(covidDataRequestMedia.getDeathCases(),covidDataRequestVariance.getDeathCases(), new double[]{ciDeathLow,ciDeathUp}));
-        covidDataStatistics.setVaccinatedStatistics(new Statistics(covidDataRequestMedia.getVaccinated(),covidDataRequestVariance.getVaccinated(), new double[]{ciVacLow,ciVacUp}));
+        CovidDataStatistics covidDataStatistics = new CovidDataStatistics();
+        covidDataStatistics.setLocationName(countryDao.countryName(countryId));
+        covidDataStatistics.setDate(dateCovid);
+        covidDataStatistics.setConfirmedStatistics(new Statistics(covidDataRequestMedia.getConfirmedCases(), covidDataRequestVariance.getConfirmedCases(), new double[]{confidenceInterval.getConfirmedCasesLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setRecuperatedStatistics(new Statistics(covidDataRequestMedia.getRecuperated(), covidDataRequestVariance.getRecuperated(), new double[]{confidenceInterval.getRecuperatedLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setDeathStatistics(new Statistics(covidDataRequestMedia.getDeathCases(), covidDataRequestVariance.getDeathCases(), new double[]{confidenceInterval.getDeathCasesLowerLimit(), confidenceInterval.getDeathCasesUpperLimit()}));
+        covidDataStatistics.setVaccinatedStatistics(new Statistics(covidDataRequestMedia.getVaccinated(), covidDataRequestVariance.getVaccinated(), new double[]{confidenceInterval.getVaccinatedLowerLimit(), confidenceInterval.getVaccinatedUpperLimit()}));
         return covidDataStatistics;
     }
-    public CovidDataRequestMedia mediaCovidDataCountryAllInfo(int countryId, String dateCovid) {
-        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
-        return mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
+
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate){
+        List<CovidDataRequest> covidDataRequests = countryDao.covidDataListCountryAllInfoNoDate(countryId);
+        List<CovidDataRequest> covidDataRequests1 = countryDao.covidDataListCountryAllInfoNoDateDESC(countryId);
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(covidDataRequests, covidDataRequests1,forecastDate,countryDao.countryName(countryId));
+        return leastSquaresMethod.getCovidDataRequestLeastSquares();
     }
 
-    public CovidDataRequestVariance varianceCovidDataCountryAllInfo(int countryId, String dateCovid) {
-        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
-        return varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
-    }
-
-    public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCountryAllInfo(int countryId, String dateCovid) {
-        ConfidenceIntervalCountry confidenceIntervalCountry = new ConfidenceIntervalCountry(countryDao);
-        return confidenceIntervalCountry.condifenceIntervalCountry(countryId, dateCovid);
-    }
-
-    public CovidDataRequestLeastSquares leastSquaresCovidDataCountryAllInfo(int countryId, String forecastDate, String dateCovid){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(countryDao, null, null, forecastDate, this.getClass().getSimpleName(),countryId, dateCovid);
-        return leastSquaresMethod.assignCovidDataAccordingToBlName();
-    }
-
-    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
+    public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
         AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(countryDao, null, null, this.getClass().getSimpleName(),countryId, forecastDate);
         return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+    }
+
+    public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataCountryAllInfo(int countryId, String forecastDate){
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(countryDao, null, null, this.getClass().getSimpleName(),countryId, forecastDate);
+        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
     }
 }

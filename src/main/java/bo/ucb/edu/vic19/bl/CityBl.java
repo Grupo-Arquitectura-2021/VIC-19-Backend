@@ -5,17 +5,14 @@ import bo.ucb.edu.vic19.dao.CovidDataDao;
 import bo.ucb.edu.vic19.dto.*;
 
 import bo.ucb.edu.vic19.model.CityCovidData;
-import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
-import bo.ucb.edu.vic19.statistics.absoluteIncrease.AbsoluteIncreaseMethod;
-import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCity;
-import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceIntervalCountry;
+import bo.ucb.edu.vic19.statistics.confidenceInterval.ConfidenceInterval;
+import bo.ucb.edu.vic19.statistics.increaseMethods.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.statistics.leastSquaresMethod.LeastSquaresMethod;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCity;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCity;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
+import bo.ucb.edu.vic19.statistics.increaseMethods.PercentageIncreaseMethod;
+import bo.ucb.edu.vic19.statistics.media.MediaCovidData;
+import bo.ucb.edu.vic19.statistics.variance.VarianceCovidData;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,29 +134,43 @@ public class CityBl {
         return covidDataListCityAllInfo;
     }
 
-    public CovidDataRequestMedia mediaCovidDataCityAllInfo(int cityId, String dateCovid) {
-        MediaCovidDataCity mediaCovidDataCity = new MediaCovidDataCity(cityDao);
-        return mediaCovidDataCity.mediaCovidDataCityAllInfo(cityId, dateCovid);
+    public CovidDataStatistics statisticsCity(Integer cityId,String dateCovid){
+        List<CovidDataRequest> covidDataRequests=cityDao.covidDataListCityAllInfo(cityId,dateCovid);
+        MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);
+        VarianceCovidData varianceCovidData = new VarianceCovidData(covidDataRequests);
+        CovidDataRequestMedia covidDataRequestMedia;
+        covidDataRequestMedia = mediaCovidData.mediaCovidDataCountryAllInfo(cityId, dateCovid, cityDao.cityName(cityId));
+        CovidDataRequestVariance covidDataRequestVariance;
+        covidDataRequestVariance = varianceCovidData.varianceCovidDataCountryAllInfo(covidDataRequestMedia);
+        ConfidenceInterval confidenceIntervalCountry=new ConfidenceInterval(covidDataRequests);
+        CovidDataRequestConfidenceInterval confidenceInterval;
+        confidenceInterval = confidenceIntervalCountry.condifenceIntervalCountry(covidDataRequestMedia, covidDataRequestVariance);
+
+        CovidDataStatistics covidDataStatistics = new CovidDataStatistics();
+        covidDataStatistics.setLocationName(cityDao.cityName(cityId));
+        covidDataStatistics.setDate(dateCovid);
+        covidDataStatistics.setConfirmedStatistics(new Statistics(covidDataRequestMedia.getConfirmedCases(), covidDataRequestVariance.getConfirmedCases(), new double[]{confidenceInterval.getConfirmedCasesLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setRecuperatedStatistics(new Statistics(covidDataRequestMedia.getRecuperated(), covidDataRequestVariance.getRecuperated(), new double[]{confidenceInterval.getRecuperatedLowerLimit(), confidenceInterval.getConfirmedCasesUpperLimit()}));
+        covidDataStatistics.setDeathStatistics(new Statistics(covidDataRequestMedia.getDeathCases(), covidDataRequestVariance.getDeathCases(), new double[]{confidenceInterval.getDeathCasesLowerLimit(), confidenceInterval.getDeathCasesUpperLimit()}));
+        covidDataStatistics.setVaccinatedStatistics(new Statistics(covidDataRequestMedia.getVaccinated(), covidDataRequestVariance.getVaccinated(), new double[]{confidenceInterval.getVaccinatedLowerLimit(), confidenceInterval.getVaccinatedUpperLimit()}));
+        return covidDataStatistics;
     }
 
-    public CovidDataRequestVariance varianceCovidDataCityAllInfo(int cityId, String dateCovid) {
-        VarianceCovidDataCity varianceCovidDataCity = new VarianceCovidDataCity(cityDao);
-        return varianceCovidDataCity.varianceCovidDataCityAllInfo(cityId, dateCovid);
+    public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int cityId, String forecastDate){
+        List<CovidDataRequest> covidDataRequests = cityDao.covidDataListCityAllInfoNoDate(cityId);
+        List<CovidDataRequest> covidDataRequests1 = cityDao.covidDataListCityAllInfoNoDateDESC(cityId);
+        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(covidDataRequests, covidDataRequests1,forecastDate,cityDao.cityName(cityId));
+        return leastSquaresMethod.getCovidDataRequestLeastSquares();
     }
 
-    public CovidDataRequestConfidenceInterval confidenceIntervalCovidDataCityAllInfo(int cityId, String dateCovid) {
-        ConfidenceIntervalCity confidenceIntervalCity = new ConfidenceIntervalCity(cityDao);
-        return confidenceIntervalCity.condifenceIntervalCity(cityId, dateCovid);
-    }
-
-    public CovidDataRequestLeastSquares leastSquaresCovidDataCityAllInfo(int cityId, String forecastDate, String dateCovid){
-        LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(null, cityDao, null,forecastDate, this.getClass().getSimpleName(),cityId, dateCovid);
-        return leastSquaresMethod.assignCovidDataAccordingToBlName();
-    }
-
-    public CovidDataRequestAbsoluteIncrease absoluteIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){
+    public CovidDataRequestIncreaseMethod absoluteIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){
         AbsoluteIncreaseMethod absoluteIncreaseMethod = new AbsoluteIncreaseMethod(null, cityDao, null, this.getClass().getSimpleName(),cityId, forecastDate);
         return absoluteIncreaseMethod.assignCovidDataAccordingToBlName();
+    }
+
+    public CovidDataRequestIncreaseMethod percentageIncreaseCovidDataCityAllInfo(int cityId, String forecastDate){
+        PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(null, cityDao, null, this.getClass().getSimpleName(),cityId, forecastDate);
+        return percentageIncreaseMethod.assignCovidDataAccordingToBlName();
     }
 
 

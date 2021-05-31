@@ -1,27 +1,19 @@
 package bo.ucb.edu.vic19.statistics.variance;
 
-import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
 import bo.ucb.edu.vic19.dto.CovidDataRequestVariance;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class VarianceCovidDataCountry {
-    CountryDao countryDao;
+public class VarianceCovidData {
+    private List<CovidDataRequest> covidDataListCountryAllInfo;
 
-    public VarianceCovidDataCountry(CountryDao countryDao){
-        this.countryDao = countryDao;
+    public VarianceCovidData(List<CovidDataRequest> covidDataRequests){
+        this.covidDataListCountryAllInfo=covidDataRequests;
     }
 
-    public CovidDataRequestVariance varianceCovidDataCountryAllInfo (int countryId, String dateCovid){
-        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
-        CovidDataRequestMedia covidDataRequestMedia;
-        covidDataRequestMedia = mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
-
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
+    public CovidDataRequestVariance varianceCovidDataCountryAllInfo (CovidDataRequestMedia covidDataRequestMedia){
         int size=covidDataListCountryAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
         float varianceVac=0, varianceRec=0, varianceConf=0, varianceDeath=0;
         for(int i=0; i<size; i++){
@@ -55,8 +47,8 @@ public class VarianceCovidDataCountry {
         covidDataRequestVariance.setDeathCases(varianceDeath);
         covidDataRequestVariance.setRecuperated(varianceRec);
         covidDataRequestVariance.setVaccinated(varianceVac);
-        covidDataRequestVariance.setDateLocationCovid(dateCovid);
-        covidDataRequestVariance.setNameLocationCovid(countryDao.countryName(countryId));
+        covidDataRequestVariance.setDateLocationCovid(covidDataRequestMedia.getDateLocationCovid());
+        covidDataRequestVariance.setNameLocationCovid(covidDataRequestMedia.getNameLocationCovid());
 
         return covidDataRequestVariance;
     }

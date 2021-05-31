@@ -9,17 +9,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class MediaCovidDataCountry {
-    CountryDao countryDao;
+public class MediaCovidData {
+    private List<CovidDataRequest> covidDataListCountryAllInfo;
+    private float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
 
-    public MediaCovidDataCountry(CountryDao countryDao){
-        this.countryDao = countryDao;
+    public List<CovidDataRequest> getCovidDataListCountryAllInfo() {
+        return covidDataListCountryAllInfo;
     }
 
-    public CovidDataRequestMedia mediaCovidDataCountryAllInfo(int countryId, String dateCovid) {
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
+    public void setCovidDataListCountryAllInfo(List<CovidDataRequest> covidDataListCountryAllInfo) {
+        this.covidDataListCountryAllInfo = covidDataListCountryAllInfo;
+    }
+
+    public float getMediaVac() {
+        return mediaVac;
+    }
+
+    public void setMediaVac(float mediaVac) {
+        this.mediaVac = mediaVac;
+    }
+
+    public float getMediaRec() {
+        return mediaRec;
+    }
+
+    public void setMediaRec(float mediaRec) {
+        this.mediaRec = mediaRec;
+    }
+
+    public float getMediaConf() {
+        return mediaConf;
+    }
+
+    public void setMediaConf(float mediaConf) {
+        this.mediaConf = mediaConf;
+    }
+
+    public float getMediaDeath() {
+        return mediaDeath;
+    }
+
+    public void setMediaDeath(float mediaDeath) {
+        this.mediaDeath = mediaDeath;
+    }
+
+    public MediaCovidData(List<CovidDataRequest> covidDataRequests){
+        this.covidDataListCountryAllInfo=covidDataRequests;
+    }
+
+    public CovidDataRequestMedia mediaCovidDataCountryAllInfo(int countryId, String dateCovid, String name) {
         int size=covidDataListCountryAllInfo.size(), sumVac=0,sumRec=0,sumConf=0, sumDeath=0;
-        float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
         for(int i=0; i<size; i++){
             if(covidDataListCountryAllInfo.get(i).getVaccinated() >= 0){
                 sumVac+=covidDataListCountryAllInfo.get(i).getVaccinated();
@@ -48,7 +87,7 @@ public class MediaCovidDataCountry {
         covidDataRequestMedia.setRecuperated(mediaRec);
         covidDataRequestMedia.setVaccinated(mediaVac);
         covidDataRequestMedia.setDateLocationCovid(dateCovid);
-        covidDataRequestMedia.setNameLocationCovid(countryDao.countryName(countryId));
+        covidDataRequestMedia.setNameLocationCovid(name);
 
         return covidDataRequestMedia;
     }

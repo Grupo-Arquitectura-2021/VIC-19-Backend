@@ -1,37 +1,89 @@
 package bo.ucb.edu.vic19.statistics.confidenceInterval;
 
-import bo.ucb.edu.vic19.dao.CountryDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestConfidenceInterval;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;
 import bo.ucb.edu.vic19.dto.CovidDataRequestVariance;
-import bo.ucb.edu.vic19.model.Country;
-import bo.ucb.edu.vic19.statistics.media.MediaCovidDataCountry;
-import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ConfidenceIntervalCountry {
-    CountryDao countryDao;
+public class ConfidenceInterval {
+    private float ciRecUp=0, ciRecLow=0, ciVacUp=0, ciVacLow=0, ciConfUp=0, ciConfLow=0, ciDeathUp=0, ciDeathLow=0;
 
-    public ConfidenceIntervalCountry(CountryDao countryDao){
-        this.countryDao = countryDao;
+    private List<CovidDataRequest> covidDataListCountryAllInfo;
+
+    public ConfidenceInterval(List<CovidDataRequest> covidDataRequests){
+        this.covidDataListCountryAllInfo=covidDataRequests;
     }
 
-    public CovidDataRequestConfidenceInterval condifenceIntervalCountry(int countryId, String dateCovid){
-        VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);
-        MediaCovidDataCountry mediaCovidDataCountry = new MediaCovidDataCountry(countryDao);
-        CovidDataRequestVariance covidDataRequestVariance = new CovidDataRequestVariance();
-        covidDataRequestVariance = varianceCovidDataCountry.varianceCovidDataCountryAllInfo(countryId, dateCovid);
-        CovidDataRequestMedia covidDataRequestMedia = new CovidDataRequestMedia();
-        covidDataRequestMedia = mediaCovidDataCountry.mediaCovidDataCountryAllInfo(countryId, dateCovid);
+    public float getCiRecUp() {
+        return ciRecUp;
+    }
 
-        List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(countryId, dateCovid);
+    public void setCiRecUp(float ciRecUp) {
+        this.ciRecUp = ciRecUp;
+    }
+
+    public float getCiRecLow() {
+        return ciRecLow;
+    }
+
+    public void setCiRecLow(float ciRecLow) {
+        this.ciRecLow = ciRecLow;
+    }
+
+    public float getCiVacUp() {
+        return ciVacUp;
+    }
+
+    public void setCiVacUp(float ciVacUp) {
+        this.ciVacUp = ciVacUp;
+    }
+
+    public float getCiVacLow() {
+        return ciVacLow;
+    }
+
+    public void setCiVacLow(float ciVacLow) {
+        this.ciVacLow = ciVacLow;
+    }
+
+    public float getCiConfUp() {
+        return ciConfUp;
+    }
+
+    public void setCiConfUp(float ciConfUp) {
+        this.ciConfUp = ciConfUp;
+    }
+
+    public float getCiConfLow() {
+        return ciConfLow;
+    }
+
+    public void setCiConfLow(float ciConfLow) {
+        this.ciConfLow = ciConfLow;
+    }
+
+    public float getCiDeathUp() {
+        return ciDeathUp;
+    }
+
+    public void setCiDeathUp(float ciDeathUp) {
+        this.ciDeathUp = ciDeathUp;
+    }
+
+    public float getCiDeathLow() {
+        return ciDeathLow;
+    }
+
+    public void setCiDeathLow(float ciDeathLow) {
+        this.ciDeathLow = ciDeathLow;
+    }
+
+    public CovidDataRequestConfidenceInterval condifenceIntervalCountry(CovidDataRequestMedia covidDataRequestMedia, CovidDataRequestVariance covidDataRequestVariance){
         int size=covidDataListCountryAllInfo.size();
         float standardErrorRec=0, standardErrorVac=0, standardErrorConf=0, standardDeath=0;
         float errorRangeRec=0, errorRangeVac=0, errorRangeConf=0, errorRangeDeath=0;
-        float ciRecUp=0, ciRecLow=0, ciVacUp=0, ciVacLow=0, ciConfUp=0, ciConfLow=0, ciDeathUp=0, ciDeathLow=0;
         float z = 2.05f;
 
         standardErrorConf = (float) (covidDataRequestVariance.getConfirmedCases()/(Math.sqrt(size)));
@@ -63,8 +115,8 @@ public class ConfidenceIntervalCountry {
         covidDataRequestConfidenceInterval.setDeathCasesUpperLimit(ciDeathUp);
         covidDataRequestConfidenceInterval.setDeathCasesLowerLimit(ciDeathLow);
         covidDataRequestConfidenceInterval.setPercentage(96);
-        covidDataRequestConfidenceInterval.setDateLocationCovid(dateCovid);
-        covidDataRequestConfidenceInterval.setNameLocationCovid(countryDao.countryName(countryId));
+        covidDataRequestConfidenceInterval.setDateLocationCovid(covidDataRequestMedia.getDateLocationCovid());
+        covidDataRequestConfidenceInterval.setNameLocationCovid(covidDataRequestMedia.getNameLocationCovid());
 
         return covidDataRequestConfidenceInterval;
 

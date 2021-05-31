@@ -1,6 +1,6 @@
 package bo.ucb.edu.vic19.dto;
 
-public class CovidDataRequestAbsoluteIncrease {
+public class CovidDataRequestIncreaseMethod {
     private String nameLocationCovid;
     private String dateLocationCovid;
     private float deathForecast;

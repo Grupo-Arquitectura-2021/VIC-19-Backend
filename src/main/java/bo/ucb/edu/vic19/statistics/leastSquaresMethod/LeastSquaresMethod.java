@@ -13,11 +13,8 @@ import java.util.*;
 
 public class LeastSquaresMethod {
     public String blName;
-    public CountryDao countryDao;
-    public CityDao cityDao;
-    public MunicipalityDao municipalityDao;
     public String dateCovid;
-    public Integer locationId;
+    public String locationName;
     public Integer period;
     public float totalPeriod;
     public String forecastDate;
@@ -26,49 +23,22 @@ public class LeastSquaresMethod {
     public ArrayList<PeriodQuantity> periodQuantitiesVac = new ArrayList<PeriodQuantity>(),periodQuantitiesConf = new ArrayList<PeriodQuantity>(),periodQuantitiesDeath = new ArrayList<PeriodQuantity>(),periodQuantitiesRec = new ArrayList<PeriodQuantity>();
     public float n,dif,dayAux;
     public boolean flagFirst=true;
-    public CovidDataRequestLeastSquares covidDataRequestLeastSquares = new CovidDataRequestLeastSquares();
+    private CovidDataRequestLeastSquares covidDataRequestLeastSquares = new CovidDataRequestLeastSquares();
 
 
-    public LeastSquaresMethod(CountryDao countryDao, CityDao cityDao, MunicipalityDao municipalityDao, String forecastDate, String daoName, int locationId, String dateCovid) {
-        this.countryDao = countryDao;
-        this.municipalityDao = municipalityDao;
-        this.cityDao = cityDao;
-        this.blName = daoName;
-        this.dateCovid = dateCovid;
-        this.locationId = locationId;
+    public LeastSquaresMethod(List<CovidDataRequest> covidDataList, List<CovidDataRequest> covidDataListDESC, String forecastDate, String locationName) {
+        this.covidDataList=covidDataList;
+        this.covidDataListDESC=covidDataListDESC;
+        this.locationName = locationName;
         this.forecastDate = forecastDate;
     }
 
-    public String getBlName(){
-        return blName;
-    }
-
-    public CovidDataRequestLeastSquares assignCovidDataAccordingToBlName(){
-        switch (blName){
-            case "CountryBl":
-                covidDataList=countryDao.covidDataListCountryAllInfo(locationId, dateCovid);
-                covidDataListDESC=countryDao.covidDataListCountryAllInfoDESC(locationId, dateCovid);
-                covidDataRequestLeastSquares.setNameLocationCovid(countryDao.countryName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "CityBl":
-                covidDataList=cityDao.covidDataListCityAllInfo(locationId, dateCovid);
-                covidDataListDESC=cityDao.covidDataListCityAllInfoDESC(locationId, dateCovid);
-                covidDataRequestLeastSquares.setNameLocationCovid(cityDao.cityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-            case "MunicipalityBl":
-                covidDataList=municipalityDao.covidDataListMunAllInfo(locationId, dateCovid);
-                covidDataListDESC=municipalityDao.covidDataListMunAllInfoDESC(locationId, dateCovid);
-                covidDataRequestLeastSquares.setNameLocationCovid(municipalityDao.municipalityName(locationId));
-                determinePeriod(covidDataList);
-                break;
-        }
-
+    public CovidDataRequestLeastSquares getCovidDataRequestLeastSquares() {
+        determinePeriod();
         return covidDataRequestLeastSquares;
     }
 
-    private void getVariables(List<CovidDataRequest> covidDataList) {
+    private void getVariables() {
         n = covidDataList.size();
         for(int i=0; i<n; i++){
             if(flagFirst) {
@@ -114,7 +84,7 @@ public class LeastSquaresMethod {
 
     }
 
-    private void determinePeriod(List<CovidDataRequest> covidDataList) {
+    private void determinePeriod() {
         int dayForecast = 0, lastDay =0;
 
         Date datePeriod, datePeriodf, dateTotal;
@@ -152,11 +122,11 @@ public class LeastSquaresMethod {
             covidDataRequestLeastSquares.setDateLocationCovid("No se pueden realizar proyecciones del dia actual o dias anteriores");
         }else{
             covidDataRequestLeastSquares.setDateLocationCovid(forecastDate);
-            getVariables(covidDataList);
+            getVariables();
         }
     }
 
-    private void leastSquaresMethod() {
+    private CovidDataRequestLeastSquares leastSquaresMethod() {
         float x = 0,y = 0,x2 = 0,y2 = 0,xy = 0,b=0,a=0,growthPercentage=0, forecast =0;
         float xc = 0,yc = 0,x2c = 0,y2c = 0,xyc = 0,bc=0,ac=0,growthPercentagec=0, forecastc =0;
         float xd = 0,yd = 0,x2d = 0,y2d = 0,xyd = 0,bd=0,ad=0,growthPercentaged=0, forecastd =0;
@@ -211,6 +181,8 @@ public class LeastSquaresMethod {
         forecastd = ad + (bd*totalPeriod);
 
         //Guardando datos del metodo de minimos cuadrados en una variable
+        covidDataRequestLeastSquares.setNameLocationCovid(locationName);
+
         covidDataRequestLeastSquares.setVacForecast(forecast);
         covidDataRequestLeastSquares.setVacPercentage(growthPercentage);
 
@@ -223,7 +195,7 @@ public class LeastSquaresMethod {
         covidDataRequestLeastSquares.setRecForecast(forecastr);
         covidDataRequestLeastSquares.setRecPercentage(growthPercentager);
 
-
+        return covidDataRequestLeastSquares;
     }
 
     private Date parseFecha(String dateLocationCovid) {

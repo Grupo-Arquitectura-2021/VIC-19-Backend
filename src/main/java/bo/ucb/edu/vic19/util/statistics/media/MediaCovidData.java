@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.statistics.media;
+package bo.ucb.edu.vic19.util.statistics.media;
 
 import bo.ucb.edu.vic19.dao.CityDao;
 import bo.ucb.edu.vic19.dao.CountryDao;

@@ -1,8 +1,5 @@
-package bo.ucb.edu.vic19.statistics.increaseMethods;
+package bo.ucb.edu.vic19.util.statistics.increaseMethods;
 
-import bo.ucb.edu.vic19.dao.CityDao;
-import bo.ucb.edu.vic19.dao.CountryDao;
-import bo.ucb.edu.vic19.dao.MunicipalityDao;
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestIncreaseMethod;
 import bo.ucb.edu.vic19.dto.CovidDataRequestLeastSquares;
@@ -13,11 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class PercentageIncreaseMethod {
+public class AbsoluteIncreaseMethod {
     public String blName;
-    public CountryDao countryDao;
-    public CityDao cityDao;
-    public MunicipalityDao municipalityDao;
     public String dateCovid;
     public String locationName;
     public Integer period;
@@ -30,19 +24,19 @@ public class PercentageIncreaseMethod {
     public CovidDataRequestIncreaseMethod covidDataRequestIncreaseMethod = new CovidDataRequestIncreaseMethod();
 
 
-    public PercentageIncreaseMethod(List<CovidDataRequest> covidDataList, List<CovidDataRequest> covidDataListDESC, String forecastDate, String locationName) {
+    public AbsoluteIncreaseMethod(List<CovidDataRequest> covidDataList, List<CovidDataRequest> covidDataListDESC, String forecastDate, String locationName) {
         this.covidDataList=covidDataList;
         this.covidDataListDESC=covidDataListDESC;
-        this.locationName = locationName;
+        this.locationName=locationName;
         this.forecastDate = forecastDate;
     }
 
-    public CovidDataRequestIncreaseMethod getCovidDataRequestPercentageIncrease() {
+    public CovidDataRequestIncreaseMethod getCovidDataRequestAbsoluteIncrease() {
         determinePeriod();
         return covidDataRequestIncreaseMethod;
     }
 
-    private void getVariables(List<CovidDataRequest> covidDataList) {
+    private void getVariables() {
         n = covidDataList.size();
         System.out.println("get variables size "+covidDataList.size());
         for(int i=0; i<n; i++){
@@ -111,7 +105,7 @@ public class PercentageIncreaseMethod {
 
         System.out.println("periodo difftime : "+period);
 
-        getVariables(covidDataList);
+        getVariables();
     }
 
     private void absoluteIncreaseMethod() {
@@ -119,7 +113,6 @@ public class PercentageIncreaseMethod {
         float xc = 0,xcsum=0;
         float xd = 0,xdsum=0;
         float xr = 0,xrsum=0;
-        float per=0, perxc=0, perxd=0, perxr=0;
         float mediax=0, mediaxc=0, mediaxd=0, mediaxr=0;
         float forecastx=0, forecastxc=0, forecastxd=0, forecastxr=0;
         float n = periodQuantitiesVac.size();
@@ -129,41 +122,40 @@ public class PercentageIncreaseMethod {
             System.out.println("periodo "+periodQuantitiesVac.get(i).getPeriod());
 
             x = (periodQuantitiesVac.get(i).getQuantity()-periodQuantitiesVac.get(i-1).getQuantity());
-            xsum+=x/periodQuantitiesVac.get(i-1).getQuantity();
+            xsum+=x;
 
             System.out.println("valor de x "+x);
             System.out.println("suma vac "+xsum);
 
             xr = (periodQuantitiesRec.get(i).getQuantity()-periodQuantitiesRec.get(i-1).getQuantity());
-            xrsum+=xr/periodQuantitiesRec.get(i-1).getQuantity();
+            xrsum+=xr;
 
             xc = (periodQuantitiesConf.get(i).getQuantity()-periodQuantitiesConf.get(i-1).getQuantity());
-            xcsum+=xc/periodQuantitiesConf.get(i-1).getQuantity();
+            xcsum+=xc;
 
             xd= (periodQuantitiesDeath.get(i).getQuantity()-periodQuantitiesDeath.get(i-1).getQuantity());
-            xdsum+=xd/periodQuantitiesDeath.get(i-1).getQuantity();
+            xdsum+=xd;
         }
 
-        per = xsum/(periodQuantitiesVac.size()-1);
-        perxc = xcsum/(periodQuantitiesVac.size()-1);
-        perxd = xdsum/(periodQuantitiesVac.size()-1);
-        perxr = xrsum/(periodQuantitiesVac.size()-1);
+            mediax = xsum/(periodQuantitiesVac.size()-1);
+            mediaxc = xcsum/(periodQuantitiesVac.size()-1);
+            mediaxd = xdsum/(periodQuantitiesVac.size()-1);
+            mediaxr = xrsum/(periodQuantitiesVac.size()-1);
 
-        System.out.println("percetage vaar "+per);
-
-        for(int p=0; p<period;p++) {
-            if(p==0) {
-                forecastx = covidDataListDESC.get(0).getVaccinated() + (per*covidDataListDESC.get(0).getVaccinated());
-                forecastxc = covidDataListDESC.get(0).getConfirmedCases() + (perxc*covidDataListDESC.get(0).getConfirmedCases());
-                forecastxd = covidDataListDESC.get(0).getDeathCases() + (perxd*covidDataListDESC.get(0).getDeathCases());
-                forecastxr = covidDataListDESC.get(0).getRecuperated() + (perxr*covidDataListDESC.get(0).getRecuperated());
-            }else{
-                forecastx+=per*forecastx;
-                forecastxc+=perxc*forecastxc;
-                forecastxd+=perxd*forecastxd;
-                forecastxr+=perxr*forecastxr;
+            for(int p=0; p<period;p++) {
+                if(p==0) {
+                    forecastx = covidDataListDESC.get(0).getVaccinated() + mediax;
+                    forecastxc = covidDataListDESC.get(0).getConfirmedCases() + mediaxc;
+                    forecastxd = covidDataListDESC.get(0).getDeathCases() + mediaxd;
+                    forecastxr = covidDataListDESC.get(0).getRecuperated() + mediaxr;
+                }else{
+                    forecastx+=mediax;
+                    forecastxc+=mediaxc;
+                    forecastxd+=mediaxd;
+                    forecastxr+=mediaxr;
+                }
+                System.out.println("forecast vac "+forecastx);
             }
-        }
 
         covidDataRequestIncreaseMethod.setNameLocationCovid(locationName);
 
@@ -174,6 +166,7 @@ public class PercentageIncreaseMethod {
         covidDataRequestIncreaseMethod.setDeathForecast(forecastxd);
 
         covidDataRequestIncreaseMethod.setRecForecast(forecastxr);
+
 
     }
 

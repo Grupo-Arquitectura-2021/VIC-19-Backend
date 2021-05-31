@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.statistics.variance;
+package bo.ucb.edu.vic19.util.statistics.variance;
 
 import bo.ucb.edu.vic19.dto.CovidDataRequest;
 import bo.ucb.edu.vic19.dto.CovidDataRequestMedia;

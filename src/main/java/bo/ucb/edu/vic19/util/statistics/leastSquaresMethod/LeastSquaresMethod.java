@@ -1,4 +1,4 @@
-package bo.ucb.edu.vic19.statistics.leastSquaresMethod;
+package bo.ucb.edu.vic19.util.statistics.leastSquaresMethod;
 
 import bo.ucb.edu.vic19.dao.CityDao;
 import bo.ucb.edu.vic19.dao.CountryDao;

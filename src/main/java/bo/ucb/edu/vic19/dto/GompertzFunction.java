@@ -38,4 +38,14 @@ public class GompertzFunction extends PredictFunction{
     public void setRecuperated(GompertzVariables recuperated) {
         this.recuperated = recuperated;
     }
+
+    @Override
+    public String toString() {
+        return "GompertzFunction{" +
+                "deathCases=" + deathCases +
+                ", confirmedCases=" + confirmedCases +
+                ", vaccinated=" + vaccinated +
+                ", recuperated=" + recuperated +
+                '}';
+    }
 }

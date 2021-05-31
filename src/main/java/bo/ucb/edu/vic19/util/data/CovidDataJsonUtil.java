@@ -142,7 +142,7 @@ public class CovidDataJsonUtil {
             cal.add(Calendar.DAY_OF_YEAR, -length);
             date = cal.getTime();
             ArrayList arr;
-            for(int i=0;i<innerObjectRec.size();i++){
+            for(int i=0;i<length;i++){
                 arr=new ArrayList();
                 arr.add(date);
                 if(innerObjectCas.get(formatCalendar(cal))==null){
@@ -182,7 +182,8 @@ public class CovidDataJsonUtil {
             c.add(Calendar.DAY_OF_YEAR, -length);
             date = c.getTime();
             ArrayList arr;
-            for(int i=0;i<vaccines.getTimeline().size();i++){
+            System.out.println(c.getTime());
+            for(int i=0;i<length;i++){
                 arr=new ArrayList();
                 arr.add(date);
                 if((Integer) vaccines.getTimeline().get(formatCalendar(c))==null){
@@ -205,13 +206,14 @@ public class CovidDataJsonUtil {
 
 
    //@Scheduled(fixedRate = 30000L)
-   //@GetMapping(value = "/swagger")
+  // @GetMapping(value = "/swagger")
     public void readDataJsonSwagger() {
         try {
             List<LocationResponse> countries=countryDao.countries();
             for(int i=0;i<countries.size();i++){
                 var general=getJsonHistoricalData(countries.get(i).getLocationName(),100);
                 var vaccine=getJsonVaccine(countries.get(i).getLocationName(),100);
+                System.out.println(vaccine.toString());
                 Date date;
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());

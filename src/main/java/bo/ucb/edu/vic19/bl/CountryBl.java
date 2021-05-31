@@ -14,6 +14,7 @@ import bo.ucb.edu.vic19.statistics.variance.VarianceCovidDataCountry;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -126,16 +127,6 @@ public class CountryBl {
     public List<CovidDataRequest> covidDataCountryAllInfo(int cityId, String dateCovid) {
         List<CovidDataRequest> covidDataListCountryAllInfo=countryDao.covidDataListCountryAllInfo(cityId, dateCovid);
         return covidDataListCountryAllInfo;
-    }
-    public GompertzFunction predictDataGompertz(){
-        return null;
-    }
-    public PredictFunction predictData(Integer countryId,String dateCovid,Integer type){
-        switch (type){
-            case 1:
-                return null;
-                break;
-        }
     }
     public CovidDataStatistics statisticsCountry(Integer countryId,String dateCovid){
         VarianceCovidDataCountry varianceCovidDataCountry = new VarianceCovidDataCountry(countryDao);

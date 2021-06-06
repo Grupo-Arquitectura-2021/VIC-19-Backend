@@ -1,7 +1,13 @@
 package bo.ucb.edu.vic19.util.security;
 
 
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -23,7 +29,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     //Se visualiza las autorizaciones de seguridad
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.requiresChannel().anyRequest().requiresSecure().and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/country/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/country/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/city/**").permitAll()
@@ -33,12 +39,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/shelter/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/news").permitAll()
                 .anyRequest().permitAll()
-                //.anyRequest().authenticated()
-                //.and().cors().disable();
                 .and().cors().configurationSource(corsConfigurationSource());
-                /*.and()
-                .oauth2Login()
-                .loginPage("/**//*auth");*/
     }
 
     //Se muestra la autenticacion del servidor
@@ -61,5 +62,31 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                SecurityConstraint securityConstraint = new SecurityConstraint();
+                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                securityConstraint.addCollection(collection);
+                context.addConstraint(securityConstraint);
+            }
+        };
+        tomcat.addAdditionalTomcatConnectors(getHttpConnector());
+        return tomcat;
+    }
+
+    private Connector getHttpConnector() {
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+        connector.setScheme("http");
+        connector.setPort(8080);
+        connector.setSecure(false);
+        connector.setRedirectPort(8443);
+        return connector;
+    }
+
 }
 

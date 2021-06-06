@@ -28,4 +28,14 @@ mybatis:
     default-fetch-size: 100
     default-statement-timeout: 30
   mapper-locations: classpath:/dao/*Dao.xml
-
+server:
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: abcd1234
+    key-store-type: PKCS12
+    key-alias: tomcat
+    key-password: abcd1234
+    enabled: true
+  port: 8443
+  http2:
+    enabled: true

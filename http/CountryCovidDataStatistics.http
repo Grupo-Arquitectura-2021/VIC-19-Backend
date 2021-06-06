@@ -47,3 +47,10 @@ Accept: application/json
 Content-Type: application/json
 ###
 
+### Mostrar proyecciones por el modelo de Brwon de datos de un pais desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/country/brownModelAllInfo/1/2021-05-30
+Accept: application/json
+Content-Type: application/json
+###
+

@@ -21,3 +21,10 @@ GET http://localhost:8080/municipality/percentageIncreaseAllInfo/1/2021-05-30
 Accept: application/json
 Content-Type: application/json
 ###
+
+### Mostrar proyecciones por el modelo de Brown de datos de un municipio desde el inicio de los datos hasta la fecha indicada
+
+GET http://localhost:8080/municipality/brownModelAllInfo/1/2021-05-30
+Accept: application/json
+Content-Type: application/json
+###

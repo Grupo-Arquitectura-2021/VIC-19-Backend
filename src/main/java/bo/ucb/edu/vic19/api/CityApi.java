@@ -87,4 +87,9 @@ public class CityApi {
         return cityBl.percentageIncreaseCovidDataCityAllInfo(Integer.parseInt(cityId), forecastDate);
     }
 
+    @GetMapping(path = "/brownModelAllInfo/{cityId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestBrownModel covidDataCityBrownModelAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return cityBl.brownModelCovidDataCityAllInfo(Integer.parseInt(cityId),forecastDate);
+    }
+
 }

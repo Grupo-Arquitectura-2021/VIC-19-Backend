@@ -6,11 +6,12 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CountryCovidData;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.util.statistics.brownModel.BrownModel;
 import bo.ucb.edu.vic19.util.statistics.confidenceInterval.ConfidenceInterval;
 import bo.ucb.edu.vic19.util.statistics.increaseMethods.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.util.statistics.increaseMethods.PercentageIncreaseMethod;
 import bo.ucb.edu.vic19.util.statistics.leastSquaresMethod.LeastSquaresMethod;
-import bo.ucb.edu.vic19.util.statistics.media.MediaCovidData;
+import bo.ucb.edu.vic19.util.statistics.media.AverageCovidData;
 import bo.ucb.edu.vic19.util.statistics.variance.VarianceCovidData;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,10 +128,10 @@ public class CountryBl {
     }
     public CovidDataStatistics statisticsCountry(Integer countryId,String dateCovid){
         List<CovidDataRequest> covidDataRequests=countryDao.covidDataListCountryAllInfo(countryId,dateCovid);
-        MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);
+        AverageCovidData averageCovidData = new AverageCovidData(covidDataRequests);
         VarianceCovidData varianceCovidData = new VarianceCovidData(covidDataRequests);
         CovidDataRequestMedia covidDataRequestMedia;
-        covidDataRequestMedia = mediaCovidData.mediaCovidDataCountryAllInfo(countryId, dateCovid, countryDao.countryName(countryId));
+        covidDataRequestMedia = averageCovidData.mediaCovidDataCountryAllInfo(countryId, dateCovid, countryDao.countryName(countryId));
         CovidDataRequestVariance covidDataRequestVariance;
         covidDataRequestVariance = varianceCovidData.varianceCovidDataCountryAllInfo(covidDataRequestMedia);
         ConfidenceInterval confidenceIntervalCountry=new ConfidenceInterval(covidDataRequests);
@@ -165,7 +166,14 @@ public class CountryBl {
         List<CovidDataRequest> covidDataRequests = countryDao.covidDataListCountryAllInfoNoDate(countryId);
         List<CovidDataRequest> covidDataRequests1 = countryDao.covidDataListCountryAllInfoNoDateDESC(countryId);
         PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(covidDataRequests, covidDataRequests1,forecastDate,countryDao.countryName(countryId));
-        System.out.println("nombre "+countryDao.countryName(countryId));
         return percentageIncreaseMethod.getCovidDataRequestPercentageIncrease();
+    }
+
+    public CovidDataRequestBrownModel brownModelCovidDataCountryAllInfo(int countryId, String forecastDate){
+        List<CovidDataRequest> covidDataRequests = countryDao.covidDataListCountryAllInfoNoDate(countryId);
+        List<CovidDataRequest> covidDataRequests1 = countryDao.covidDataListCountryAllInfoNoDateDESC(countryId);
+        BrownModel brownModel=new BrownModel(covidDataRequests, covidDataRequests1,forecastDate,countryDao.countryName(countryId));
+        System.out.println("nombre "+countryDao.countryName(countryId));
+        return brownModel.getCovidDataRequestBrownModel();
     }
 }

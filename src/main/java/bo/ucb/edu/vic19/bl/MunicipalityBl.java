@@ -6,10 +6,11 @@ import bo.ucb.edu.vic19.dto.*;
 import bo.ucb.edu.vic19.model.CovidData;
 import bo.ucb.edu.vic19.model.MunicipalityCovidData;
 import bo.ucb.edu.vic19.model.Transaction;
+import bo.ucb.edu.vic19.util.statistics.brownModel.BrownModel;
 import bo.ucb.edu.vic19.util.statistics.confidenceInterval.ConfidenceInterval;
 import bo.ucb.edu.vic19.util.statistics.increaseMethods.AbsoluteIncreaseMethod;
 import bo.ucb.edu.vic19.util.statistics.leastSquaresMethod.LeastSquaresMethod;
-import bo.ucb.edu.vic19.util.statistics.media.MediaCovidData;
+import bo.ucb.edu.vic19.util.statistics.media.AverageCovidData;
 import bo.ucb.edu.vic19.util.statistics.increaseMethods.PercentageIncreaseMethod;
 import bo.ucb.edu.vic19.util.statistics.variance.VarianceCovidData;
 import bo.ucb.edu.vic19.util.data.CovidDataCSVUtil;
@@ -126,10 +127,10 @@ public class MunicipalityBl {
 
     public CovidDataStatistics statisticsMunicipality(Integer munId,String dateCovid){
         List<CovidDataRequest> covidDataRequests=municipalityDao.covidDataListMunAllInfo(munId,dateCovid);
-        MediaCovidData mediaCovidData = new MediaCovidData(covidDataRequests);
+        AverageCovidData averageCovidData = new AverageCovidData(covidDataRequests);
         VarianceCovidData varianceCovidData = new VarianceCovidData(covidDataRequests);
         CovidDataRequestMedia covidDataRequestMedia;
-        covidDataRequestMedia = mediaCovidData.mediaCovidDataCountryAllInfo(munId, dateCovid, municipalityDao.municipalityName(munId));
+        covidDataRequestMedia = averageCovidData.mediaCovidDataCountryAllInfo(munId, dateCovid, municipalityDao.municipalityName(munId));
         CovidDataRequestVariance covidDataRequestVariance;
         covidDataRequestVariance = varianceCovidData.varianceCovidDataCountryAllInfo(covidDataRequestMedia);
         ConfidenceInterval confidenceIntervalCountry=new ConfidenceInterval(covidDataRequests);
@@ -165,5 +166,12 @@ public class MunicipalityBl {
         List<CovidDataRequest> covidDataRequests1 = municipalityDao.covidDataListMunAllInfoNoDateDESC(munId);
         PercentageIncreaseMethod percentageIncreaseMethod=new PercentageIncreaseMethod(covidDataRequests,covidDataRequests1,forecastDate, municipalityDao.municipalityName(munId));
         return percentageIncreaseMethod.getCovidDataRequestPercentageIncrease();
+    }
+
+    public CovidDataRequestBrownModel brownModelCovidDataMunAllInfo(int munId, String forecastDate){
+        List<CovidDataRequest> covidDataRequests = municipalityDao.covidDataListMunAllInfoNoDate(munId);
+        List<CovidDataRequest> covidDataRequests1 = municipalityDao.covidDataListMunAllInfoNoDateDESC(munId);
+        BrownModel brownModel=new BrownModel(covidDataRequests, covidDataRequests1,forecastDate,municipalityDao.municipalityName(munId));
+        return brownModel.getCovidDataRequestBrownModel();
     }
 }

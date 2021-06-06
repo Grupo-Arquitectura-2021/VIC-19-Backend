@@ -73,10 +73,14 @@ public class CountryApi {
         return countryBl.statisticsCountry(countryId,date);
     }
 
-
     @GetMapping(path = "/percentageIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.percentageIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
+    }
+
+    @GetMapping(path = "/brownModelAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestBrownModel covidDataCountryBrownModelAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return countryBl.brownModelCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
 
 }

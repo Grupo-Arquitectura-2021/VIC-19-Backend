@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -77,6 +78,11 @@ public class CountryApi {
     @GetMapping(path = "/percentageIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.percentageIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
+    }
+
+    @GetMapping(path = "/functions/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FunctionsRequest getFunctions(@PathVariable Integer countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date) throws ParseException {
+        return countryBl.getFunction(countryId,date);
     }
 
 }

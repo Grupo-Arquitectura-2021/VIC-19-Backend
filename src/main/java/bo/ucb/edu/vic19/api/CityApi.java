@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -91,5 +92,10 @@ public class CityApi {
     public CovidDataRequestBrownModel covidDataCityBrownModelAllInfo(@PathVariable String cityId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return cityBl.brownModelCovidDataCityAllInfo(Integer.parseInt(cityId),forecastDate);
     }
+    @GetMapping(path = "/functions/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FunctionsRequest getFunctions(@PathVariable Integer cityId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date) throws ParseException {
+        return cityBl.getFunction(cityId,date);
+    }
+
 
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class MediaCovidData {
+public class AverageCovidData {
     private List<CovidDataRequest> covidDataListCountryAllInfo;
     private float mediaVac=0, mediaRec=0, mediaConf=0, mediaDeath=0;
 
@@ -53,7 +53,7 @@ public class MediaCovidData {
         this.mediaDeath = mediaDeath;
     }
 
-    public MediaCovidData(List<CovidDataRequest> covidDataRequests){
+    public AverageCovidData(List<CovidDataRequest> covidDataRequests){
         this.covidDataListCountryAllInfo=covidDataRequests;
     }
 

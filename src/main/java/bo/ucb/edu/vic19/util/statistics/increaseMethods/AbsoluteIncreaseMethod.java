@@ -38,7 +38,6 @@ public class AbsoluteIncreaseMethod {
 
     private void getVariables() {
         n = covidDataList.size();
-        System.out.println("get variables size "+covidDataList.size());
         for(int i=0; i<n; i++){
             if(flagFirst) {
                 if (covidDataList.get(i).getVaccinated() >= 0) {

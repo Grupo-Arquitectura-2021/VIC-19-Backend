@@ -74,7 +74,6 @@ public class CountryApi {
         return countryBl.statisticsCountry(countryId,date);
     }
 
-
     @GetMapping(path = "/percentageIncreaseAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CovidDataRequestIncreaseMethod covidDataCountryPercentageIncreaseAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
         return countryBl.percentageIncreaseCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
@@ -83,6 +82,11 @@ public class CountryApi {
     @GetMapping(path = "/functions/{countryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FunctionsRequest getFunctions(@PathVariable Integer countryId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String date) throws ParseException {
         return countryBl.getFunction(countryId,date);
+    }
+
+    @GetMapping(path = "/brownModelAllInfo/{countryId}/{forecastDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CovidDataRequestBrownModel covidDataCountryBrownModelAllInfo(@PathVariable String countryId, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String forecastDate){
+        return countryBl.brownModelCovidDataCountryAllInfo(Integer.parseInt(countryId),forecastDate);
     }
 
 }
